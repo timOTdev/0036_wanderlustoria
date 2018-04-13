@@ -23,11 +23,11 @@ body {
     color: white;
     text-shadow: 3px 3px 3px black;
     padding: 1rem;
+    font-family: 'Fira Sans', sans-serif;
 }
 #landing-header button {
     font-size: 1.5rem;
     margin: 1rem;
-    /* font-family: 'Black And White Picture', sans-serif; */
 }
 .slideshow {
     position: fixed;

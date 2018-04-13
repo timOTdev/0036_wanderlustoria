@@ -1,3 +1,82 @@
+/* Globals */
+body {
+    margin: 0;
+    padding: 0;
+    background:#f4f4f4;
+}
 .container {
     max-width: 90%;
+    display: block;
+}
+
+/* Header */
+.navbar{
+    background: black;
+    color: white;
+    margin: 0 auto;
+    display: inline-block;
+    font-family: 'Fira Sans', sans-serif;
+}
+.nav-link, .navbar-brand{
+    color: white;
+    cursor: pointer;
+}
+.nav-link{
+    margin-right: 1em !important;
+}
+.nav-link:hover{
+    background: #f4f4f4;
+    color: #f97300;
+}
+.navbar-collapse{
+    justify-content: flex-end;
+}
+.navbar-toggler{
+    background:#fff !important;
+}
+.navbar .logo {
+    color: lightcoral;
+    text-shadow: 3px 3px 3px darkred;
+    font-family: 'Black And White Picture', sans-serif;
+}
+.navbar .wander {
+    color: lightgreen;
+    text-shadow: 3px 3px 3px darkcyan;
+}
+
+/* Home */
+#header {
+    background-image: url("../images/wing.jpg");
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    z-index: 0;
+    font-family: 'Fira Sans', sans-serif;
+}
+#header .overlay{
+    position: absolute;
+    margin: 0 auto;
+    width: 100%;
+    height: 60vh;
+    background: rgba(244, 244, 244, 0.7);
+}
+#header .headline {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    left: 5%;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 1;
+}
+#header button {
+    font-size: 1.5rem;
+    margin: 1rem;
+}
+#header p {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: large;
 }
