@@ -1,15 +1,58 @@
 <% include partials/header %>
 
-<div class="header" id="header">
-    <div class="header">
+<div class="container">
+    <div class="header" id="header">
         <div class="overlay"></div>
-        <div container>
-            <div class="headline">
-                <h1>A Travel Vision Platform</h1>                
-                <a href="/wanderlustoria"><button type="button" class="btn btn-success">Enter Wanderlustoria</button></a>
+
+        <div class="headline">
+            <h1>A Travel Vision Platform</h1>                
+            <p>Finding your next long-term travel location</p>
+            <a href="/wanderlustoria"><button type="button" class="btn btn-success">Enter Wanderlustoria</button></a>
+        </div>
+    </div>
+    
+    <div class="summary" id="summary">
+        <h1>"Where should I go?"</h1>
+        <div class="row justify-content-between">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/photo-1512250431446-d0b4b57b27ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a44ca66de56c79c3f78639b5e948d17a&auto=format&fit=crop&w=1355&q=80">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/photo-1512553353614-82a7370096dc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=643c6ebcaf321c2a939e57ed8c0eb485&auto=format&fit=crop&w=1489&q=80">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/36/hGibbjg0Rb2fUIoMtU5l__DSC8099.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89cdd0f896a0d49a26d8627cca6b41e3&auto=format&fit=crop&w=1418&q=80">
+            </div>
+        </div>        
+        <p>The first question we ask our friends when we want to travel someplace new.
+           <br>
+            An experience sharing platform for travelers who dare to dream of places off the beaten path.
+            For those who wants to wants to become immersed in authentic culture outside of resorts/tours, 
+            to visit a new lands and stay for a month or more,
+            or to find a new home for the expatriate harboring insatiable curiousity.
+        </p>
+    </div>
+
+    
+    <div class="features" id="features">
+        <div class="row justify-content-around">
+            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
+                <span class="summary-icons"><i class="fas fa-search fa-10x"></i></span>
+                <h3>Find</h3>
+                <p>The world is filled with millions of microcosms of cultures. Finding that new place to visit is frustrating. Let others inspire you with real pictures and stories.</p>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
+                <span class="summary-icons"><i class="fas fa-globe fa-10x"></i></span>
+                <h3>Share</h3>
+                <p>You're the trailblazer in a fabulous new location and want to share this little piece of paradise with others. Share a photo you took and a story revel about.</p>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
+                <span class="summary-icons"><i class="far fa-comments fa-10x"></i></span>
+                <h3>Connect</h3>
+                <p>A picture may be worth a thousand words but the right question can be worth its weight in gold. Make new friends and discover compelling reasons of reaching this newfound treasure of yours.</p>
             </div>
         </div>
     </div>
 </div>
-
+    
 <% include partials/footer %>

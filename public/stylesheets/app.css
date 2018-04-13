@@ -1,13 +1,14 @@
 /* Globals */
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     background:#f4f4f4;
     font-family: 'Fira Sans', sans-serif !important;
 }
 .container {
-    max-width: 90%;
-    display: block;
+    min-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Header */
@@ -47,18 +48,16 @@ body {
 /* Home */
 #header {
     background-image: url("../images/wing.jpg");
-    margin: 0 auto;
-    background-size: cover;
-    background-position: center;
-    height: 60vh;
-    z-index: 0;
-    font-family: 'Fira Sans', sans-serif;
+    background-size: auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 60vh;
 }
 #header .overlay{
     position: absolute;
     margin: 0 auto;
-    width: 100%;
-    height: 60vh;
+    min-height: 60vh;
+    min-width: 100%;
     background: rgba(244, 244, 244, 0.7);
 }
 #header .headline {
@@ -72,10 +71,29 @@ body {
 }
 #header button {
     font-size: 1.5rem;
-    margin: 1rem; black;
     margin: 0 auto;
     text-align: center;
     font-size: large;
+}
+
+/* Summary */
+#summary {
+    text-align: center;
+    width: 75%;
+    margin: 2rem auto;
+}
+#summary p {
+    padding: 1rem;
+}
+
+/* Features */
+#features {
+    background: lightgreen;
+    padding: 2rem;
+}
+#features .summary-icons {
+    display:inline-block;
+    text-align: center;
 }
 
 /* Footer */
@@ -83,4 +101,5 @@ body {
     text-align: center;
     background: black;
     color: white;
+    padding: 0.5rem;
 }
