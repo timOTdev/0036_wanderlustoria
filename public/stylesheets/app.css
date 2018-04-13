@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background:#f4f4f4;
+    font-family: 'Fira Sans', sans-serif !important;
 }
 .container {
     max-width: 90%;
@@ -15,7 +16,6 @@ body {
     color: white;
     margin: 0 auto;
     display: inline-block;
-    font-family: 'Fira Sans', sans-serif;
 }
 .nav-link, .navbar-brand{
     color: white;
@@ -25,8 +25,8 @@ body {
     margin-right: 1em !important;
 }
 .nav-link:hover{
-    background: #f4f4f4;
-    color: #f97300;
+    background: lightgreen;
+    color: black;
 }
 .navbar-collapse{
     justify-content: flex-end;
@@ -72,11 +72,15 @@ body {
 }
 #header button {
     font-size: 1.5rem;
-    margin: 1rem;
-}
-#header p {
-    width: 50%;
+    margin: 1rem; black;
     margin: 0 auto;
     text-align: center;
     font-size: large;
+}
+
+/* Footer */
+#footer {
+    text-align: center;
+    background: black;
+    color: white;
 }
