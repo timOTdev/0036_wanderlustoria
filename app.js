@@ -3,18 +3,18 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+// Routes
+const homeRoutes = require("./routes/homeRoute");
+const wanderlustoriaRoutes = require("./routes/wanderlustoriaRoute");
+const cityRoutes = require("./routes/citiesRoute");
+const storiesRoutes = require("./routes/storiesRoute");
+
 // Setup
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 // app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost/wanderlustoria");
-
-// Routes
-const homeRoutes = require("./routes/homeRoute");
-const wanderlustoriaRoutes = require("./routes/wanderlustoriaRoute");
-const cityRoutes = require("./routes/citiesRoute");
-const storiesRoutes = require("./routes/storiesRoute");
 
 app.use("/", homeRoutes);
 app.use("/wanderlustoria", wanderlustoriaRoutes);
