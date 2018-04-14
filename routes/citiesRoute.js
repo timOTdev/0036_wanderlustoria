@@ -3,17 +3,17 @@ var router = express.Router();
 
 // INDEX ROUTE
 router.get('/', function(req, res){
-    res.render("cities/index");
+    res.render("citiesIndex");
 });
 
 // NEW ROUTE
 router.get('/new', function(req, res){
-    res.render("cities/new");
+    res.render("citiesNew");
 });
 
 // CREATE ROUTE
 router.post('/', function(req, res){
-    res.redirect("/cities/index");
+    res.redirect("citiesIndex");
 });
 
 module.exports = router;

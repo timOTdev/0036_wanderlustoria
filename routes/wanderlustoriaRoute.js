@@ -9,12 +9,12 @@ var cities = [
 
 // INDEX ROUTE
 router.get('/', function(req, res){
-    res.render("wanderlustoria/index", {cities: cities});
+    res.render("wanderlustoriaIndex", {cities: cities});
 });
 
 // NEW ROUTE
 router.get('/new', function(req, res){
-    res.render("wanderlustoria/new");
+    res.render("wanderlustoriaNew");
 });
 
 // CREATE ROUTE
@@ -22,7 +22,7 @@ router.post('/', function(req, res){
     console.log("You've just added " + req.body.nameCity + "!");
     console.log("You've just added " + req.body.nameCountry + "!");
     console.log("You've just added " + req.body.description + "!");
-    res.redirect("/wanderlustoria");
+    res.redirect("wanderlustoriaIndex");
 });
 
 module.exports = router;

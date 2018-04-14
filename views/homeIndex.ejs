@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include headerPartial %>
 
 <div class="container">
     <div class="header" id="header">
@@ -33,26 +33,79 @@
         </p>
     </div>
 
-    
     <div class="features" id="features">
         <div class="row justify-content-around">
             <div class="col-lg-3 col-md-4 col-sm-12 text-center">
                 <span class="summary-icons"><i class="fas fa-search fa-10x"></i></span>
                 <h3>Find</h3>
                 <p>The world is filled with millions of microcosms of cultures. Finding that new place to visit is frustrating. Let others inspire you with real pictures and stories.</p>
+                <ul class="checkmarks">
+                    <li><i class="fas fa-check"></i> Find amazing food</li>
+                    <li><i class="fas fa-check"></i> Find unbelievable standards of living</li>
+                    <li><i class="fas fa-check"></i> Find unparalleled culture</li>
+                </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12 text-center">
                 <span class="summary-icons"><i class="fas fa-globe fa-10x"></i></span>
                 <h3>Share</h3>
                 <p>You're the trailblazer in a fabulous new location and want to share this little piece of paradise with others. Share a photo you took and a story revel about.</p>
+                <ul class="checkmarks">
+                    <li><i class="fas fa-check"></i> Share amazing photos</li>
+                    <li><i class="fas fa-check"></i> Share marvelous travel stories</li>
+                    <li><i class="fas fa-check"></i> Inspire others to greatness</li>
+                </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12 text-center">
                 <span class="summary-icons"><i class="far fa-comments fa-10x"></i></span>
                 <h3>Connect</h3>
-                <p>A picture may be worth a thousand words but the right question can be worth its weight in gold. Make new friends and discover compelling reasons of reaching this newfound treasure of yours.</p>
+                <p>A picture may be worth a thousand words but the right question can be worth its weight in gold. Make new friends and reach your dreams.</p>
+                <ul class="checkmarks">
+                    <li><i class="fas fa-check"></i> Find new friends</li>
+                    <li><i class="fas fa-check"></i> Find travel buddies</li>
+                    <li><i class="fas fa-check"></i> Find the answers you seek</li>
+                </ul>
             </div>
+        </div>
+    </div>
+
+    <div class="start" id="start">
+        <div class="container col-lg-12 col-md-12 col-sm-12">
+            <p>
+                Visit Wanderlustoria,
+                sign up to share your adventure,
+                and be the first to comment, like, or connect with a new friend!
+            </p>
+            <a href="#"><button class="btn btn-success">Register</button></a>
+        </div>
+    </div>
+
+    <div class="contact-form" id="contact">
+        <div class="container">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-md-12 left">
+                        <h1>Get in Touch</h1>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-12 right">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Your name" name="name">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-lg" placeholder="Email@service.com" name="email">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control form-control-lg"></textarea>
+                        </div>
+
+                        <input type="submit" class="btn btn-success btn-block" value="Send">
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
     
-<% include partials/footer %>
+<% include footerPartial %>

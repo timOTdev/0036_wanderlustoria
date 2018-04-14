@@ -1,11 +1,13 @@
 /* Globals */
-body {
+body{
     margin: 0 !important;
     padding: 0 !important;
+    padding-top: 65px !important;
     background:#f4f4f4;
     font-family: 'Fira Sans', sans-serif !important;
 }
-.container {
+.container{
+    display: block;
     min-width: 100%;
     margin: 0 !important;
     padding: 0 !important;
@@ -15,8 +17,10 @@ body {
 .navbar{
     background: black;
     color: white;
-    margin: 0 auto;
+    max-width: 100%;
     display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 .nav-link, .navbar-brand{
     color: white;
@@ -35,23 +39,24 @@ body {
 .navbar-toggler{
     background:#fff !important;
 }
-.navbar .logo {
+.navbar .logo{
     color: lightcoral;
     text-shadow: 3px 3px 3px darkred;
     font-family: 'Black And White Picture', sans-serif;
 }
-.navbar .wander {
+.navbar .wander{
     color: lightgreen;
     text-shadow: 3px 3px 3px darkcyan;
 }
 
 /* Home */
-#header {
+#header{
     background-image: url("../images/wing.jpg");
     background-size: auto;
     background-position: center center;
     background-repeat: no-repeat;
     min-height: 60vh;
+    width: 100%;
 }
 #header .overlay{
     position: absolute;
@@ -60,7 +65,7 @@ body {
     min-width: 100%;
     background: rgba(244, 244, 244, 0.7);
 }
-#header .headline {
+#header .headline{
     position: absolute;
     top: 20%;
     right: 5%;
@@ -69,37 +74,61 @@ body {
     vertical-align: middle;
     z-index: 1;
 }
-#header button {
-    font-size: 1.5rem;
-    margin: 0 auto;
-    text-align: center;
-    font-size: large;
-}
 
 /* Summary */
-#summary {
+#summary{
     text-align: center;
     width: 75%;
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding: 2rem 0;
+    width: 100%;
 }
-#summary p {
-    padding: 1rem;
+#summary p{
+    padding-top: 1rem;
 }
 
 /* Features */
-#features {
-    background: lightgreen;
-    padding: 2rem;
+#features{
+    margin: 0 auto;
+    padding: 2rem 0;
+    width: 100%;
 }
-#features .summary-icons {
+#features .summary-icons{
     display:inline-block;
     text-align: center;
 }
+#features .checkmarks, 
+#features p{
+    text-align: left;
+    list-style: none;
+}
+
+/* Start */
+#start{
+    width: 100%;
+    padding: 2rem 0;
+    font-size: x-large;
+    text-align: center;
+}
+
+/* Contacts */
+.contact-form{
+    width: 100%;
+    margin: 6em 0;
+    /* position: relative;   */
+}
+.contact-form .left{
+    text-align: right;
+    border-right: 10px solid black;
+}
+.contact-form .right{
+    max-width: 50%;
+}
 
 /* Footer */
-#footer {
+#footer{
     text-align: center;
     background: black;
     color: white;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
 }

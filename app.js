@@ -9,10 +9,10 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Routes
-const homeRoutes = require("./routes/home");
-const wanderlustoriaRoutes = require("./routes/wanderlustoria");
-const cityRoutes = require("./routes/cities");
-const storiesRoutes = require("./routes/stories");
+const homeRoutes = require("./routes/homeRoute");
+const wanderlustoriaRoutes = require("./routes/wanderlustoriaRoute");
+const cityRoutes = require("./routes/citiesRoute");
+const storiesRoutes = require("./routes/storiesRoute");
 
 app.use("/", homeRoutes);
 app.use("/wanderlustoria", wanderlustoriaRoutes);
