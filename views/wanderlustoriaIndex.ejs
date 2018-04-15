@@ -1,18 +1,35 @@
 <% include headerPartial %>
 
-<div class="container">
-    <h1>Wanderlustoria Page</h1>
+<div id="wanderlustoriaIndex">
+    <div class="container">
+        <h1 style="text-align: center;">The Wonderful Land of Wanderlustoria</h1>
 
-    <!-- <% cities.forEach(function(city){ %>
-        <div>
-            <h4><%= city.name %>, <%= city.country %></h4>
-            <img src="<%= city.image %>">
+        <div class="navButtons d-flex justify-content-center">
+            <a href="/wanderlustoria/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New City</button></a>
         </div>
-    <% }) %> -->
 
-    <a href="/home"><button>Back To Home Page</button></a>
-    <a href="/wanderlustoria/new"><button>Add New City</button></a>
-    <a href="/cities"><button>View All Cities</button></a>
+        <div class="row text-center justify-content-around">
+            <% cities.forEach(function(city){ %>
+                <div class="col-lg-4 col-md-4 col-sm-6" style="margin: 0rem;">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="<%= city.photo %>" style="object-fit: none;
+                            object-position: center;
+                            height: 400px;
+                            width: 100%;">
+                        </div>
+                        <div class="card-body">
+                            <h4><%= city.city %>, <%= city.country %></h4>
+                            <p><%= city.description %></p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-info btn-block">Explore</button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
 </div>
 
 <% include footerPartial %>

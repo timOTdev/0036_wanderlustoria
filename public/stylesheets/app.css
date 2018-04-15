@@ -132,3 +132,8 @@ body{
     color: white;
     padding: 0.5rem 0;
 }
+
+/* wanderlustoriaIndex */
+#wanderlustoriaIndex .navButtons > * {
+    margin: 0 3rem;
+}
