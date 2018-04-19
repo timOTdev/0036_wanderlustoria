@@ -4,6 +4,7 @@ let citySchema = new mongoose.Schema({
     name: String,
     country: String,
     photo: String,
+    headline: String,
     description: String
 })
 

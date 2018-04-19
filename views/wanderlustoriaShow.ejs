@@ -1,23 +1,28 @@
 <% include headerPartial %>
 
-
 <h1>Stories Page</h1>
 <div class="jumbotron mx-auto text-center">
-  <h1 class="display-4">Welcome to <%= city.city %>, <%= city.country %>!</h1>
+  <h1 class="display-4">Welcome to <%= city.name %>, <%= city.country %>!</h1>
+  <h2 class="display-4"><em><%= city.headline %></em></h2>
   <hr class="my-4">
   <img class="img-fluid w-50" src="<%= city.photo %>" alt="<%= city.description %>" />
-  <h2><%= city.description %></h2>
+  <h2 class="mt-5"><%= city.description %></h2>
+  <div class="navButtons d-inline">
+    <a href="/wanderlustoria/<%= city._id %>/edit"><button class="btn btn-warning" style="margin: 1rem 0;">Edit</button></a>
+</div>
+<div class="navButtons d-inline">
+  <a href="/wanderlustoria/<%= city._id %>"><button class="btn btn-danger" style="margin: 1rem 0;">Delete</button></a>
+</div>
 </div>
 
 <div class="Stories text-center">
-  <div class="navButtons d-flex justify-content-center">
-    <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New Story</button></a>
+  <div class="navButtons">
+    <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
   </div>
   <h1>All the Stories</h1>
-</div>
-
-<div class="navButtons d-flex justify-content-center">
-    <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New Story</button></a>
+  <div class="navButtons">
+    <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
+  </div>
 </div>
 
 <% include footerPartial %>

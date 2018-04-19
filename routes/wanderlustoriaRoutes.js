@@ -43,6 +43,24 @@ router.get('/:id', function(req, res){
 
 // EDIT ROUTE
 router.get("/:id/edit", function(req, res){
-
+    City.findById(req.params.id, function(err, foundCity){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("wanderlustoriaEdit", {city: foundCity});
+        }
+    });
 })
+
+// UPDATE ROUTE
+router.put("/:id", function(req, res){
+    City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity){
+        if(err){
+            res.redirect("/wanderlustoria");
+        } else {
+            res.redirect("/wanderlustoria/" + req.params.id);
+        }
+    })
+})
+
 module.exports = router;

@@ -19,8 +19,9 @@
                             width: 100%;">
                         </div>
                         <div class="card-body">
-                            <h4><%= city.name %>, <%= city.country %></h4>
-                            <p><%= city.description %></p>
+                            <h4><%= city.name.toUpperCase() %>, <%= city.country.toUpperCase() %></h4>
+                            <h5><em><%= city.headline %></em></h5>
+                            <p><%= city.description.substring(0,100) %>...</p>
                         </div>
                         <div class="card-footer">
                             <a href="/wanderlustoria/<%= city._id %>"><button class="btn btn-info btn-block">Explore</button></a>
