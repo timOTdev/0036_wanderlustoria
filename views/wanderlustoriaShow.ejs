@@ -1,18 +1,23 @@
 <% include headerPartial %>
 
-<h1>Stories Page</h1>
 
+<h1>Stories Page</h1>
 <div class="jumbotron mx-auto text-center">
   <h1 class="display-4">Welcome to <%= city.city %>, <%= city.country %>!</h1>
+  <hr class="my-4">
   <img class="img-fluid w-50" src="<%= city.photo %>" alt="<%= city.description %>" />
   <h2><%= city.description %></h2>
-  <hr class="my-4">
-  <p>all the comments</p>
+</div>
+
+<div class="Stories text-center">
   <div class="navButtons d-flex justify-content-center">
-      <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New Story</button></a>
+    <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New Story</button></a>
   </div>
+  <h1>All the Stories</h1>
 </div>
 
 <div class="navButtons d-flex justify-content-center">
     <a href="/wanderlustoria/<%= city._id %>/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New Story</button></a>
 </div>
+
+<% include footerPartial %>

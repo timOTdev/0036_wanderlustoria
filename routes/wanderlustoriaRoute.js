@@ -13,15 +13,15 @@ router.get('/', function(req, res){
     })
 });
 
+
+// NEW ROUTE
+router.get('/new', function(req, res){
+    res.render("wanderlustoriaNew");
+});
+
 // CREATE ROUTE
 router.post('/', function(req, res){
-    let city = req.body.city;
-    let country = req.body.country;
-    let photo = req.body.photo;
-    let description = req.body.description;
-    
-    let newCity = {city:city, country:country, photo:photo, description:description};
-    City.create(newCity, function(err, newlyCreated){
+    City.create(req.body.city, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
@@ -30,21 +30,19 @@ router.post('/', function(req, res){
     });
 });
 
-// NEW ROUTE
-router.get('/new', function(req, res){
-    res.render("wanderlustoriaNew");
-});
-
 // SHOW ROUTE
 router.get('/:id', function(req, res){
     City.findById(req.params.id, function(err, foundCity){
         if(err){
             console.log(err);
         } else {
-            console.log(foundCity);
             res.render("wanderlustoriaShow", {city: foundCity});
         }
     });
 });
 
+// EDIT ROUTE
+router.get("/:id/edit", function(req, res){
+
+})
 module.exports = router;
