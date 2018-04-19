@@ -1,18 +1,25 @@
 <% include headerPartial %>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/wanderlustoria"><button class="btn">Wanderlustoria</button></a></li>
+    <li class="breadcrumb-item"><a href="/wanderlustoria/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
+  </ol>
+</nav>
 
-<h1>Stories Page</h1>
 <div class="jumbotron mx-auto text-center">
-  <h1 class="display-4">Welcome to <%= city.name %>, <%= city.country %>!</h1>
-  <h2 class="display-4"><em><%= city.headline %></em></h2>
+  <h1>Welcome to <%= city.name %>, <%= city.country %>!</h1>
+  <h2><em><%= city.headline %></em></h2>
   <hr class="my-4">
   <img class="img-fluid w-50" src="<%= city.photo %>" alt="<%= city.description %>" />
-  <h2 class="mt-5"><%= city.description %></h2>
+  <p class="mt-5 w-75 mx-auto"><%= city.description %></p>
   <div class="navButtons d-inline">
     <a href="/wanderlustoria/<%= city._id %>/edit"><button class="btn btn-warning" style="margin: 1rem 0;">Edit</button></a>
-</div>
-<div class="navButtons d-inline">
-  <a href="/wanderlustoria/<%= city._id %>"><button class="btn btn-danger" style="margin: 1rem 0;">Delete</button></a>
-</div>
+  </div>
+  <div class="navButtons d-inline">
+    <form class="d-inline" id="delete" action="/wanderlustoria/<%= city._id%>?_method=DELETE" method="POST">
+      <button class="btn btn-danger">Delete</button>
+    </form>
+  </div>
 </div>
 
 <div class="Stories text-center">

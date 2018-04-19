@@ -63,4 +63,15 @@ router.put("/:id", function(req, res){
     })
 })
 
+// DESTROY ROUTE
+router.delete("/:id", function(req, res){
+    City.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/wanderlustoria");
+        } else {
+            res.redirect("/wanderlustoria");
+        }
+    });
+});
+
 module.exports = router;
