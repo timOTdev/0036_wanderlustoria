@@ -1,24 +1,29 @@
 <% include headerPartial %>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item"><a href="/wanderlustoria"><button class="btn">Wanderlustoria</button></a></li>
+    </ol> 
+</nav>
 
 <div class="container">
     <div class="row">
-        <div style="text-align: center; margin: 0 auto;">
+        <div class="w-100" style="text-align: center; margin: 0 auto;">
             <h1>New City Page</h1>
-            <form action="/wanderlustoria" method="POST">
-                <div class="form-group">
-                    <input type="text" name="city[name]" placeholder="City" required>
+            <form class="w-100" action="/wanderlustoria" method="POST">
+                <div class="form-group w-100">
+                    <input class="w-50 text-center" type="text" name="city[name]" placeholder="City" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[country]" placeholder="Country" required>
+                    <input class="w-50 text-center" type="text" name="city[country]" placeholder="Country" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[photo]" placeholder="Photo" required>
+                    <input class="w-50 text-center" type="text" name="city[photo]" placeholder="Photo" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[headline]" placeholder="Headline" required>
+                    <input class="w-50 text-center" type="text" name="city[headline]" placeholder="Headline" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[description]" placeholder="Description" required>
+                    <textarea class="w-50 text-center" type="text" name="city[description]" placeholder="Description" required></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Submit</button>

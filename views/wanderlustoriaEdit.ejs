@@ -1,24 +1,35 @@
 <% include headerPartial %>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item"><a href="/wanderlustoria"><button class="btn">Wanderlustoria</button></a></li>
+        <li class="breadcrumb-item"><a href="/wanderlustoria/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
+        <div class="ml-auto my-0">
+            <form class="d-inline" id="delete" action="/wanderlustoria/<%= city._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </ol> 
+</nav>
 
 <div class="container">
     <div class="row">
-        <div style="text-align: center; margin: 0 auto;">
+        <div class="w-100" style="text-align: center; margin: 0 auto;">
             <h1>Edit City Page</h1>
-            <form action="/wanderlustoria/<%= city._id%>?_method=PUT" method="POST">
-                <div class="form-group">
-                    <input type="text" name="city[name]" value="<%= city.name %>" required>
+            <form class="w-100" action="/wanderlustoria/<%= city._id%>?_method=PUT" method="POST">
+                <div class="form-group w-100">
+                    <input class="w-50 text-center" type="text" name="city[name]" value="<%= city.name %>" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[country]" value="<%= city.country %>" required>
+                    <input class="w-50 text-center" type="text" name="city[country]" value="<%= city.country %>" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[photo]" value="<%= city.photo %>" required>
+                    <input class="w-50 text-center" type="text" name="city[photo]" value="<%= city.photo %>" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[headline]" value="<%= city.headline %>" required>
+                    <input class="w-50 text-center" type="text" name="city[headline]" value="<%= city.headline %>" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="city[description]" value="<%= city.description %>" required>
+                    <textarea class="w-50 text-center" type="text" name="city[description]" value="<%= city.description %>" required></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Update</button>
