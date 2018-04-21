@@ -10,9 +10,8 @@ router.get('/', function(req, res){
         } else {
             res.render("wanderlustoriaIndex", {cities: allCities});
         }
-    })
+    });
 });
-
 
 // NEW ROUTE
 router.get('/new', function(req, res){
@@ -21,6 +20,12 @@ router.get('/new', function(req, res){
 
 // CREATE ROUTE
 router.post('/', function(req, res){
+    req.body.city.name = req.sanitize(req.body.city.name);
+    req.body.city.country = req.sanitize(req.body.city.country);
+    req.body.city.photo = req.sanitize(req.body.city.photo);
+    req.body.city.headline = req.sanitize(req.body.city.headline);
+    req.body.city.description = req.sanitize(req.body.city.description);
+
     City.create(req.body.city, function(err, newlyCreated){
         if(err){
             console.log(err);
@@ -50,18 +55,24 @@ router.get("/:id/edit", function(req, res){
             res.render("wanderlustoriaEdit", {city: foundCity});
         }
     });
-})
+});
 
 // UPDATE ROUTE
 router.put("/:id", function(req, res){
+    req.body.city.name = req.sanitize(req.body.city.name);
+    req.body.city.country = req.sanitize(req.body.city.country);
+    req.body.city.photo = req.sanitize(req.body.city.photo);
+    req.body.city.headline = req.sanitize(req.body.city.headline);
+    req.body.city.description = req.sanitize(req.body.city.description);
+    
     City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity){
         if(err){
             res.redirect("/wanderlustoria");
         } else {
             res.redirect("/wanderlustoria/" + req.params.id);
         }
-    })
-})
+    });
+});
 
 // DESTROY ROUTE
 router.delete("/:id", function(req, res){

@@ -6,7 +6,7 @@ let citySchema = new mongoose.Schema({
     photo: String,
     headline: String,
     description: String
-})
+});
 
 let City = mongoose.model("City", citySchema);
 

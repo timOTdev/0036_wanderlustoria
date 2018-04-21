@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
+const expressSanitizer = require("express-sanitizer");
 
 // Routes
 const homeRoutes = require("./routes/homeRoutes");
@@ -16,6 +17,7 @@ app.use(express.static("public"));
 // app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(expressSanitizer());
 mongoose.connect("mongodb://localhost/wanderlustoria");
 
 app.use("/", homeRoutes);
