@@ -1,0 +1,33 @@
+<% include headerPartial %>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb my-0">
+    <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
+    <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
+    <div class="ml-auto my-0">
+        <a href="/cities/<%= city._id %>/edit"><button class="btn btn-warning">Edit</button></a>
+        <form class="d-inline" id="delete" action="/cities/<%= city._id%>?_method=DELETE" method="POST">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+  </ol> 
+</nav>
+
+<div class="jumbotron mx-auto text-center pt-0">
+  <h1>Welcome to <%= city.name %>, <%= city.country %>!</h1>
+  <h2><em><%= city.headline %></em></h2>
+  <hr class="my-4">
+  <img class="img-fluid w-50" src="<%= city.photo %>" alt="<%= city.description %>" />
+  <p class="mt-5 w-75 mx-auto"><%= city.description %></p>
+</div>
+
+<div class="Stories text-center">
+  <div class="navButtons">
+    <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
+  </div>
+  <h1>All the Stories</h1>
+  <div class="navButtons">
+    <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
+  </div>
+</div>
+
+<% include footerPartial %>

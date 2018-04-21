@@ -7,9 +7,7 @@ const expressSanitizer = require("express-sanitizer");
 
 // Routes
 const homeRoutes = require("./routes/homeRoutes");
-const wanderlustoriaRoutes = require("./routes/wanderlustoriaRoutes");
-const cityRoutes = require("./routes/citiesRoutes");
-const storiesRoutes = require("./routes/storiesRoutes");
+const citiesRoutes = require("./routes/citiesRoutes");
 
 // Setup
 app.set("view engine", "ejs");
@@ -21,9 +19,7 @@ app.use(expressSanitizer());
 mongoose.connect("mongodb://localhost/wanderlustoria");
 
 app.use("/", homeRoutes);
-app.use("/wanderlustoria", wanderlustoriaRoutes);
-app.use("/cities", cityRoutes);
-app.use("/stories", storiesRoutes);
+app.use("/cities", citiesRoutes);
 
 // Server Listener
 app.listen(3000, function(){

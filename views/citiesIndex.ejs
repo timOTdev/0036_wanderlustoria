@@ -1,9 +1,36 @@
 <% include headerPartial %>
 
-<h1>City Page</h1>
+<div id="citiesIndex">
+    <div class="container">
+        <h1 style="text-align: center;">The Cities of Wanderlustoria</h1>
 
-<a href="/wanderlustoria"><button>Back To Wanderlustoria</button></a>
-<a href="/cities/new"><button>Add New Story</button></a>
+        <div class="navButtons d-flex justify-content-center">
+            <a href="/cities/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New City</button></a>
+        </div>
 
+        <div class="row text-center justify-content-around">
+            <% cities.forEach(function(city){ %>
+                <div class="col-lg-4 col-md-4 col-sm-6" style="margin: 0rem;">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="<%= city.photo %>" style="object-fit: fit;
+                            object-position: center;
+                            height: 400px;
+                            width: 100%;">
+                        </div>
+                        <div class="card-body">
+                            <h4><%= city.name.toUpperCase() %>, <%= city.country.toUpperCase() %></h4>
+                            <h5><em><%= city.headline %></em></h5>
+                            <p><%= city.description.substring(0,100) %>...</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/cities/<%= city._id %>"><button class="btn btn-info btn-block">Explore</button></a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
 
 <% include footerPartial %>

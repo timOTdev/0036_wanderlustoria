@@ -9,8 +9,8 @@ body{
 .container{
     display: block;
     min-width: 100%;
-    margin: 0 !important;
-    padding: 0 !important;
+    /* margin: 0 !important; */
+    /* padding: 0 !important; */
 }
 
 /* Header */
@@ -56,13 +56,13 @@ body{
     background-position: center center;
     background-repeat: no-repeat;
     min-height: 60vh;
-    width: 100%;
+    min-width: 100%;
 }
 #header .overlay{
     position: absolute;
     margin: 0 auto;
     min-height: 60vh;
-    min-width: 100%;
+    min-width: 98.5%;
     background: rgba(244, 244, 244, 0.7);
 }
 #header .headline{
@@ -78,12 +78,13 @@ body{
 /* Summary */
 #summary{
     text-align: center;
-    width: 75%;
+    width: 100%;
     margin: 0 auto;
     padding: 2rem 0;
-    width: 100%;
 }
 #summary p{
+    width: 75%;
+    margin: 0 auto;
     padding-top: 1rem;
 }
 
