@@ -1,0 +1,39 @@
+<% include headerPartial %>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb my-0">
+    <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
+    <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn"><%= city.name %>, <%= city.country %></button></a></li>
+    <li class="breadcrumb-item"><a href="/cities/<%= city._id %>/<%= story._id %>"><button class="btn btn-info"><%= story.title %></button></a></li>
+    <div class="ml-auto my-0">
+      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/edit"><button class="btn btn-warning">Edit</button></a>
+      <form class="d-inline" id="delete" action="/cities/<%= city._id%>stories/<%= story._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </ol> 
+</nav>
+
+<div class="jumbotron mx-auto text-center pt-0">
+    <h1><%= story.title.toUpperCase() %></h1>
+    <h2><em><%= story.headline %></em></h2>
+    <hr class="my-4">
+    <img class="img-fluid w-50" src="<%= story.photo %>" alt="<%= story.title %>" />
+    <p class="mt-5 w-75 mx-auto"><%= story.body %></p>
+  </div>
+
+
+<div class="Stories text-center">
+    <div class="navButtons">
+      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
+    </div>
+
+    <% story.comments.forEach(function(comment){ %>
+      <p><strong><%= comment.author %></strong>: <%= comment.body %></p>
+    <% }) %>
+    
+    <div class="navButtons">
+      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
+    </div>
+  </div>
+<% include footerPartial %>

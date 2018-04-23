@@ -5,7 +5,13 @@ let storySchema = new mongoose.Schema({
   date: String,
   photo: String,
   headline: String,
-  body: String
+  body: String,
+  comments: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }
+]
 });
 
 let Story = mongoose.model("Story", storySchema);

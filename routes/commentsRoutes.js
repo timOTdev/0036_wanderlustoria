@@ -2,6 +2,7 @@ const express = require("express");
 const router  = express.Router({mergeParams: true});
 const City = require("../models/cityModel");
 const Story = require("../models/storyModel");
+const Comment = require("../models/commentModel");
 
 // NEW ROUTE
 router.get("/new", function(req, res){
@@ -9,7 +10,13 @@ router.get("/new", function(req, res){
     if(err){
       console.log(err);
     } else {
-      res.render("storiesNew", {city: foundCity});
+      Story.findById(req.params.storyId, function(err, foundStory){
+        if(err){
+          console.log(err);
+        } else {
+          res.render("commentsNew", {city: foundCity, story: foundStory});
+        }
+      })
     }
   });
 });
@@ -20,30 +27,19 @@ router.post("/", function(req, res){
     if(err){
       console.log(err);
     } else {
-      Story.create(req.body.story, function(err, newStory){
+      Story.findById(req.params.storyId, function(err, newStory){
         if(err){
           console.log(err);
         } else {
-          foundCity.stories.push(newStory);
-          foundCity.save();
-          res.redirect("/cities/" + req.params.cityId);
-        }
-      })
-    }
-  });
-});
-
-// SHOW ROUTE
-router.get("/stories/:storyId", function(req, res){
-  City.findById(req.params.cityId, function(err, foundCity){
-    if(err){
-      console.log(err);
-    } else {
-      Story.findById(req.params.storyId).populate("comments").exec(function(err, foundStory){
-        if(err){
-          console.log(err);
-        } else {
-          res.render("storiesShow", {city: foundCity, story: foundStory});
+          Comment.create(req.body.comment, function(err, newComment){
+            if(err){
+              console.log(err);
+            } else {
+              newStory.comments.push(newComment);
+              newStory.save();
+              res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+            }
+          })
         }
       })
     }
