@@ -24,7 +24,26 @@
   <div class="navButtons">
     <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
   </div>
-  <h1>All the Stories</h1>
+
+  <div class="row text-center justify-content-around">
+    <% city.stories.forEach(function(story){ %>
+    <div class="col-lg-4 col-md-4 col-sm-6">
+      <div class="card">
+          <div class="card-img">
+            <img src="<%= story.photo %>" style="object-fit: fit;
+            object-position: center;
+            height: 400px;
+            width: 100%;">
+          </div>
+          <div class="card-footer">
+              <h1><%= story.title.toUpperCase() %></h1>
+              <p><%= story.headline %></p>
+          </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  
   <div class="navButtons">
     <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
   </div>

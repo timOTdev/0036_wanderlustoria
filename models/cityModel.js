@@ -5,7 +5,13 @@ let citySchema = new mongoose.Schema({
     country: String,
     photo: String,
     headline: String,
-    description: String
+    description: String,
+    stories: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Story"
+        }
+    ]
 });
 
 let City = mongoose.model("City", citySchema);

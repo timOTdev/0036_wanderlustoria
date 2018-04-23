@@ -1,29 +1,31 @@
 <% include headerPartial %>
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-0">
         <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
+        <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
     </ol> 
 </nav>
 
 <div class="container">
     <div class="row">
         <div class="w-100" style="text-align: center; margin: 0 auto;">
-            <h1>New City Page</h1>
-            <form class="w-100" action="/cities" method="POST">
+            <h1>New Story Page</h1>
+            <form class="w-100" action="/cities/<%= city._id %>" method="POST">
                 <div class="form-group w-100">
-                    <input class="w-50" type="text" name="city[name]" placeholder="City" required>
+                    <input class="w-50" type="text" name="story[title]" placeholder="Title" required>
                 </div>
                 <div class="form-group">
-                    <input class="w-50" type="text" name="city[country]" placeholder="Country" required>
+                    <input class="w-50" type="text" name="story[date]" placeholder="Date" required>
                 </div>
                 <div class="form-group">
-                    <input class="w-50" type="text" name="city[photo]" placeholder="Photo" required>
+                    <input class="w-50" type="text" name="story[photo]" placeholder="Photo" required>
                 </div>
                 <div class="form-group">
-                    <input class="w-50" type="text" name="city[headline]" placeholder="Headline" required>
+                    <input class="w-50" type="text" name="story[headline]" placeholder="Headline" required>
                 </div>
                 <div class="form-group">
-                    <textarea class="w-50" type="text" name="city[description]" placeholder="Description" required></textarea>
+                    <textarea class="w-50" type="text" name="story[body]" placeholder="Body" required></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Submit</button>

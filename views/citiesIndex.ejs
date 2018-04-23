@@ -1,5 +1,11 @@
 <% include headerPartial %>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-0">
+        <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
+    </ol> 
+</nav>
+
 <div id="citiesIndex">
     <div class="container">
         <h1 style="text-align: center;">The Cities of Wanderlustoria</h1>
@@ -13,10 +19,11 @@
                 <div class="col-lg-4 col-md-4 col-sm-6" style="margin: 0rem;">
                     <div class="card">
                         <div class="card-img">
-                            <img src="<%= city.photo %>" style="object-fit: fit;
-                            object-position: center;
-                            height: 400px;
-                            width: 100%;">
+                            <img src="<%= city.photo %>" 
+                                style="object-fit: fit;
+                                    object-position: center;
+                                    height: 400px;
+                                    width: 100%;">
                         </div>
                         <div class="card-body">
                             <h4><%= city.name.toUpperCase() %>, <%= city.country.toUpperCase() %></h4>

@@ -4,7 +4,8 @@ let storySchema = new mongoose.Schema({
   title: String,
   date: String,
   photo: String,
-  story: String
+  headline: String,
+  body: String
 });
 
 let Story = mongoose.model("Story", storySchema);

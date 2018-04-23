@@ -37,14 +37,14 @@ router.post('/', function(req, res){
 
 // SHOW ROUTE
 router.get('/:cityId', function(req, res){
-    City.findById(req.params.cityId, function(err, foundCity){
+    City.findById(req.params.cityId).populate("stories").exec(function(err, foundCity){
         if(err){
             console.log(err);
         } else {
             res.render("citiesShow", {city: foundCity});
         }
     });
-});
+  });
 
 // EDIT ROUTE
 router.get("/:cityId/edit", function(req, res){
