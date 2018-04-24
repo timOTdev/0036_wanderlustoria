@@ -27,7 +27,7 @@ router.post("/", function(req, res){
     if(err){
       console.log(err);
     } else {
-      Story.findById(req.params.storyId, function(err, newStory){
+      Story.findById(req.params.storyId, function(err, foundStory){
         if(err){
           console.log(err);
         } else {
@@ -35,8 +35,8 @@ router.post("/", function(req, res){
             if(err){
               console.log(err);
             } else {
-              newStory.comments.push(newComment);
-              newStory.save();
+              foundStory.comments.push(newComment);
+              foundStory.save();
               res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
             }
           })
@@ -46,4 +46,49 @@ router.post("/", function(req, res){
   });
 });
 
+// EDIT ROUTE
+router.get("/comments/:commentId/edit", function(req, res){
+  City.findById(req.params.cityId, function(err, foundCity){
+    if(err){
+        console.log(err);
+    } else {
+      Story.findById(req.params.storyId, function(err, foundStory){
+        if(err){
+          console.log(err);
+        } else {
+          Comment.findById(req.params.commentId, function(err, foundComment){
+            if(err){
+              console.log(err);
+            } else {
+              res.render("commentsEdit", {city: foundCity, story: foundStory, comment: foundComment});
+            }
+          })
+        }
+      })
+    }
+  });
+})
+
+// UPDATE ROUTE
+router.put("/comments/:commentId", function(req, res){
+  Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, foundComment){
+    if(err){
+      console.log(err);
+    } else {
+      res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+    }
+  });
+});
+
+// DESTROY ROUTE
+router.delete("/comments/:commentId", function(req, res){
+  Comment.findByIdAndRemove(req.params.commentId, function(err, foundComment){
+    if(err){
+      console.log(err);
+      console.log(err);
+    }else{
+      res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+    }
+  })
+})
 module.exports = router;

@@ -15,25 +15,41 @@
 </nav>
 
 <div class="jumbotron mx-auto text-center pt-0">
-    <h1><%= story.title.toUpperCase() %></h1>
-    <h2><em><%= story.headline %></em></h2>
-    <hr class="my-4">
-    <img class="img-fluid w-50" src="<%= story.photo %>" alt="<%= story.title %>" />
-    <p class="mt-5 w-75 mx-auto"><%= story.body %></p>
-  </div>
+  <h1><%= story.title.toUpperCase() %></h1>
+  <h2><em><%= story.headline %></em></h2>
+  <hr class="my-4">
+  <img class="img-fluid w-50" src="<%= story.photo %>" alt="<%= story.title %>" />
+  <p class="mt-5 w-75 mx-auto"><%= story.body %></p>
+</div>
 
 
 <div class="Stories text-center">
-    <div class="navButtons">
-      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
-    </div>
-
-    <% story.comments.forEach(function(comment){ %>
-      <p><strong><%= comment.author %></strong>: <%= comment.body %></p>
-    <% }) %>
-    
-    <div class="navButtons">
-      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
-    </div>
+  <div class="navButtons">
+    <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
   </div>
+
+  <div class="comments">
+    <% story.comments.forEach(function(comment){ %>
+      <div class="comment">
+        <p style="display:inline"><strong><%= comment.author %></strong>: <%= comment.body %></p>
+        <a href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
+          <button class="btn btn-warning">
+            <span className="white" role="img" aria-label="lower left pencil">&#128393;</span>
+          </button>
+        </a>
+        <form class="d-inline" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-danger">
+            <span className="white" role="img" aria-label="latin small letter x">&#120;</span>
+          </button>
+        </form>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="navButtons">
+    <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
+  </div>
+</div>
+
 <% include footerPartial %>
