@@ -82,13 +82,13 @@ router.put("/comments/:commentId", function(req, res){
 
 // DESTROY ROUTE
 router.delete("/comments/:commentId", function(req, res){
-  Comment.findByIdAndRemove(req.params.commentId, function(err, foundComment){
+  Comment.findByIdAndRemove(req.params.commentId, function(err){
     if(err){
-      console.log(err);
       console.log(err);
     }else{
       res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
     }
   })
 })
+
 module.exports = router;

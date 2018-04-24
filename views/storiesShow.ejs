@@ -7,7 +7,7 @@
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>/<%= story._id %>"><button class="btn btn-info"><%= story.title %></button></a></li>
     <div class="ml-auto my-0">
       <a href="/cities/<%= city._id %>/stories/<%= story._id %>/edit"><button class="btn btn-warning">Edit</button></a>
-      <form class="d-inline" id="delete" action="/cities/<%= city._id%>stories/<%= story._id %>?_method=DELETE" method="POST">
+      <form class="d-inline" id="delete" action="/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE" method="POST">
         <button class="btn btn-danger">Delete</button>
       </form>
     </div>

@@ -50,4 +50,44 @@ router.get("/stories/:storyId", function(req, res){
   });
 });
 
+
+// EDIT ROUTE
+router.get("/stories/:storyId/edit", function(req, res){
+  City.findById(req.params.cityId, function(err, foundCity){
+    if(err){
+        console.log(err);
+    } else {
+      Story.findById(req.params.storyId, function(err, foundStory){
+        if(err){
+          console.log(err);
+        } else {
+          res.render("storiesEdit", {city: foundCity, story: foundStory});
+        }
+      })
+    }
+  });
+});
+
+// UPDATE ROUTE
+router.put("/stories/:storyId", function(req, res){
+  Story.findByIdAndUpdate(req.params.storyId, req.body.story, function(err, foundStory){
+    if(err){
+      console.log(err);
+    } else {
+      res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+    }
+  });
+});
+
+// DESTROY ROUTE
+router.delete("/stories/:storyId", function(req, res){
+  Story.findByIdAndRemove(req.params.storyId, function(err){
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect("/cities/" + req.params.cityId);
+    }
+  });
+});
+
 module.exports = router;
