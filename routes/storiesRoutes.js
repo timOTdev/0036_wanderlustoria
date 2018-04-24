@@ -16,6 +16,12 @@ router.get("/new", function(req, res){
 
 // CREATE ROUTE
 router.post("/", function(req, res){
+  req.body.story.title = req.sanitize(req.body.story.title);
+  req.body.story.date = req.sanitize(req.body.story.date);
+  req.body.story.photo = req.sanitize(req.body.story.photo);
+  req.body.story.headline = req.sanitize(req.body.story.headline);
+  req.body.story.body = req.sanitize(req.body.story.body);
+
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
       console.log(err);
@@ -70,6 +76,12 @@ router.get("/stories/:storyId/edit", function(req, res){
 
 // UPDATE ROUTE
 router.put("/stories/:storyId", function(req, res){
+  req.body.story.title = req.sanitize(req.body.story.title);
+  req.body.story.date = req.sanitize(req.body.story.date);
+  req.body.story.photo = req.sanitize(req.body.story.photo);
+  req.body.story.headline = req.sanitize(req.body.story.headline);
+  req.body.story.body = req.sanitize(req.body.story.body);
+
   Story.findByIdAndUpdate(req.params.storyId, req.body.story, function(err, foundStory){
     if(err){
       console.log(err);
