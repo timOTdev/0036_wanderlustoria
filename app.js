@@ -1,9 +1,14 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const expressSanitizer = require("express-sanitizer");
+
+// Models
+const User = require("./models/userModel");
 
 // Routes
 const homeRoutes = require("./routes/homeRoutes");
@@ -24,6 +29,18 @@ app.use("/", homeRoutes);
 app.use("/cities", citiesRoutes);
 app.use("/cities/:cityId", storiesRoutes);
 app.use("/cities/:cityId/stories/:storyId", commentsRoutes);
+
+// Passport Configuration
+app.use(require("express-session")({
+    secret: "fernweh",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Server Listener
 app.listen(3000, function(){
