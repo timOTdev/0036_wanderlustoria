@@ -11,7 +11,14 @@ let citySchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Story"
         }
-    ]
+    ],
+    author: {
+        id: {
+           type: mongoose.Schema.Types.ObjectId,
+           ref: "User"
+        },
+        username: String
+    },
 });
 
 let City = mongoose.model("City", citySchema);

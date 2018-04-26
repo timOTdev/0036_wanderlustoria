@@ -26,6 +26,10 @@ router.post('/', middleware.isLoggedIn, function(req, res){
     req.body.city.photo = req.sanitize(req.body.city.photo);
     req.body.city.headline = req.sanitize(req.body.city.headline);
     req.body.city.description = req.sanitize(req.body.city.description);
+    req.body.city.author = {
+        id: req.user._id,
+        username: req.user.username
+    };
     City.create(req.body.city, function(err, newlyCreated){
         if(err){
             console.log(err);
@@ -65,7 +69,13 @@ router.put("/:cityId", function(req, res){
     req.body.city.headline = req.sanitize(req.body.city.headline);
     req.body.city.description = req.sanitize(req.body.city.description);
     
-    City.findByIdAndUpdate(req.params.cityId, req.body.city, function(err, updatedCity){
+    City.findByIdAndUpdate(req.params.cityId, {
+        name: req.body.city.name,
+        country: req.body.city.country,
+        photo: req.body.city.photo,
+        headline: req.body.city.headline,
+        description: req.body.city.description,
+      }, function(err, updatedCity){
         if(err){
             res.redirect("/cities");
         } else {

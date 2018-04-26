@@ -87,13 +87,13 @@ router.put("/stories/:storyId", function(req, res){
   req.body.story.headline = req.sanitize(req.body.story.headline);
   req.body.story.body = req.sanitize(req.body.story.body);
 
-  Story.findByIdAndUpdate(req.params.storyId, {
-    title: req.body.story.title,
-    date: req.body.story.date,
-    photo: req.body.story.photo,
-    headline: req.body.story.headline,
-    body: req.body.story.body,
-  }, function(err, foundStory){
+    Story.findByIdAndUpdate(req.params.storyId, {
+      title: req.body.story.title,
+      date: req.body.story.date,
+      photo: req.body.story.photo,
+      headline: req.body.story.headline,
+      body: req.body.story.body,
+    }, function(err, foundStory){
     if(err){
       console.log(err);
     } else {
