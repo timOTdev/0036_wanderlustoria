@@ -25,11 +25,6 @@ app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 mongoose.connect("mongodb://localhost/wanderlustoria");
 
-app.use("/", homeRoutes);
-app.use("/cities", citiesRoutes);
-app.use("/cities/:cityId", storiesRoutes);
-app.use("/cities/:cityId/stories/:storyId", commentsRoutes);
-
 // Passport Configuration
 app.use(require("express-session")({
     secret: "fernweh",
@@ -41,6 +36,16 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
+app.use("/", homeRoutes);
+app.use("/cities", citiesRoutes);
+app.use("/cities/:cityId", storiesRoutes);
+app.use("/cities/:cityId/stories/:storyId", commentsRoutes);
 
 // Server Listener
 app.listen(3000, function(){
