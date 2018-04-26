@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const City = require("../models/cityModel");
+const middleware = require("../middleware");
 
 // INDEX ROUTE
 router.get('/', function(req, res){
@@ -14,12 +15,12 @@ router.get('/', function(req, res){
 });
 
 // NEW ROUTE
-router.get('/new', function(req, res){
+router.get('/new', middleware.isLoggedIn, function(req, res){
     res.render("citiesNew");
 });
 
 // CREATE ROUTE
-router.post('/', function(req, res){
+router.post('/', middleware.isLoggedIn, function(req, res){
     req.body.city.name = req.sanitize(req.body.city.name);
     req.body.city.country = req.sanitize(req.body.city.country);
     req.body.city.photo = req.sanitize(req.body.city.photo);

@@ -3,9 +3,10 @@ const router  = express.Router({mergeParams: true});
 const City = require("../models/cityModel");
 const Story = require("../models/storyModel");
 const Comment = require("../models/commentModel");
+const middleware = require("../middleware");
 
 // NEW ROUTE
-router.get("/new", function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
       console.log(err);
@@ -22,7 +23,7 @@ router.get("/new", function(req, res){
 });
 
 // CREATE ROUTE
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
   req.body.comment.author = req.sanitize(req.body.comment.author);
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
