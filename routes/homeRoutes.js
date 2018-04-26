@@ -12,7 +12,7 @@ router.get('/home', function(req,res){
     res.render("homeIndex");
 });
 
-// AUTH ROUTES
+// REGISTER ROUTES
 router.get("/register", function(req, res){
     res.render("registerIndex");
 })
@@ -30,5 +30,21 @@ router.post("/register", function(req, res){
     })
 })
 
+// LOGIN ROUTES
+router.get("/login", function(req, res){
+    res.render("loginIndex");
+})
+
+router.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/cities",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+router.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/cities");
+});
 
 module.exports = router;
