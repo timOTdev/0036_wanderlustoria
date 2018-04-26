@@ -12,11 +12,8 @@
         <div class="w-100" style="text-align: center; margin: 0 auto;">
             <h1>New Story Page</h1>
             <form class="w-100" action="/cities/<%= city._id %>/stories/<%= story._id%>" method="POST">
-                <div class="form-group w-100">
-                    <input class="w-50" type="text" name="comment[author]" placeholder="Author" required>
-                </div>
                 <div class="form-group">
-                    <textarea class="w-50" type="text" name="comment[body]" placeholder="Body" required></textarea>
+                    <textarea class="w-50" type="text" name="comment[body]" placeholder="Comment" required></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Submit</button>

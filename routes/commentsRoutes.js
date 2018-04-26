@@ -24,7 +24,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 
 // CREATE ROUTE
 router.post("/", middleware.isLoggedIn, function(req, res){
-  req.body.comment.author = req.sanitize(req.body.comment.author);
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
   City.findById(req.params.cityId, function(err, foundCity){
@@ -39,6 +38,9 @@ router.post("/", middleware.isLoggedIn, function(req, res){
             if(err){
               console.log(err);
             } else {
+              newComment.author.id = req.user._id
+              newComment.author.username = req.user.username
+              newComment.save();
               foundStory.comments.push(newComment);
               foundStory.save();
               res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
@@ -64,6 +66,9 @@ router.get("/comments/:commentId/edit", function(req, res){
             if(err){
               console.log(err);
             } else {
+              foundComment.author.id = req.user._id
+              foundComment.author.username = req.user.username
+              foundComment.save();
               res.render("commentsEdit", {city: foundCity, story: foundStory, comment: foundComment});
             }
           })
@@ -75,10 +80,9 @@ router.get("/comments/:commentId/edit", function(req, res){
 
 // UPDATE ROUTE
 router.put("/comments/:commentId", function(req, res){
-  req.body.comment.author = req.sanitize(req.body.comment.author);
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
-  Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, foundComment){
+  Comment.findByIdAndUpdate(req.params.commentId, {body: req.body.comment.body}, function(err, foundComment){
     if(err){
       console.log(err);
     } else {

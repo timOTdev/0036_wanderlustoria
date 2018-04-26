@@ -31,7 +31,7 @@
   <div class="comments">
     <% story.comments.forEach(function(comment){ %>
       <div class="comment">
-        <p style="display:inline"><strong><%= comment.author %></strong>: <%= comment.body %></p>
+        <p style="display:inline"><strong><%= comment.author.username %></strong>: <%= comment.body %></p>
         <a href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
           <button class="btn btn-warning">
             <span className="white" role="img" aria-label="lower left pencil">&#128393;</span>
