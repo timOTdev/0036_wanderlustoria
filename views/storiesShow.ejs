@@ -5,14 +5,12 @@
     <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn"><%= city.name %>, <%= city.country %></button></a></li>
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>/<%= story._id %>"><button class="btn btn-info"><%= story.title %></button></a></li>
-    <% if(currentUser && story.author.id.equals(currentUser._id)){ %>
       <div class="ml-auto my-0">
         <a href="/cities/<%= city._id %>/stories/<%= story._id %>/edit"><button class="btn btn-warning">Edit</button></a>
         <form class="d-inline" id="delete" action="/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE" method="POST">
           <button class="btn btn-danger">Delete</button>
         </form>
       </div>
-    <% } %>
   </ol> 
 </nav>
 
@@ -35,18 +33,16 @@
     <% story.comments.forEach(function(comment){ %>
       <div class="comment">
         <p style="display:inline"><strong><%= comment.author.username %></strong>: <%= comment.body %></p>
-        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-        <a href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
-          <button class="btn btn-warning">
-            <span className="white" role="img" aria-label="lower left pencil">&#128393;</span>
-          </button>
-        </a>
-        <form class="d-inline" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-          <button class="btn btn-danger">
-            <span className="white" role="img" aria-label="latin small letter x">&#120;</span>
-          </button>
-        </form>
-        <% } %>
+          <a href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
+            <button class="btn btn-warning">
+              <span className="white" role="img" aria-label="lower left pencil">&#128393;</span>
+            </button>
+          </a>
+          <form class="d-inline" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">
+              <span className="white" role="img" aria-label="latin small letter x">&#120;</span>
+            </button>
+          </form>
       </div>
     <% }) %>
   </div>
