@@ -11,7 +11,14 @@ let storySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
     }
-]
+   ],
+    author: {
+        id: {
+           type: mongoose.Schema.Types.ObjectId,
+           ref: "User"
+        },
+        username: String
+    },
 });
 
 let Story = mongoose.model("Story", storySchema);

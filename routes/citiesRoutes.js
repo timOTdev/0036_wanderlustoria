@@ -26,7 +26,6 @@ router.post('/', middleware.isLoggedIn, function(req, res){
     req.body.city.photo = req.sanitize(req.body.city.photo);
     req.body.city.headline = req.sanitize(req.body.city.headline);
     req.body.city.description = req.sanitize(req.body.city.description);
-
     City.create(req.body.city, function(err, newlyCreated){
         if(err){
             console.log(err);

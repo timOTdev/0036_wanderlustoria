@@ -22,6 +22,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   req.body.story.photo = req.sanitize(req.body.story.photo);
   req.body.story.headline = req.sanitize(req.body.story.headline);
   req.body.story.body = req.sanitize(req.body.story.body);
+  req.body.story.author = {
+    id: req.user._id,
+    username: req.user.username
+  };
 
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
@@ -83,7 +87,13 @@ router.put("/stories/:storyId", function(req, res){
   req.body.story.headline = req.sanitize(req.body.story.headline);
   req.body.story.body = req.sanitize(req.body.story.body);
 
-  Story.findByIdAndUpdate(req.params.storyId, req.body.story, function(err, foundStory){
+  Story.findByIdAndUpdate(req.params.storyId, {
+    title: req.body.story.title,
+    date: req.body.story.date,
+    photo: req.body.story.photo,
+    headline: req.body.story.headline,
+    body: req.body.story.body,
+  }, function(err, foundStory){
     if(err){
       console.log(err);
     } else {

@@ -66,9 +66,6 @@ router.get("/comments/:commentId/edit", function(req, res){
             if(err){
               console.log(err);
             } else {
-              foundComment.author.id = req.user._id
-              foundComment.author.username = req.user.username
-              foundComment.save();
               res.render("commentsEdit", {city: foundCity, story: foundStory, comment: foundComment});
             }
           })
