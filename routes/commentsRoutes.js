@@ -53,7 +53,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 // EDIT ROUTE
-router.get("/comments/:commentId/edit", function(req, res){
+router.get("/comments/:commentId/edit", middleware.checkCommentOwner, function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
         console.log(err);
@@ -76,7 +76,7 @@ router.get("/comments/:commentId/edit", function(req, res){
 })
 
 // UPDATE ROUTE
-router.put("/comments/:commentId", function(req, res){
+router.put("/comments/:commentId", middleware.checkCommentOwner, function(req, res){
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
   Comment.findByIdAndUpdate(req.params.commentId, {body: req.body.comment.body}, function(err, foundComment){
@@ -89,7 +89,7 @@ router.put("/comments/:commentId", function(req, res){
 });
 
 // DESTROY ROUTE
-router.delete("/comments/:commentId", function(req, res){
+router.delete("/comments/:commentId", middleware.checkCommentOwner, function(req, res){
   Comment.findByIdAndRemove(req.params.commentId, function(err){
     if(err){
       console.log(err);
