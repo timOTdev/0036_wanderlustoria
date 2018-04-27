@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="w-100" style="text-align: center; margin: 0 auto;">
-            <h1>New Story Page</h1>
+            <h1>Edit Comment Page</h1>
             <form class="w-100" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <textarea class="w-50" type="text" name="comment[body]" required><%= comment.body %></textarea>
