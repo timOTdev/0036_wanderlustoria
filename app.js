@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const mongoose = require("mongoose");
@@ -23,6 +24,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
+app.use(flash());
 mongoose.connect("mongodb://localhost/wanderlustoria");
 
 // Passport Configuration
@@ -39,6 +41,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

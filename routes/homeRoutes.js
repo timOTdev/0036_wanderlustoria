@@ -21,10 +21,11 @@ router.post("/register", function(req, res){
     let newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            console.log(err);
-            return res.render("registerIndex");
+            req.flash("error", err.message);
+            return res.redirect("/register");
         }
         passport.authenticate("local")(req, req, function(){
+            req.flash("success", "Welcome to Wanderlustoria, " + user.username + "!")
             res.redirect("/cities");
         })
     })
@@ -38,13 +39,16 @@ router.get("/login", function(req, res){
 router.post("/login", passport.authenticate("local",
     {
         successRedirect: "/cities",
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        failureFlash: true,
+        successFlash: "Welcome back!"
     }), function(req, res){
 });
 
 router.get("/logout", function(req, res){
     req.logout();
-    res.redirect("/cities");
+    req.flash("success", "Successful logout!")
+    res.redirect("back");
 });
 
 module.exports = router;
