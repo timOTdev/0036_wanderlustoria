@@ -13,11 +13,6 @@ router.get('/home', function(req,res){
     res.render("homeIndex");
 });
 
-// DASHBOARD ROUTES
-router.get('/dashboard', middleware.isAdminAccount, function(req,res){
-    res.render("dashboardIndex");
-});
-
 // REGISTER ROUTES
 router.get("/register", function(req, res){
     res.render("registerIndex");
@@ -64,6 +59,22 @@ router.get("/logout", function(req, res){
     req.logout();
     req.flash("success", "Successful logout!")
     res.redirect("back");
+});
+
+// DASHBOARD ROUTES
+router.get('/dashboard', middleware.isAdminAccount, function(req,res){
+    res.render("dashboardIndex");
+});
+
+// PROFILE ROUTES
+router.get("/users/:userId", function(req, res){
+    User.findById(req.params.userId, function(err, foundUser){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("/cities");
+        }
+        res.render("usersShow", {user: foundUser});
+    })
 });
 
 module.exports = router;

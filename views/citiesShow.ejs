@@ -44,7 +44,7 @@
             <div class="card-footer">
                 <h1><%= story.title.toUpperCase() %></h1>
                 <p><%= story.headline %></p>
-                <p>Submitted By: <%= story.author.username %></p>
+                <p>Submitted By: <a href="/users/<%= story.author.id %>"><%= story.author.username %></a></p>
             </div>
         </div>
       </div>

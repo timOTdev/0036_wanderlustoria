@@ -23,9 +23,8 @@
   <hr class="my-4">
   <img class="img-fluid w-50" src="<%= story.photo %>" alt="<%= story.title %>" />
   <p class="mt-5 w-75 mx-auto"><%= story.body %></p>
-  <p>Submitted By: <%= story.author.username %></p>
+  <p>Submitted By: <a href="/users/<%= story.author.id %>"><%= story.author.username %></a></p>
 </div>
-
 
 <div class="Stories text-center">
   <div class="navButtons">
@@ -35,7 +34,7 @@
   <div class="comments">
     <% story.comments.forEach(function(comment){ %>
       <div class="comment">
-        <p style="display:inline"><strong><%= comment.author.username %></strong>: <%= comment.body %></p>
+        <p style="display:inline"><a href="/users/<%= comment.author.id %>"><strong><%= comment.author.username %></strong></a>: <%= comment.body %></p>
 
         <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
           <a href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
