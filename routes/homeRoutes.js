@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const User = require("../models/userModel")
+const User = require("../models/userModel");
+const middleware = require("../middleware");
 
-// INDEX ROUTE
+// INDEX ROUTES
 router.get('/', function(req, res){
     res.render("introIndex");
 });
 
 router.get('/home', function(req,res){
     res.render("homeIndex");
+});
+
+// DASHBOARD ROUTES
+router.get('/dashboard', middleware.isAdminAccount, function(req,res){
+    res.render("dashboardIndex");
 });
 
 // REGISTER ROUTES
@@ -36,13 +42,16 @@ router.get("/login", function(req, res){
     res.render("loginIndex");
 })
 
-router.post("/login", passport.authenticate("local",
-    {
-        successRedirect: "/cities",
-        failureRedirect: "/login",
-        failureFlash: true,
-        successFlash: "Welcome back!"
-    }), function(req, res){
+router.post('/login',passport.authenticate('local', {
+    failureRedirect: "/login",
+    failureFlash: true,
+    successFlash: "Welcome back!"
+}), (req, res) => {
+    if (req.user.isAdmin === true) {
+    res.redirect('/dashboard');
+    } else {
+    res.redirect('/cities');
+    }
 });
 
 router.get("/logout", function(req, res){

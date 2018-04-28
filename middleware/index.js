@@ -19,7 +19,7 @@ middlewareObj.checkStoryOwner = function(req, res, next){
       }
     })
   }else{
-    req.flash("error", "You need to be logged in")
+    req.flash("error", "You need to be logged in");
     res.redirect("back");
   }
 }
@@ -43,6 +43,16 @@ middlewareObj.checkCommentOwner = function(req, res, next){
     req.flash("error", "You need to be logged in")
     res.redirect("back");
   }
+}
+
+middlewareObj.isAdminAccount = function(req, res, next){
+  if(req.isAuthenticated()){
+    if (req.user.isAdmin){
+      return next();
+    }
+  }
+  req.flash("error", "You need to be an admin");
+  res.redirect("/login");
 }
 
 middlewareObj.isLoggedIn = function(req, res, next){

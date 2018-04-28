@@ -15,12 +15,12 @@ router.get('/', function(req, res){
 });
 
 // NEW ROUTE
-router.get('/new', middleware.isLoggedIn, function(req, res){
+router.get('/new', middleware.isAdminAccount, function(req, res){
     res.render("citiesNew");
 });
 
 // CREATE ROUTE
-router.post('/', middleware.isLoggedIn, function(req, res){
+router.post('/', middleware.isAdminAccount, function(req, res){
     req.body.city.name = req.sanitize(req.body.city.name);
     req.body.city.country = req.sanitize(req.body.city.country);
     req.body.city.photo = req.sanitize(req.body.city.photo);
@@ -51,7 +51,7 @@ router.get('/:cityId', function(req, res){
   });
 
 // EDIT ROUTE
-router.get("/:cityId/edit", function(req, res){
+router.get("/:cityId/edit", middleware.isAdminAccount, function(req, res){
     City.findById(req.params.cityId, function(err, foundCity){
         if(err){
             console.log(err);
@@ -62,7 +62,7 @@ router.get("/:cityId/edit", function(req, res){
 });
 
 // UPDATE ROUTE
-router.put("/:cityId", function(req, res){
+router.put("/:cityId", middleware.isAdminAccount, function(req, res){
     req.body.city.name = req.sanitize(req.body.city.name);
     req.body.city.country = req.sanitize(req.body.city.country);
     req.body.city.photo = req.sanitize(req.body.city.photo);
@@ -85,7 +85,7 @@ router.put("/:cityId", function(req, res){
 });
 
 // DESTROY ROUTE
-router.delete("/:cityId", function(req, res){
+router.delete("/:cityId", middleware.isAdminAccount, function(req, res){
     City.findByIdAndRemove(req.params.cityId, function(err){
         if(err){
             res.redirect("/cities");
