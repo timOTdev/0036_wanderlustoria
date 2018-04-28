@@ -3,12 +3,14 @@
   <ol class="breadcrumb my-0">
     <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
-    <div class="ml-auto my-0">
-      <a href="/cities/<%= city._id %>/edit"><button class="btn btn-warning">Edit</button></a>
-      <form class="d-inline" id="delete" action="/cities/<%= city._id%>?_method=DELETE" method="POST">
-        <button class="btn btn-danger">Delete</button>
-      </form>
-    </div>
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <div class="ml-auto my-0">
+        <a href="/cities/<%= city._id %>/edit"><button class="btn btn-warning">Edit</button></a>
+        <form class="d-inline" id="delete" action="/cities/<%= city._id%>?_method=DELETE" method="POST">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    <% } %>
   </ol> 
 </nav>
 
