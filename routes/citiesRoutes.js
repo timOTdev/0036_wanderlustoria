@@ -1,7 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const City = require("../models/cityModel");
 const middleware = require("../middleware");
+const dotenv = require('dotenv').config();
+const multer = require('multer');
+const City = require("../models/cityModel");
+
+let storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+let imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+let upload = multer({ storage: storage, fileFilter: imageFilter})
+let cloudinary = require('cloudinary');
+
+cloudinary.config({ 
+  cloud_name: 'wanderlustoria', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // INDEX ROUTE
 router.get('/', function(req, res){
@@ -20,23 +43,26 @@ router.get('/new', middleware.isAdminAccount, function(req, res){
 });
 
 // CREATE ROUTE
-router.post('/', middleware.isAdminAccount, function(req, res){
-    req.body.city.name = req.sanitize(req.body.city.name);
-    req.body.city.country = req.sanitize(req.body.city.country);
-    req.body.city.photo = req.sanitize(req.body.city.photo);
-    req.body.city.headline = req.sanitize(req.body.city.headline);
-    req.body.city.description = req.sanitize(req.body.city.description);
-    req.body.city.author = {
-        id: req.user._id,
-        username: req.user.username
-    };
-    City.create(req.body.city, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect("/cities");
-        }
-    });
+router.post('/', middleware.isAdminAccount, upload.single('image'), function(req, res){
+    cloudinary.uploader.upload(req.file.path, function(result){
+        req.body.city.name = req.sanitize(req.body.city.name);
+        req.body.city.country = req.sanitize(req.body.city.country);
+        req.body.city.photo = result.secure_url;
+        req.body.city.headline = req.sanitize(req.body.city.headline);
+        req.body.city.description = req.sanitize(req.body.city.description);
+        req.body.city.author = {
+            id: req.user._id,
+            username: req.sanitize(req.user.username)
+        };
+        City.create(req.body.city, function(err, newCity){
+            if(err){
+                req.flash("error", err.message);
+                res.redirect("back");
+            } else {
+                res.redirect("/cities");
+            }
+        });
+    })
 });
 
 // SHOW ROUTE
