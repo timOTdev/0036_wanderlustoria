@@ -13,6 +13,7 @@ const User = require("./models/userModel");
 
 // Routes
 const homeRoutes = require("./routes/homeRoutes");
+const usersRoutes = require("./routes/usersRoutes");
 const citiesRoutes = require("./routes/citiesRoutes");
 const storiesRoutes = require("./routes/storiesRoutes");
 const commentsRoutes = require("./routes/commentsRoutes");
@@ -47,6 +48,7 @@ app.use(function(req, res, next){
 });
 
 app.use("/", homeRoutes);
+app.use("/", usersRoutes);
 app.use("/cities", citiesRoutes);
 app.use("/cities/:cityId", storiesRoutes);
 app.use("/cities/:cityId/stories/:storyId", commentsRoutes);

@@ -1,7 +1,32 @@
+const User = require("../models/userModel");
 const Story = require("../models/storyModel")
 const Comment = require("../models/commentModel")
 
 let middlewareObj = {};
+
+middlewareObj.checkProfileOwner = function(req, res, next){
+  if (req.isAuthenticated()){
+    User.findById(req.params.userId, function(err, foundUser){
+      if (err){
+        req.flash("error", "User not found");
+        res.redirect("back");
+      }
+      else {
+        if(foundUser._id.equals(req.user._id)){
+          next();
+        }
+        else {
+          req.flash("error", "You don't have permission")
+          res.redirect("/cities");
+        }
+      }
+    })
+  }
+  else {
+    req.flash("error", "You need to be logged in");
+    res.redirect("/login");
+  }
+}
 
 middlewareObj.checkStoryOwner = function(req, res, next){
   if(req.isAuthenticated()){

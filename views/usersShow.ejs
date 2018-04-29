@@ -15,7 +15,7 @@
         <div class="card-footer text-center">
           <a class="btn btn-primary" type="button" href="#">Direct Message</a>
         <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-          <a class="btn btn-warning" type="button" href="#">Edit Profile</a>
+          <a class="btn btn-warning" type="button" href="/users/<%= user._id %>/edit">Edit Profile</a>
           <a class="btn btn-danger" type="button" href="#">Delete Profile</a>
         <% } %>
         </div>
