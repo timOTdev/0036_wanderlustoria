@@ -95,7 +95,7 @@ router.get("/:cityId/edit", middleware.isAdminAccount, function(req, res){
 // UPDATE ROUTE
 router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), function(req, res){    
     City.findById(req.params.cityId, async function(err, foundCity){
-        if(err){
+        if (err){
             req.flash("error", err.message);
             res.redirect("back");
         } else {
@@ -115,7 +115,7 @@ router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), functi
             foundCity.headline = req.sanitize(req.body.city.headline);
             foundCity.description = req.sanitize(req.body.city.description);
             foundCity.save();
-            req.flash("success", "Successfully updated");
+            req.flash("success", "City updated");
             res.redirect("/cities/" + req.params.cityId);
         }
     });
@@ -123,11 +123,20 @@ router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), functi
 
 // DESTROY ROUTE
 router.delete("/:cityId", middleware.isAdminAccount, function(req, res){
-    City.findByIdAndRemove(req.params.cityId, function(err){
-        if(err){
+    City.findById(req.params.cityId, async function (err, foundCity){
+        if (err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } 
+        try {
+            cloudinary.v2.uploader.destroy(foundCity.imageId);
+            foundCity.remove();
+            req.flash("success", "City deleted");
             res.redirect("/cities");
-        } else {
-            res.redirect("/cities");
+        }
+        catch (err) {
+            req.flash("error", err.message);
+            res.redirect("back");
         }
     });
 });
