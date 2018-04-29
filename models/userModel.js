@@ -8,6 +8,7 @@ let UserSchema = new mongoose.Schema({
   username: String,
   password: String,
   avatar: String,
+  bio: String,
   isAdmin: {type: Boolean, default: false}
 })
 

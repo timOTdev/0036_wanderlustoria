@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const Story = require("../models/storyModel");
 const User = require("../models/userModel");
 const middleware = require("../middleware");
 
@@ -25,6 +26,7 @@ router.post("/register", function(req, res){
         email: req.body.email,
         username: req.body.username,
         avatar: req.body.avatar,
+        bio: "No bio provided."
     });
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -73,7 +75,14 @@ router.get("/users/:userId", function(req, res){
             req.flash("error", err.message);
             res.redirect("/cities");
         }
-        res.render("usersShow", {user: foundUser});
+        Story.find().where('author.id').equals(foundUser._id).exec(function(err, foundStories){
+            if(err){
+                req.flash("error", err.message);
+                res.redirect("/cities");
+            } else {
+                res.render("profileIndex", {user: foundUser, stories: foundStories});
+            }
+        })
     })
 });
 

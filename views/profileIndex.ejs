@@ -1,0 +1,33 @@
+<% include headerPartial %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+      <div class="card">
+        <h1 class="card-header"><%= user.firstName + " " + user.lastName %></h1>
+        <div class="card-body">
+            <img class="card-img-top img-fluid img-thumbnail rounded mx-auto" 
+            src="<%= user.avatar %>" 
+            alt="<%= user.username %>'s Profile Image"
+            style="display: block; max-width: 20rem;">
+          <p class="card-text"><%= user.bio %></p>
+        </div>
+        <div class="card-footer text-center">
+          <a class="btn btn-primary" type="button" href="#">Direct Message</a>
+        <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+          <a class="btn btn-warning" type="button" href="#">Edit Profile</a>
+          <a class="btn btn-danger" type="button" href="#">Delete Profile</a>
+        <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12">
+      <h1><%= user.username %>'s Stories</h1>
+      <% stories.forEach(story => { %>
+        <p><a href=""><%= story.title %></a></p>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<% include footerPartial %>
