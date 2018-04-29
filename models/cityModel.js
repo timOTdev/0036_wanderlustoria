@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 let citySchema = new mongoose.Schema({
     name: String,
     country: String,
-    photo: String,
+    image: String,
+    imageId: String,
     headline: String,
     description: String,
     stories: [

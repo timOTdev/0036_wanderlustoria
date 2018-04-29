@@ -18,7 +18,7 @@
   <h1>Welcome to <%= city.name %>, <%= city.country %>!</h1>
   <h2><em><%= city.headline %></em></h2>
   <hr class="my-4">
-  <img class="img-fluid w-50" src="<%= city.photo %>" alt="<%= city.description %>" />
+  <img class="img-fluid w-50" src="<%= city.image %>" alt="<%= city.description %>" />
   <p class="mt-5 w-75 mx-auto"><%= city.description %></p>
   <p>Submitted By: <a href="/users/<%= city.author.id %>"><%= city.author.username %></a></p>
 </div>

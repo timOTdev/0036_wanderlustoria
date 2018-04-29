@@ -44,10 +44,15 @@ router.get('/new', middleware.isAdminAccount, function(req, res){
 
 // CREATE ROUTE
 router.post('/', middleware.isAdminAccount, upload.single('image'), function(req, res){
-    cloudinary.uploader.upload(req.file.path, function(result){
+    cloudinary.v2.uploader.upload(req.file.path, function(err, result){
+        if (err){
+            req.flash("err", err.message);
+            return res.redirect('back');
+        }
         req.body.city.name = req.sanitize(req.body.city.name);
         req.body.city.country = req.sanitize(req.body.city.country);
-        req.body.city.photo = result.secure_url;
+        req.body.city.image = result.secure_url;
+        req.body.city.imageId = result.public_id;
         req.body.city.headline = req.sanitize(req.body.city.headline);
         req.body.city.description = req.sanitize(req.body.city.description);
         req.body.city.author = {
@@ -88,23 +93,29 @@ router.get("/:cityId/edit", middleware.isAdminAccount, function(req, res){
 });
 
 // UPDATE ROUTE
-router.put("/:cityId", middleware.isAdminAccount, function(req, res){
-    req.body.city.name = req.sanitize(req.body.city.name);
-    req.body.city.country = req.sanitize(req.body.city.country);
-    req.body.city.photo = req.sanitize(req.body.city.photo);
-    req.body.city.headline = req.sanitize(req.body.city.headline);
-    req.body.city.description = req.sanitize(req.body.city.description);
-    
-    City.findByIdAndUpdate(req.params.cityId, {
-        name: req.body.city.name,
-        country: req.body.city.country,
-        photo: req.body.city.photo,
-        headline: req.body.city.headline,
-        description: req.body.city.description,
-      }, function(err, updatedCity){
+router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), function(req, res){    
+    City.findById(req.params.cityId, async function(err, foundCity){
         if(err){
-            res.redirect("/cities");
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
+            if (req.file) {
+                try {
+                    await cloudinary.v2.uploader.destroy(foundCity.imageId);
+                    let result = await cloudinary.v2.uploader.upload(req.file.path);
+                    foundCity.image = result.secure_url;
+                    foundCity.imageId = result.public_id;
+                } catch (err) {
+                    req.flash("error", err.message);
+                    return res.redirect("back");
+                }
+            }
+            foundCity.name = req.sanitize(req.body.city.name);
+            foundCity.country = req.sanitize(req.body.city.country);
+            foundCity.headline = req.sanitize(req.body.city.headline);
+            foundCity.description = req.sanitize(req.body.city.description);
+            foundCity.save();
+            req.flash("success", "Successfully updated");
             res.redirect("/cities/" + req.params.cityId);
         }
     });
