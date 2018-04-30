@@ -1,20 +1,31 @@
 <% include headerPartial %>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb my-0">
-        <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
-    </ol> 
+<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center">
+    <div class="py-1" aria-label="breadcrumb">
+        <a class="btn btn-info py-0" href="/cities">Cities</a>
+    </div> 
+    <% if (currentUser && currentUser.isAdmin) { %>
+    <div class="py-1">
+        <a href="/cities/new"><button class="btn btn-primary py-0">Add New City</button></a>
+    </div>
+    <% } else { %>
+        <div class="py-1">
+            <a href="/home"><button class="btn btn-primary py-0">Want a new city? Send us a message!</button></a>
+        </div>
+    <% } %>
 </nav>
 
 <div id="citiesIndex">
     <div class="container">
         <h1 style="text-align: center;">The Cities of Wanderlustoria</h1>
 
-        <div class="navButtons d-flex justify-content-center">
-            <a href="/cities/new"><button class="btn btn-primary btn-block" style="margin: 1rem 0;">Add New City</button></a>
-        </div>
-
         <div class="row text-center justify-content-around">
+            <% if (noMatch !== null) { %>
+                <div class="col-lg-12">
+                    <h3><%= noMatch %></h3>
+                    <a class="btn btn-primary my-1" href="/cities">View All Cities</a>
+                </div>
+            <% } else {} %>
             <% cities.forEach(function(city){ %>
                 <div class="col-lg-4 col-md-4 col-sm-6" style="margin: 0rem;">
                     <div class="card">

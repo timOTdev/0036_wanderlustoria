@@ -5,6 +5,7 @@ const middleware = require("../middleware");
 const expressSanitizer = require("express-sanitizer");
 
 const User = require("../models/userModel");
+const City = require("../models/cityModel");
 const Story = require("../models/storyModel");
 
 // NEW ROUTE
@@ -52,7 +53,7 @@ router.get("/users/:userId", middleware.isLoggedIn, function(req, res){
             if(err){
                 req.flash("error", err.message);
                 res.redirect("/cities");
-            } else {
+            }else{
                 res.render("usersShow", {user: foundUser, stories: foundStories});
             }
         })

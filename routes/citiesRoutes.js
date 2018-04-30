@@ -11,7 +11,6 @@ let storage = multer.diskStorage({
   }
 });
 let imageFilter = function (req, file, cb) {
-    // accept image files only
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
@@ -28,13 +27,28 @@ cloudinary.config({
 
 // INDEX ROUTE
 router.get('/', function(req, res){
-    City.find({}, function(err, allCities){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("citiesIndex", {cities: allCities});
-        }
-    });
+    let noMatch = null;
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        City.find({name: regex}, function(err, allCities){
+            if(err){
+                console.log(err);
+            }else{
+                if (allCities.length === 0){
+                    noMatch = "No matches found."
+                }
+                res.render("citiesIndex", {cities: allCities, noMatch: noMatch});
+            }
+        })
+    }else{
+        City.find({}, function(err, allCities){
+            if(err){
+                console.log(err);
+            }else{
+                res.render("citiesIndex", {cities: allCities, noMatch: null});
+            }
+        })
+    }
 });
 
 // NEW ROUTE
@@ -140,5 +154,9 @@ router.delete("/:cityId", middleware.isAdminAccount, function(req, res){
         }
     });
 });
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;

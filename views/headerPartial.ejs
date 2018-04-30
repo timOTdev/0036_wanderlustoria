@@ -10,8 +10,11 @@
         <nav class="navbar navbar-expand-lg fixed-top justify-content-between">
             <a class="navbar-brand logo" href="/home"><h3><span class="wander">Wander</span>lustoria</h3></a>
             
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" action="/cities" method="GET">
+                <div class="form-group">
+                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="City Search..." aria-label="Search">
+                    <input class="btn btn-default" type="submit" value="Search">
+                </div>
             </form>
 
             <ul class="navbar-nav">
@@ -33,14 +36,14 @@
             </ul>
         </nav>
 
-        <div class="container">
+        <div class="my-0 py-0">
             <% if(error && error.length > 0 ){ %>
-                <div class="alert alert-danger text-center" role="alert">
+                <div class="alert alert-danger text-center my-0 py-0" role="alert">
                     <%= error %>
                 </div>
             <% } %>
             <% if(success && success.length > 0){ %>
-                <div class="alert alert-success text-center" role="alert">
+                <div class="alert alert-success text-center my-0 py-0" role="alert">
                     <%= success %>
                 </div>
             <% } %>

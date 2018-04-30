@@ -6,6 +6,10 @@
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn"><%= city.name %>, <%= city.country %></button></a></li>
     <li class="breadcrumb-item"><a href="/cities/<%= city._id %>/<%= story._id %>"><button class="btn btn-info"><%= story.title %></button></a></li>
     
+    <div class="navButtons">
+      <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
+    </div>
+
     <% if (currentUser && story.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
       <div class="ml-auto my-0">
         <a href="/cities/<%= city._id %>/stories/<%= story._id %>/edit"><button class="btn btn-warning">Edit</button></a>
@@ -27,9 +31,6 @@
 </div>
 
 <div class="Stories text-center">
-  <div class="navButtons">
-    <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Comment</button></a>
-  </div>
 
   <div class="comments">
     <% story.comments.forEach(function(comment){ %>

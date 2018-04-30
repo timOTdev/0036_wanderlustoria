@@ -22,12 +22,18 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   req.body.story.photo = req.sanitize(req.body.story.photo);
   req.body.story.headline = req.sanitize(req.body.story.headline);
   req.body.story.body = req.sanitize(req.body.story.body);
-  req.body.story.author = {
-    id: req.user._id,
-    username: req.user.username
-  };
-
+  
   City.findById(req.params.cityId, function(err, foundCity){
+    req.body.story.author = {
+      id: req.user._id,
+      username: req.user.username
+    };
+    req.body.story.city = {
+      id: req.params.cityId,
+      name: foundCity.name,
+      country: foundCity.country
+    }
+
     if(err){
       console.log(err);
     } else {

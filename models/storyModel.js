@@ -7,18 +7,23 @@ let storySchema = new mongoose.Schema({
   headline: String,
   body: String,
   comments: [
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment"
-    }
-   ],
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ],
     author: {
         id: {
-           type: mongoose.Schema.Types.ObjectId,
-           ref: "User"
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         },
         username: String
     },
+    city: {
+        id: String,
+        name: String,
+        country: String,
+    }
 });
 
 let Story = mongoose.model("Story", storySchema);
