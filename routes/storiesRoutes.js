@@ -31,7 +31,8 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
       console.log(err);
-    } else {
+    } 
+    else{
       res.render("storiesNew", {city: foundCity});
     }
   });
@@ -42,7 +43,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
       console.log(err);
-    } else {
+    } 
+    else{
       cloudinary.v2.uploader.upload(req.file.path, function(err, result){
         if(err){
           req.flash("err", err.message);
@@ -69,7 +71,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
           if(err){
             req.flash("error", err.message);
             return res.redirect("back");
-          } else {
+          } 
+          else{
             foundCity.stories.push(newStory);
             foundCity.save();
             res.redirect("/cities/" + req.params.cityId);
@@ -85,11 +88,13 @@ router.get("/stories/:storyId", function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
       console.log(err);
-    } else {
+    } 
+    else{
       Story.findById(req.params.storyId).populate("comments").exec(function(err, foundStory){
         if(err){
           console.log(err);
-        } else {
+        } 
+        else{
           res.render("storiesShow", {city: foundCity, story: foundStory});
         }
       })
@@ -102,11 +107,13 @@ router.get("/stories/:storyId/edit", middleware.checkStoryOwner, function(req, r
   City.findById(req.params.cityId, function(err, foundCity){
     if(err){
         console.log(err);
-    } else {
+    } 
+    else{
       Story.findById(req.params.storyId, function(err, foundStory){
         if(err){
           console.log(err);
-        } else {
+        } 
+        else{
           res.render("storiesEdit", {city: foundCity, story: foundStory});
         }
       })
@@ -115,35 +122,52 @@ router.get("/stories/:storyId/edit", middleware.checkStoryOwner, function(req, r
 });
 
 // UPDATE ROUTE
-router.put("/stories/:storyId", middleware.checkStoryOwner, function(req, res){
-  req.body.story.title = req.sanitize(req.body.story.title);
-  req.body.story.location = req.sanitize(req.body.story.location);
-  req.body.story.date = req.sanitize(req.body.story.date);
-  req.body.story.photo = req.sanitize(req.body.story.photo);
-  req.body.story.body = req.sanitize(req.body.story.body);
-
-    Story.findByIdAndUpdate(req.params.storyId, {
-      title: req.body.story.title,
-      location: req.body.story.location,
-      date: req.body.story.date,
-      photo: req.body.story.photo,
-      body: req.body.story.body,
-    }, function(err, foundStory){
+router.put("/stories/:storyId", middleware.checkStoryOwner, upload.single('image'), function(req, res){
+  Story.findById(req.params.storyId, async function(err, foundStory){
     if(err){
-      console.log(err);
-    } else {
+      req.flash("error", err.message);
+      return res.redirect("back");
+    }
+    else{
+      if(req.file){
+        try{
+          await cloudinary.v2.uploader.destroy(foundStory.image.id);
+          let result = await cloudinary.v2.uploader.upload(req.file.path);
+          foundStory.image.name = result.secure_url;
+          foundStory.image.id = result.public_id;
+        }
+        catch(err){
+          req.flash("error", err.message);
+          return res.redirect("back");
+        }
+      }
+      foundStory.title = req.sanitize(req.body.story.title);
+      foundStory.location = req.sanitize(req.body.story.location);
+      foundStory.date = req.sanitize(req.body.story.date);
+      foundStory.body = req.sanitize(req.body.story.body);
+      foundStory.save();
+      req.flash("success", "Story updated");
       res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
     }
-  });
+  })
 });
 
 // DESTROY ROUTE
 router.delete("/stories/:storyId", middleware.checkStoryOwner, function(req, res){
-  Story.findByIdAndRemove(req.params.storyId, function(err){
+  Story.findById(req.params.storyId, async function(err, foundStory){
     if(err){
-      console.log(err);
-    }else{
+      req.flash("err", err.message);
+      res.redirect("back");
+    }
+    try{
+      await cloudinary.v2.uploader.destroy(foundStory.image.id);
+      foundStory.remove();
+      req.flash("success", "Story deleted")
       res.redirect("/cities/" + req.params.cityId);
+    }
+    catch(err){
+      req.flash("error", err.message);
+      res.redirect("back");
     }
   });
 });

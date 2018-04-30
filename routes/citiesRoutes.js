@@ -13,7 +13,7 @@ let storage = multer.diskStorage({
   }
 });
 let imageFilter = function (req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);
@@ -28,23 +28,26 @@ cloudinary.config({
 // INDEX ROUTE
 router.get('/', function(req, res){
     let noMatch = null;
-    if (req.query.search) {
+    if(req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
         City.find({name: regex}, function(err, allCities){
             if(err){
                 console.log(err);
-            }else{
-                if (allCities.length === 0){
+            }
+            else{
+                if(allCities.length === 0){
                     noMatch = "No matches found."
                 }
                 res.render("citiesIndex", {cities: allCities, noMatch: noMatch});
             }
         })
-    }else{
+    }
+    else{
         City.find({}, function(err, allCities){
             if(err){
                 console.log(err);
-            }else{
+            }
+            else{
                 res.render("citiesIndex", {cities: allCities, noMatch: null});
             }
         })
@@ -59,7 +62,7 @@ router.get('/new', middleware.isAdminAccount, function(req, res){
 // CREATE ROUTE
 router.post('/', middleware.isAdminAccount, upload.single('image'), function(req, res){
     cloudinary.v2.uploader.upload(req.file.path, function(err, result){
-        if (err){
+        if(err){
             req.flash("err", err.message);
             return res.redirect('back');
         }
@@ -77,7 +80,8 @@ router.post('/', middleware.isAdminAccount, upload.single('image'), function(req
             if(err){
                 req.flash("error", err.message);
                 return res.redirect("back");
-            } else {
+            } 
+            else{
                 res.redirect("/cities");
             }
         });
@@ -89,7 +93,8 @@ router.get('/:cityId', function(req, res){
     City.findById(req.params.cityId).populate("stories").exec(function(err, foundCity){
         if(err){
             console.log(err);
-        } else {
+        } 
+        else{
             res.render("citiesShow", {city: foundCity});
         }
     });
@@ -100,7 +105,8 @@ router.get("/:cityId/edit", middleware.isAdminAccount, function(req, res){
     City.findById(req.params.cityId, function(err, foundCity){
         if(err){
             console.log(err);
-        } else {
+        } 
+        else{
             res.render("citiesEdit", {city: foundCity});
         }
     });
@@ -109,11 +115,12 @@ router.get("/:cityId/edit", middleware.isAdminAccount, function(req, res){
 // UPDATE ROUTE
 router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), function(req, res){    
     City.findById(req.params.cityId, async function(err, foundCity){
-        if (err){
+        if(err){
             req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            if (req.file) {
+            return res.redirect("back");
+        } 
+        else{
+            if(req.file){
                 try {
                     await cloudinary.v2.uploader.destroy(foundCity.imageId);
                     let result = await cloudinary.v2.uploader.upload(req.file.path);
@@ -138,17 +145,17 @@ router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), functi
 // DESTROY ROUTE
 router.delete("/:cityId", middleware.isAdminAccount, function(req, res){
     City.findById(req.params.cityId, async function (err, foundCity){
-        if (err){
+        if(err){
             req.flash("error", err.message);
             res.redirect("back");
         } 
-        try {
+        try{
             cloudinary.v2.uploader.destroy(foundCity.imageId);
             foundCity.remove();
             req.flash("success", "City deleted");
             res.redirect("/cities");
         }
-        catch (err) {
+        catch(err){
             req.flash("error", err.message);
             res.redirect("back");
         }
