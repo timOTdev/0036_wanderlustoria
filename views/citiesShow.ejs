@@ -34,7 +34,7 @@
         <div class="card">
             <div class="card-img">
               <a href="/cities/<%= city._id %>/stories/<%= story._id %>">
-                <img src="<%= story.photo %>" 
+                <img src="<%= story.image.name %>" 
                   style="object-fit: fit;
                     object-position: center;
                     height: 400px;
@@ -43,8 +43,9 @@
             </div>
             <div class="card-footer">
                 <h1><%= story.title.toUpperCase() %></h1>
+                <h5><%= story.date %></h5>
                 <p><%= story.headline %></p>
-                <p>Submitted By: <a href="/users/<%= story.author.id %>"><%= story.author.username %></a></p>
+                <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></p>
             </div>
         </div>
       </div>

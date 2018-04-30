@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const middleware = require("../middleware");
-const dotenv = require('dotenv').config();
-const multer = require('multer');
 const City = require("../models/cityModel");
 
+// CLOUDINARY AND MULTER SETUP
+const dotenv = require('dotenv').config();
+const multer = require('multer');
+const cloudinary = require('cloudinary');
 let storage = multer.diskStorage({
   filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
@@ -17,8 +19,6 @@ let imageFilter = function (req, file, cb) {
     cb(null, true);
 };
 let upload = multer({ storage: storage, fileFilter: imageFilter})
-let cloudinary = require('cloudinary');
-
 cloudinary.config({ 
   cloud_name: 'wanderlustoria', 
   api_key: process.env.CLOUDINARY_API_KEY, 
@@ -76,7 +76,7 @@ router.post('/', middleware.isAdminAccount, upload.single('image'), function(req
         City.create(req.body.city, function(err, newCity){
             if(err){
                 req.flash("error", err.message);
-                res.redirect("back");
+                return res.redirect("back");
             } else {
                 res.redirect("/cities");
             }

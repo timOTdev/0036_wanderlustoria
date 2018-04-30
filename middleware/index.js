@@ -4,6 +4,24 @@ const Comment = require("../models/commentModel")
 
 let middlewareObj = {};
 
+middlewareObj.isAdminAccount = function(req, res, next){
+  if(req.isAuthenticated()){
+    if (req.user.isAdmin){
+      return next();
+    }
+  }
+  req.flash("error", "You need to be an admin");
+  res.redirect("/login");
+}
+
+middlewareObj.isLoggedIn = function(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  req.flash("error", "You need to be logged in");
+  res.redirect("/login");
+}
+
 middlewareObj.checkProfileOwner = function(req, res, next){
   if (req.isAuthenticated()){
     User.findById(req.params.userId, function(err, foundUser){
@@ -12,7 +30,7 @@ middlewareObj.checkProfileOwner = function(req, res, next){
         res.redirect("back");
       }
       else {
-        if(foundUser._id.equals(req.user._id)){
+        if(foundUser._id.equals(req.user._id) || req.user.isAdmin){
           next();
         }
         else {
@@ -35,7 +53,7 @@ middlewareObj.checkStoryOwner = function(req, res, next){
         req.flash("error", "Story not found");
         res.redirect("back");
       }else{
-        if(foundStory.author.id.equals(req.user._id)){
+        if(foundStory.author.id.equals(req.user._id) || req.user.isAdmin){
           next();
         }else{
           req.flash("error", "You don't have permission")
@@ -56,7 +74,7 @@ middlewareObj.checkCommentOwner = function(req, res, next){
         req.flash("error", "Comment not found");
         res.redirect("back");
       }else{
-        if(foundComment.author.id.equals(req.user._id)){
+        if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
           next();
         }else{
           req.flash("error", "You don't have permission")
@@ -68,24 +86,6 @@ middlewareObj.checkCommentOwner = function(req, res, next){
     req.flash("error", "You need to be logged in")
     res.redirect("back");
   }
-}
-
-middlewareObj.isAdminAccount = function(req, res, next){
-  if(req.isAuthenticated()){
-    if (req.user.isAdmin){
-      return next();
-    }
-  }
-  req.flash("error", "You need to be an admin");
-  res.redirect("/login");
-}
-
-middlewareObj.isLoggedIn = function(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  req.flash("error", "You need to be logged in");
-  res.redirect("/login");
 }
 
 module.exports = middlewareObj;

@@ -2,17 +2,11 @@ const mongoose = require("mongoose");
 
 let citySchema = new mongoose.Schema({
     name: String,
+    headline: String,
     country: String,
     image: String,
     imageId: String,
-    headline: String,
     description: String,
-    stories: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Story"
-        }
-    ],
     author: {
         id: {
            type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +14,12 @@ let citySchema = new mongoose.Schema({
         },
         username: String
     },
+    stories: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Story"
+        }
+    ],
 });
 
 let City = mongoose.model("City", citySchema);

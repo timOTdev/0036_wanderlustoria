@@ -11,7 +11,7 @@
     <div class="row">
         <div class="w-100" style="text-align: center; margin: 0 auto;">
             <h1>New Story Page</h1>
-            <form class="w-100" action="/cities/<%= city._id %>" method="POST">
+            <form class="w-100" action="/cities/<%= city._id %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group w-100">
                     <input class="w-50" type="text" name="story[title]" placeholder="Title" required>
                 </div>
@@ -19,13 +19,14 @@
                     <input class="w-50" type="text" name="story[date]" placeholder="Date" required>
                 </div>
                 <div class="form-group">
-                    <input class="w-50" type="text" name="story[photo]" placeholder="Photo" required>
-                </div>
-                <div class="form-group">
-                    <input class="w-50" type="text" name="story[headline]" placeholder="Headline" required>
+                    <input class="w-50" type="text" name="story[location]" placeholder="Location" required>
                 </div>
                 <div class="form-group">
                     <textarea class="w-50" type="text" name="story[body]" placeholder="Body" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input id="image" type="file" name="image" accept="image/*" required>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Submit</button>

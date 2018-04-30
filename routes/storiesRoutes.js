@@ -1,8 +1,30 @@
 const express = require("express");
 const router  = express.Router({mergeParams: true});
+const middleware = require("../middleware");
 const City = require("../models/cityModel");
 const Story = require("../models/storyModel");
-const middleware = require("../middleware");
+
+// CLOUDINARY AND MULTER SETUP
+const dotenv = require('dotenv').config();
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+let storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+let imageFilter = function (req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+let upload = multer({ storage: storage, fileFilter: imageFilter})
+cloudinary.config({ 
+  cloud_name: 'wanderlustoria', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // NEW ROUTE
 router.get("/new", middleware.isLoggedIn, function(req, res){
@@ -16,35 +38,43 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 });
 
 // CREATE ROUTE
-router.post("/", middleware.isLoggedIn, function(req, res){
-  req.body.story.title = req.sanitize(req.body.story.title);
-  req.body.story.date = req.sanitize(req.body.story.date);
-  req.body.story.photo = req.sanitize(req.body.story.photo);
-  req.body.story.headline = req.sanitize(req.body.story.headline);
-  req.body.story.body = req.sanitize(req.body.story.body);
-  
+router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
-    req.body.story.author = {
-      id: req.user._id,
-      username: req.user.username
-    };
-    req.body.story.city = {
-      id: req.params.cityId,
-      name: foundCity.name,
-      country: foundCity.country
-    }
-
     if(err){
       console.log(err);
     } else {
-      Story.create(req.body.story, function(err, newStory){
+      cloudinary.v2.uploader.upload(req.file.path, function(err, result){
         if(err){
-          console.log(err);
-        } else {
-          foundCity.stories.push(newStory);
-          foundCity.save();
-          res.redirect("/cities/" + req.params.cityId);
+          req.flash("err", err.message);
+          return res.redirect('back');
         }
+        req.body.story.title = req.sanitize(req.body.story.title);
+        req.body.story.location = req.sanitize(req.body.story.location);
+        req.body.story.date = req.sanitize(req.body.story.date);
+        req.body.story.body = req.sanitize(req.body.story.body);
+        req.body.story.author = {
+          name: req.user.username,
+          id: req.user._id,
+        }
+        req.body.story.image = {
+          name: result.secure_url,
+          id: result.public_id,
+        }
+        req.body.story.city = {
+          name: foundCity.name,
+          country: foundCity.country,
+          id: req.params.cityId,
+        }
+        Story.create(req.body.story, function(err, newStory){
+          if(err){
+            req.flash("error", err.message);
+            return res.redirect("back");
+          } else {
+            foundCity.stories.push(newStory);
+            foundCity.save();
+            res.redirect("/cities/" + req.params.cityId);
+          }
+        })
       })
     }
   });
@@ -87,16 +117,16 @@ router.get("/stories/:storyId/edit", middleware.checkStoryOwner, function(req, r
 // UPDATE ROUTE
 router.put("/stories/:storyId", middleware.checkStoryOwner, function(req, res){
   req.body.story.title = req.sanitize(req.body.story.title);
+  req.body.story.location = req.sanitize(req.body.story.location);
   req.body.story.date = req.sanitize(req.body.story.date);
   req.body.story.photo = req.sanitize(req.body.story.photo);
-  req.body.story.headline = req.sanitize(req.body.story.headline);
   req.body.story.body = req.sanitize(req.body.story.body);
 
     Story.findByIdAndUpdate(req.params.storyId, {
       title: req.body.story.title,
+      location: req.body.story.location,
       date: req.body.story.date,
       photo: req.body.story.photo,
-      headline: req.body.story.headline,
       body: req.body.story.body,
     }, function(err, foundStory){
     if(err){
