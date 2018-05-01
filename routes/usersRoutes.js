@@ -33,7 +33,7 @@ cloudinary.config({
 // NEW ROUTE
 router.get("/register", function(req, res){
     res.render("usersNew");
-})
+});
 
 // CREATE ROUTE
 router.post("/register", upload.single('image'), function(req, res){
@@ -64,20 +64,21 @@ router.post("/register", upload.single('image'), function(req, res){
             })
         })
     })
-})
+});
 
 // SHOW ROUTE
 router.get("/users/:userId", middleware.isLoggedIn, function(req, res){
     User.findById(req.params.userId, function(err, foundUser){
         if(err){
             req.flash("error", err.message);
-            res.redirect("/cities");
+            return res.redirect("/cities");
         }
         Story.find().where('author.id').equals(foundUser._id).exec(function(err, foundStories){
             if(err){
                 req.flash("error", err.message);
-                res.redirect("/cities");
-            }else{
+                return res.redirect("/cities");
+            }
+            else{
                 res.render("usersShow", {user: foundUser, stories: foundStories});
             }
         })
@@ -89,7 +90,7 @@ router.get("/users/:userId/edit", middleware.checkProfileOwner, function(req, re
     User.findById(req.params.userId, function(err, foundUser){
         if(err){
             req.flash("error", err.message);
-            res.redirect("/cities");
+            return res.redirect("/cities");
         } else {
             res.render("usersEdit", {user: foundUser});
         }
@@ -97,26 +98,44 @@ router.get("/users/:userId/edit", middleware.checkProfileOwner, function(req, re
 });
 
 // UPDATE ROUTE
-router.put("/users/:userId", middleware.checkProfileOwner, function(req, res){
-    req.body.firstName = req.sanitize(req.body.firstName);
-    req.body.lastName = req.sanitize(req.body.lastName);
-    req.body.email = req.sanitize(req.body.email);
-    req.body.avatar = req.sanitize(req.body.avatar);
-    req.body.bio = req.sanitize(req.body.bio);
-  
-    User.findByIdAndUpdate(req.params.userId, {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        avatar: req.body.avatar,
-        bio: req.body.bio
-    }, function(err, foundUser){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect("/users/" + req.params.userId);
+router.put("/users/:userId", middleware.checkProfileOwner, upload.single('image'), function(req, res){
+    User.findById(req.params.userId, async function(err, foundUser){
+        if(req.file){
+            try{
+                await cloudinary.v2.uploader.destroy(foundUser.image.id);
+                let result = await cloudinary.v2.uploader.upload(req.file.path);
+                foundUser.image.name = result.secure_url;
+                foundUser.image.id = result.profile_id;
+            }
+            catch(err){
+                req.flash("error", err.message);
+                return res.redirect("back");
+            }
         }
-    });
+        foundUser.firstName = req.sanitize(req.body.firstName);
+        foundUser.lastName = req.sanitize(req.body.lastName);
+        foundUser.email = req.sanitize(req.body.email);
+        foundUser.body = req.sanitize(req.body.body);
+        foundUser.save();
+        req.flash("success", "User updated");
+        res.redirect("/users/" + req.params.userId);
+    })
+});
+
+// DESTROY ROUTE
+router.delete("/users/:userId", middleware.checkProfileOwner, function(req, res){
+    User.findById(req.params.userId, async function(err, foundUser){
+        try{
+            await cloudinary.v2.uploader.destroy(foundUser.image.id);
+            foundUser.remove();
+            req.flash("success", "User deleted");
+            res.redirect("/cities");
+        }
+        catch(err){
+            req.flash("error", err.message);
+            return res.redirect("back");
+        }
+    })
 });
 
 module.exports = router;

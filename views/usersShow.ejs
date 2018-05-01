@@ -18,11 +18,15 @@
         </div>
 
         <div class="card-footer text-center">
-          <a class="btn btn-primary" type="button" href="#">Direct Message</a>
+          <button class="btn btn-primary" href="#">Direct Message</button>
         <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-          <a class="btn btn-warning" type="button" href="#">Change Password</a>
-          <a class="btn btn-warning" type="button" href="/users/<%= user._id %>/edit">Edit Profile</a>
-          <a class="btn btn-danger" type="button" href="#">Delete Profile</a>
+          <button class="btn btn-warning" href="#">Change Password</button>
+          <button class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit Profile</button>
+          <% if(currentUser && currentUser.isAdmin){ %>
+            <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-danger">Delete Profile</button>
+            </form>
+          <% } %>
         <% } %>
         </div>
       </div>

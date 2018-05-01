@@ -47,7 +47,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
     else{
       cloudinary.v2.uploader.upload(req.file.path, function(err, result){
         if(err){
-          req.flash("err", err.message);
+          req.flash("error", err.message);
           return res.redirect('back');
         }
         req.body.story.title = req.sanitize(req.body.story.title);
@@ -156,7 +156,7 @@ router.put("/stories/:storyId", middleware.checkStoryOwner, upload.single('image
 router.delete("/stories/:storyId", middleware.checkStoryOwner, function(req, res){
   Story.findById(req.params.storyId, async function(err, foundStory){
     if(err){
-      req.flash("err", err.message);
+      req.flash("error", err.message);
       res.redirect("back");
     }
     try{
