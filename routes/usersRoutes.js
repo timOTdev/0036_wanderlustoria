@@ -8,36 +8,60 @@ const User = require("../models/userModel");
 const City = require("../models/cityModel");
 const Story = require("../models/storyModel");
 
+// CLOUDINARY AND MULTER SETUP
+const dotenv = require('dotenv').config();
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+let storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+let imageFilter = function (req, file, cb) {
+    if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+let upload = multer({ storage: storage, fileFilter: imageFilter})
+cloudinary.config({ 
+  cloud_name: 'wanderlustoria', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 // NEW ROUTE
 router.get("/register", function(req, res){
     res.render("usersNew");
 })
 
 // CREATE ROUTE
-router.post("/register", function(req, res){
-    req.body.firstName = req.sanitize(req.body.firstName);
-    req.body.lastName = req.sanitize(req.body.lastName);
-    req.body.email = req.sanitize(req.body.email);
-    req.body.username = req.sanitize(req.body.username);
-    req.body.avatar = req.sanitize(req.body.avatar);
-    req.body.password = req.sanitize(req.body.password);
+router.post("/register", upload.single('image'), function(req, res){
+    cloudinary.v2.uploader.upload(req.file.path, function(err,result){
+        let newUser = new User({
+            firstName: req.sanitize(req.body.firstName),
+            lastName: req.sanitize(req.body.lastName),
+            email: req.sanitize(req.body.email),
+            username: req.sanitize(req.body.username),
+            image: {
+                name: result.secure_url,
+                id: result.public_id,
+            },
+        });
 
-    let newUser = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        username: req.body.username,
-        avatar: req.body.avatar,
-        bio: "No bio provided."
-    });
-    User.register(newUser, req.body.password, function(err, user){
         if(err){
-            req.flash("error", err.message);
-            return res.redirect("/register");
+            req.flash("err", err.message);
+            return res.redirect("back");
         }
-        passport.authenticate("local")(req, req, function(){
-            req.flash("success", "Welcome to Wanderlustoria, " + user.username + "!")
-            res.redirect("/cities");
+        User.register(newUser, req.body.password, function(err, user){
+            if(err){
+                req.flash("error", err.message);
+                return res.redirect("/register");
+            }
+            passport.authenticate("local")(req, req, function(){
+                req.flash("success", "Welcome to Wanderlustoria, " + user.username + "!")
+                res.redirect("/cities");
+            })
         })
     })
 })

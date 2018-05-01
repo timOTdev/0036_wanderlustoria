@@ -7,9 +7,12 @@ let UserSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
-  avatar: String,
-  bio: String,
-  isAdmin: {type: Boolean, default: false}
+  body: {type: String, default: "No bio provided"},
+  isAdmin: {type: Boolean, default: false},
+  image: {
+    name: String,
+    id: String,
+  },
 })
 
 UserSchema.plugin(passportLocalMongoose);
