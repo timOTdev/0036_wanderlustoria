@@ -1,76 +1,89 @@
 <% include headerPartial %>
 
-<div class="container">
-    <div class="header" id="header">
-        <div class="overlay"></div>
-
-        <div class="headline">
+<div>
+    <div class="header align-middle" id="header">
+        <div class="overlay" style="
+        position: absolute;
+        margin: 0 auto;
+        min-height: 60vh;
+        min-width: 100%;
+        background: rgba(244, 244, 244, 0.7);
+        z-index: 0;">
+        </div>
+        <div class="headline text-center" style="
+        position: absolute;
+        top: 20%;
+        vertical-align: middle;
+        z-index: 1;
+        min-width: 100%;">
             <h1>A Travel Vision Platform</h1>                
             <p>Finding your next long-term travel location</p>
             <a href="/cities"><button type="button" class="btn btn-success">Enter The Cities</button></a>
         </div>
     </div>
     
-    <div class="summary" id="summary">
-        <h1>"Where should I go?"</h1>
-        <div class="row justify-content-around">
+    <div class="summary text-center my-5" id="summary">
+        <div class="w-50 mx-auto">  
+            <h1>"Where should I go?"</h1>
+        </div>
+        <div class="row mx-0">
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/photo-1512250431446-d0b4b57b27ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a44ca66de56c79c3f78639b5e948d17a&auto=format&fit=crop&w=1355&q=80">
+                <img class="img-fluid mx-auto d-block" style="max-height:220px;" src="https://images.unsplash.com/photo-1512250431446-d0b4b57b27ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a44ca66de56c79c3f78639b5e948d17a&auto=format&fit=crop&w=1355&q=80">
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/photo-1512553353614-82a7370096dc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=643c6ebcaf321c2a939e57ed8c0eb485&auto=format&fit=crop&w=1489&q=80">
+                <img class="img-fluid mx-auto d-block" style="max-height:220px;" src="https://images.unsplash.com/photo-1512553353614-82a7370096dc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=643c6ebcaf321c2a939e57ed8c0eb485&auto=format&fit=crop&w=1489&q=80">
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-                <img class="img-fluid" style="max-height:220px" src="https://images.unsplash.com/36/hGibbjg0Rb2fUIoMtU5l__DSC8099.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89cdd0f896a0d49a26d8627cca6b41e3&auto=format&fit=crop&w=1418&q=80">
+                <img class="img-fluid mx-auto d-block" style="max-height:220px;" src="https://images.unsplash.com/36/hGibbjg0Rb2fUIoMtU5l__DSC8099.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89cdd0f896a0d49a26d8627cca6b41e3&auto=format&fit=crop&w=1418&q=80">
             </div>
-        </div>        
-        <p>The first question we ask our friends when we want to travel someplace new.
-           <br>
-            An experience sharing platform for travelers who dare to dream of places off the beaten path.
-            For those who wants to wants to become immersed in authentic culture outside of resorts/tours, 
-            to visit a new lands and stay for a month or more,
-            or to find a new home for the expatriate harboring insatiable curiousity.
-        </p>
-    </div>
-
-    <div class="features" id="features">
-        <div class="row justify-content-around">
-            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
-                <span class="summary-icons"><i class="fas fa-search fa-10x"></i></span>
-                <h3>Find</h3>
-                <p>The world is filled with millions of microcosms of cultures. Finding that new place to visit is frustrating. Let others inspire you with real pictures and stories.</p>
-                <ul class="checkmarks">
-                    <li><i class="fas fa-check"></i> Find amazing food</li>
-                    <li><i class="fas fa-check"></i> Find unbelievable standards of living</li>
-                    <li><i class="fas fa-check"></i> Find unparalleled culture</li>
-                </ul>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
-                <span class="summary-icons"><i class="fas fa-globe fa-10x"></i></span>
-                <h3>Share</h3>
-                <p>You're the trailblazer in a fabulous new location and want to share this little piece of paradise with others. Share a photo you took and a story revel about.</p>
-                <ul class="checkmarks">
-                    <li><i class="fas fa-check"></i> Share amazing photos</li>
-                    <li><i class="fas fa-check"></i> Share marvelous travel stories</li>
-                    <li><i class="fas fa-check"></i> Inspire others to greatness</li>
-                </ul>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 text-center">
-                <span class="summary-icons"><i class="far fa-comments fa-10x"></i></span>
-                <h3>Connect</h3>
-                <p>A picture may be worth a thousand words but the right question can be worth its weight in gold. Make new friends and reach your dreams.</p>
-                <ul class="checkmarks">
-                    <li><i class="fas fa-check"></i> Find new friends</li>
-                    <li><i class="fas fa-check"></i> Find travel buddies</li>
-                    <li><i class="fas fa-check"></i> Find the answers you seek</li>
-                </ul>
-            </div>
+        </div>
+        <div class="w-50 mx-auto">        
+            <p>The first question we ask our friends when we want to travel someplace new.
+            <br>
+                An experience sharing platform for travelers who dare to dream of places off the beaten path.
+                For those who wants to wants to become immersed in authentic culture outside of resorts/tours, 
+                to visit a new lands and stay for a month or more,
+                or to find a new home for the expatriate harboring insatiable curiousity.
+            </p>
         </div>
     </div>
 
-    <div class="start" id="start">
-        <div class="container col-lg-12 col-md-12 col-sm-12">
-            <p>
+    <div class="row features mx-0 my-5" id="features">
+        <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <span class="summary-icons"><i class="fas fa-search fa-10x"></i></span>
+            <h3>Find</h3>
+            <p class="w-75 mx-auto">The world is filled with millions of microcosms of cultures. Finding that new place to visit is frustrating. Let others inspire you with real pictures and stories.</p>
+            <ul class="checkmarks text-left w-50 mx-auto">
+                <li><i class="fas fa-check"></i> Find amazing food</li>
+                <li><i class="fas fa-check"></i> Find unbelievable standards of living</li>
+                <li><i class="fas fa-check"></i> Find unparalleled culture</li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <span class="summary-icons"><i class="fas fa-globe fa-10x"></i></span>
+            <h3>Share</h3>
+            <p class="w-75 mx-auto">You're the trailblazer in a fabulous new location and want to share this little piece of paradise with others. Share a photo you took and a story revel about.</p>
+            <ul class="checkmarks text-left w-50 mx-auto">
+                <li><i class="fas fa-check"></i> Share amazing photos</li>
+                <li><i class="fas fa-check"></i> Share marvelous travel stories</li>
+                <li><i class="fas fa-check"></i> Inspire others to greatness</li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 text-center">
+            <span class="summary-icons"><i class="far fa-comments fa-10x"></i></span>
+            <h3>Connect</h3>
+            <p class="w-75 mx-auto">A picture may be worth a thousand words but the right question can be worth its weight in gold. Reach out to fellow trailblazers, make new friends and reach your dreams.</p>
+            <ul class="checkmarks text-left w-50 mx-auto">
+                <li><i class="fas fa-check"></i> Find new friends</li>
+                <li><i class="fas fa-check"></i> Find travel buddies</li>
+                <li><i class="fas fa-check"></i> Find the answers you seek</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="start text-center my-5" id="start">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <p style="font-size: x-large;">
                 Visit Wanderlustoria,
                 sign up to share your adventure,
                 and be the first to comment, like, or connect with a new friend!
@@ -79,32 +92,30 @@
         </div>
     </div>
 
-    <div class="contact-form" id="contact">
-        <div class="container">
-            <form>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-md-12 left">
-                        <h1>Get in Touch</h1>
-                    </div>
-
-                    <div class="col-lg-8 col-md-8 col-sm-12 right">
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Your name" name="name">
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" class="form-control form-control-lg" placeholder="Email@service.com" name="email">
-                        </div>
-
-                        <div class="form-group">
-                            <textarea class="form-control form-control-lg"></textarea>
-                        </div>
-
-                        <input type="submit" class="btn btn-success btn-block" value="Send">
-                    </div>
+    <div class="contact-form mx-0 my-5" id="contact">
+        <form class="mx-0">
+            <div class="row mx-0">
+                <div class="col-lg-4 col-md-4 col-md-12 text-right border-right">
+                    <h1>Get in Touch</h1>
                 </div>
-            </form>
-        </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg w-50" placeholder="Your name" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-lg w-50" placeholder="Email@service.com" name="email">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control form-control-lg  w-50"></textarea>
+                    </div>
+
+                    <input type="submit" class="btn btn-success btn-block w-50" value="Send">
+                </div>
+            </div>
+        </form>
     </div>
 </div>
     

@@ -17,14 +17,14 @@
           <p class="card-text"><%= user.body %></p>
         </div>
 
-        <div class="card-footer text-center">
-          <button class="btn btn-primary" href="#">Direct Message</button>
+        <div class="card-footer text-center btn-group-vertical">
+          <a class="btn btn-primary w-50 my-1 align-self-center" href="#">Direct Message</a>
         <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-          <button class="btn btn-warning" href="#">Change Password</button>
-          <button class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit Profile</button>
+          <a class="btn btn-warning w-50 my-1 align-self-center" href="#">Change Password</a>
+          <a class="btn btn-warning w-50 my-1 align-self-center" href="/users/<%= user._id %>/edit">Edit Profile</a>
           <% if(currentUser && currentUser.isAdmin){ %>
-            <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-              <button class="btn btn-danger">Delete Profile</button>
+            <form class="w-50 my-1 align-self-center" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+              <a class="btn btn-danger">Delete Profile</a>
             </form>
           <% } %>
         <% } %>
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="col-lg-8 col-md-8 col-sm-12 py-1">
       <h1>Stories</h1>
       <% stories.forEach(story => { %>
         <p><a href="/cities/<%= story.city.id %>/stories/<%= story._id %>"><%= story.title %> (<%= story.city.name %>, <%= story.city.country %>)</a></p>

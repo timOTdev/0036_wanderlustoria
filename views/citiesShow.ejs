@@ -1,17 +1,23 @@
 <% include headerPartial %>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb my-0">
-    <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
-    <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
-    <% if (currentUser && currentUser.isAdmin) { %>
-      <div class="ml-auto my-0">
-        <a href="/cities/<%= city._id %>/edit"><button class="btn btn-warning">Edit</button></a>
-        <form class="d-inline" id="delete" action="/cities/<%= city._id%>?_method=DELETE" method="POST">
-          <button class="btn btn-danger">Delete</button>
-        </form>
-      </div>
-    <% } %>
-  </ol> 
+
+<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
+    <div class="py-1" aria-label="breadcrumb">
+        <a class="btn btn-outline-secondary py-0" href="/cities">Cities</a>
+        <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
+    </div> 
+    <div class="py-1">
+      <a href="/cities/<%= city._id %>/new"><button class="btn btn-success py-0">Add New Story</button></a>
+      <% if (currentUser && currentUser.isAdmin) { %>
+        <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/edit">Edit</a>
+          <form class="btn btn-danger p-0" 
+          id="delete" 
+          action="/cities/<%= city._id%>?_method=DELETE" 
+          method="POST" 
+          onsubmit="return confirm('Delete <%= city.name %>?');">
+            <button type="submit" class="btn btn-danger btn-transparent py-0">Delete</button>
+          </form>
+      <% } %>
+    </div>
 </nav>
 
 <div class="jumbotron mx-auto text-center pt-0">
@@ -23,37 +29,34 @@
   <p>Submitted By: <a href="/users/<%= city.author.id %>"><%= city.author.username %></a></p>
 </div>
 
-<div class="Stories text-center">
-  <div class="navButtons">
-    <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
-  </div>
-
-  <div class="row text-center justify-content-around">
+<div class="Stories">
+  <div class="row mx-0">
     <% city.stories.forEach(function(story){ %>
       <div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-img">
-              <a href="/cities/<%= city._id %>/stories/<%= story._id %>">
-                <img src="<%= story.image.name %>" 
-                  style="object-fit: fit;
-                    object-position: center;
-                    height: 400px;
-                    width: 100%;" />
-              </a>
+        <div class="card img-thumbnail rounded">
+          <div class="card-img">
+            <div class="story-overlay">
+              <div class="story-text">
+              <h1><%= story.title.toUpperCase() %></h1>
+              <h3><%= story.location %></h3>
+              <h5><%= story.date %></h5>
+              <h5>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></h5>
+              </div>
             </div>
-            <div class="card-footer">
-                <h1><%= story.title.toUpperCase() %></h1>
-                <h5><%= story.date %></h5>
-                <p><%= story.headline %></p>
-                <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></p>
-            </div>
+            <a href="/cities/<%= city._id %>/stories/<%= story._id %>">
+              <img class="story-image" src="<%= story.image.name %>" 
+                />
+            </a>
+          </div>
         </div>
       </div>
     <% }) %>
   </div>
   
-  <div class="navButtons">
-    <a href="/cities/<%= city._id %>/new"><button class="btn btn-primary" style="margin: 1rem 0;">Add New Story</button></a>
+  <div class="navButtons text-center">
+    <a href="/cities/<%= city._id %>/new">
+      <button class="btn btn-success" style="margin: 1rem 0;">Add New Story</button>
+    </a>
   </div>
 </div>
 

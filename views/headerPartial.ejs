@@ -2,13 +2,20 @@
 <html>
     <head>
         <title>Wanderlustoria by Timothy Hoang</title>
-        <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Fira+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg fixed-top justify-content-between">
-            <a class="navbar-brand logo" href="/home"><h3><span class="wander">Wander</span>lustoria</h3></a>
+        <nav class="navbar fixed-top justify-content-between my-0 py-0" style="background: black; margin-bottom: 0 !important;">
+            <a class="navbar-brand logo" href="/home" style="
+            color: lightcoral;
+            text-shadow: 3px 3px 3px darkred;
+            font-family: 'Black And White Picture', sans-serif;">
+                <h3 class="my-0 py-0">
+                    <span class="wander" style="color: lightgreen;text-shadow: 3px 3px 3px darkcyan;">Wander</span>lustoria
+                </h3>
+            </a>
             
             <form class="form-inline my-2 my-lg-0" action="/cities" method="GET">
                 <div class="form-group">
@@ -16,35 +23,37 @@
                     <input class="btn btn-default" type="submit" value="Search">
                 </div>
             </form>
-
-            <ul class="navbar-nav">
+           
+            <div>
                 <% if(!currentUser){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" data-value="register" href="/register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-value="login" href="/login">Login</a>
-                    </li>
+                    <a class="btn btn-secondary my-0 py-0" href="/register">
+                        <span className="white" role="img" aria-label="lower left fountain pen">&#128395; Register</span>
+                    </a>
+                    <a class="btn btn-secondary my-0 py-0" href="/login %>">
+                        <span className="white" role="img" aria-label="closed lock">&#128274; Login</span>
+                    </a>
                 <% } else {%>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/<%= currentUser._id %>">Signed in as <%= currentUser.username %></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-value="logout" href="/logout">Logout</a>
-                    </li>
+                    <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>">
+                        <span className="white" role="img" aria-label="bust in silhouette">&#128100; <%= currentUser.username %></span>
+                    </a>
+                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout">
+                        <span className="white" role="img" aria-label="open lock">&#128275; Logout</span>
+                    </a>
                 <% } %>
-            </ul>
+            </div>
         </nav>
 
-        <div class="my-0 py-0">
-            <% if(error && error.length > 0 ){ %>
+        <% if(error && error.length > 0 ){ %>
+            <div class="my-0 py-0">
                 <div class="alert alert-danger text-center my-0 py-0" role="alert">
                     <%= error %>
                 </div>
-            <% } %>
-            <% if(success && success.length > 0){ %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="my-0 py-0">
                 <div class="alert alert-success text-center my-0 py-0" role="alert">
                     <%= success %>
                 </div>
-            <% } %>
-        </div>
+            </div>
+        <% } %>
