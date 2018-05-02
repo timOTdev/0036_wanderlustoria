@@ -27,6 +27,9 @@ cloudinary.config({
 
 // INDEX ROUTE
 router.get('/', function(req, res){
+    let perPage = 9;
+    let pageQuery = parseInt(req.query.page);
+    let pageNumber = pageQuery ? pageQuery : 1;
     let noMatch = null;
     if(req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -43,13 +46,18 @@ router.get('/', function(req, res){
         })
     }
     else{
-        City.find({}, function(err, allCities){
-            if(err){
-                console.log(err);
-            }
-            else{
-                res.render("citiesIndex", {cities: allCities, noMatch: null});
-            }
+        City.find({})
+        .skip((perPage * pageNumber) - perPage)
+        .limit(perPage)
+        .exec(function(err, allCities){
+            City.count().exec(function(err, count){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.render("citiesIndex", {cities: allCities, current: pageNumber, pages: Math.ceil(count / perPage), noMatch: null});
+                }
+            })
         })
     }
 });

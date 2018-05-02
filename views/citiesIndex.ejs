@@ -25,7 +25,7 @@
                 </div>
             <% } else {} %>
             <% cities.forEach(function(city){ %>
-                <div class="col-lg-4 col-md-4 col-sm-6" style="margin: 0rem;">
+                <div class="col-lg-4 col-md-4 col-sm-6 my-0 py-2">
                     <div class="card">
                         <div class="card-img">
                             <img src="<%= city.image %>" 
@@ -46,6 +46,53 @@
                 </div>
             <% }) %>
         </div>
+
+        <% if (pages && pages > 0) { %>
+            <div class="container w-100 mx-auto">
+            <div class="row text-center my-3 py-3">
+                <ul class="pagination text-center mx-auto">
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>First</a></li>
+                    <% } else { %>
+                        <li><a href="/cities">First</a></li>
+                    <% } %>
+            
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>«</a></li>
+                    <% } else { %>
+                        <li><a href="/cities?page=<%= Number(current) - 1 %>">«</a></li>
+                    <% } %>
+            
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                        <li class="active"><a><%= i %></a></li>
+                    <% } else { %>
+                        <li><a href="/cities?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% } %>
+            
+                    <% if (current == pages) { %>
+                        <li class="disabled"><a>»</a></li>
+                    <% } else { %>
+                        <li><a href="/cities?page=<%= Number(current) + 1 %>">»</a></li>
+                    <% } %>
+            
+                    <% if (current == pages) { %>
+                        <li class="disabled"><a>Last</a></li>
+                    <% } else { %>
+                        <li><a href="/cities?page=<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <% } %>
     </div>
 </div>
 
