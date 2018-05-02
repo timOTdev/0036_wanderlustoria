@@ -37,6 +37,7 @@
 
     <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1" style="height: 90vh; border: 2px solid black; border-radius: 5%;">
       <% story.comments.forEach(function(comment){ %>
+        <hr class="w-100">
         <div class="comment">
           <p class="d-inline">
             <a href="/users/<%= comment.author.id %>">
@@ -56,9 +57,10 @@
               </button>
             </form>
           <% } %>
-          <hr class="w-75">
         </div>
         <% }) %>
+
+        <hr class="w-100">
 
         <form action="/cities/<%= city._id %>/stories/<%= story._id%>" method="POST">
           <div class="form-group">

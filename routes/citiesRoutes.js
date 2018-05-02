@@ -31,18 +31,31 @@ router.get('/', function(req, res){
     let pageQuery = parseInt(req.query.page);
     let pageNumber = pageQuery ? pageQuery : 1;
     let noMatch = null;
+
     if(req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        City.find({name: regex}, function(err, allCities){
-            if(err){
-                console.log(err);
-            }
-            else{
-                if(allCities.length === 0){
-                    noMatch = "No matches found."
+        City.find({name: regex})
+        .skip((perPage * pageNumber) - perPage)
+        .limit(perPage)
+        .exec(function(err, allCities){
+            City.count({name: regex}).exec(function(err, count){
+                if(err){
+                    req.flash("error", err.message);
+                    res.redirect("back");
                 }
-                res.render("citiesIndex", {cities: allCities, noMatch: noMatch});
-            }
+                else{
+                    if(allCities.length === 0){
+                        noMatch = "No matches found."
+                    }
+                    res.render("citiesIndex", {
+                        cities: allCities, 
+                        noMatch: noMatch,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        search: req.query.search,
+                    });
+                }
+            })
         })
     }
     else{
@@ -52,13 +65,20 @@ router.get('/', function(req, res){
         .exec(function(err, allCities){
             City.count().exec(function(err, count){
                 if(err){
-                    console.log(err);
+                    req.flash("error", err.message);
+                    res.redirect("back");
                 }
                 else{
-                    res.render("citiesIndex", {cities: allCities, current: pageNumber, pages: Math.ceil(count / perPage), noMatch: null});
+                    res.render("citiesIndex", {
+                        cities: allCities, 
+                        current: pageNumber, 
+                        pages: Math.ceil(count / perPage), 
+                        noMatch: null,
+                        search: false,
+                    });
                 }
-            })
-        })
+            });
+        });
     }
 });
 
