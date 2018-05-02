@@ -7,26 +7,25 @@
       <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><%= story.location.name %></a>
   </div> 
   <div class="py-1">
-    <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-success py-0">Add New Comment</button></a>
     <% if (currentUser && story.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-        <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>/edit">Edit</a>
-        <form class="btn btn-danger p-0" 
-        id="delete" 
-        action="/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE" 
-        method="POST" 
-        onsubmit="return confirm('Delete <%= story.title %>?');">
-          <button type="submit" class="btn btn-danger btn-transparent py-0">Delete</button>
-        </form>
+      <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>/edit">Edit</a>
+      <form class="btn btn-danger p-0" 
+      id="delete" 
+      action="/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE" 
+      method="POST" 
+      onsubmit="return confirm('Delete <%= story.title %>?');">
+        <button type="submit" class="btn btn-danger btn-transparent py-0">Delete</button>
+      </form>
     <% } %>
   </div>
 </nav>
 
 <div class="jumbotron mx-0 mb-0 p-0">
-  <div class="row mx-0 text-center">
-    <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1 text-right" id="map" style="height: 90vh; width: 100%; border: 2px solid black; border-radius: 5%;">
+  <div class="row mx-0">
+    <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1" id="map" style="height: 90vh; width: 100%; border: 2px solid black; border-radius: 5%;">
     </div>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 my-1 py-1">
+    <div class="col-lg-6 col-md-6 col-sm-12 my-1 py-1 text-center">
       <h1><%= story.title.toUpperCase() %></h1>
       <h5><em><%= story.location.name %> @ <%= story.location.city %>, <%= story.location.country %></em></h5>
       <hr class="w-100">
@@ -45,25 +44,28 @@
           </p>
 
           <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-            <a class="d-inline" href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
-              <button class="btn btn-warning">
-                <span className="white" role="img" aria-label="lower left pencil">&#128393;</span>
+            <a class="d-inline-block" href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
+              <button class="btn btn-warning p-1">
+                  <i class="fas fa-edit"></i>
               </button>
             </a>
             
-            <form class="d-inline" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-              <button class="btn btn-danger">
-                <span className="white" role="img" aria-label="latin small letter x">&#120;</span>
+            <form class="d-inline-block" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-danger p-1" onclick="return confirm('Delete comment?');">
+                  <i class="fas fa-trash-alt"></i>
               </button>
             </form>
           <% } %>
-          <hr class="w-50">
+          <hr class="w-75">
         </div>
         <% }) %>
 
-        <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new">
-          <button class="btn btn-success d-block mx-auto" style="margin: 1rem 0;">Add New Comment</button>
-        </a>
+        <form action="/cities/<%= city._id %>/stories/<%= story._id%>" method="POST">
+          <div class="form-group">
+              <textarea class="form-control w-100" type="text" name="comment[body]" placeholder="Comment" required></textarea>
+          </div>
+          <button class="btn btn-success d-block mx-auto" type="submit" style="margin: 1rem 0;">Add Comment</button>
+        </form>
     </div>
   </div>
 </div>
