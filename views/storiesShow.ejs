@@ -6,6 +6,7 @@
       <a class="btn btn-outline-secondary py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
       <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><%= story.location.name %></a>
   </div> 
+  
   <div class="py-1">
     <% if (currentUser && story.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
       <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>/edit">Edit</a>

@@ -5,6 +5,7 @@
         <a class="btn btn-outline-secondary py-0" href="/cities">Cities</a>
         <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
     </div> 
+    
     <div class="py-1">
       <a href="/cities/<%= city._id %>/new"><button class="btn btn-success py-0">Add New Story</button></a>
       <% if (currentUser && currentUser.isAdmin) { %>
@@ -22,7 +23,7 @@
 
 <div class="jumbotron mx-auto text-center pt-0">
   <h1>Welcome to <%= city.name %>, <%= city.country %>!</h1>
-  <h2><em><%= city.headline %></em></h2>
+  <h2><em><%= city.tagline %></em></h2>
   <hr class="my-4">
   <img class="img-fluid w-50" src="<%= city.image %>" alt="<%= city.description %>" />
   <p class="mt-5 w-75 mx-auto"><%= city.description %></p>

@@ -1,19 +1,20 @@
 <% include headerPartial %>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb my-0">
-        <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
-        <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
-    </ol> 
+<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
+    <div class="py-1" aria-label="breadcrumb">
+        <a class="btn btn-outline-secondary py-0" href="/cities">Cities</a>
+        <a class="btn btn-outline-secondary py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
+        <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><%= story.location.name %></a>
+    </div> 
 </nav>
 
 <div class="container">
     <div class="row">
-        <div class="w-100" style="text-align: center; margin: 0 auto;">
+        <div class="w-50 mx-auto text-center">
             <h1>Edit Comment Page</h1>
-            <form class="w-100" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+            <form action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                 <div class="form-group">
-                    <textarea class="w-50" type="text" name="comment[body]" required><%= comment.body %></textarea>
+                    <textarea class="form-control" type="text" name="comment[body]" required><%= comment.body %></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary">Submit</button>

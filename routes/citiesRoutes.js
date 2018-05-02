@@ -96,10 +96,10 @@ router.post('/', middleware.isAdminAccount, upload.single('image'), function(req
         }
         req.body.city.name = req.sanitize(req.body.city.name);
         req.body.city.country = req.sanitize(req.body.city.country);
+        req.body.city.tagline = req.sanitize(req.body.city.tagline);
+        req.body.city.description = req.sanitize(req.body.city.description);
         req.body.city.image = result.secure_url;
         req.body.city.imageId = result.public_id;
-        req.body.city.headline = req.sanitize(req.body.city.headline);
-        req.body.city.description = req.sanitize(req.body.city.description);
         req.body.city.author = {
             id: req.user._id,
             username: req.sanitize(req.user.username)
@@ -161,7 +161,7 @@ router.put("/:cityId", middleware.isAdminAccount, upload.single('image'), functi
             }
             foundCity.name = req.sanitize(req.body.city.name);
             foundCity.country = req.sanitize(req.body.city.country);
-            foundCity.headline = req.sanitize(req.body.city.headline);
+            foundCity.tagline = req.sanitize(req.body.city.tagline);
             foundCity.description = req.sanitize(req.body.city.description);
             foundCity.save();
             req.flash("success", "City updated");

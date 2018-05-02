@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 let citySchema = new mongoose.Schema({
     name: String,
-    headline: String,
     country: String,
+    tagline: String,
+    description: String,
     image: String,
     imageId: String,
-    description: String,
     author: {
         id: {
            type: mongoose.Schema.Types.ObjectId,
