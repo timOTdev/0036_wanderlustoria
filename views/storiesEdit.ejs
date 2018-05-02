@@ -1,35 +1,49 @@
 <% include headerPartial %>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb my-0">
-        <li class="breadcrumb-item"><a href="/cities"><button class="btn">Cities</button></a></li>
-        <li class="breadcrumb-item"><a href="/cities/<%= city._id %>"><button class="btn btn-info"><%= city.name %>, <%= city.country %></button></a></li>
-    </ol> 
+<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
+    <div class="py-1" aria-label="breadcrumb">
+        <a class="btn btn-outline-secondary py-0" href="/cities">Cities</a>
+        <a class="btn btn-outline-secondary py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
+        <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><%= story.location.name %></a>
+    </div> 
 </nav>
 
 <div class="container">
     <div class="row">
-        <div class="w-100" style="text-align: center; margin: 0 auto;">
+        <div class="w-50 mx-auto text-center">
             <h1>Edit Story Page</h1>
             <form class="w-100" action="/cities/<%= city._id %>/stories/<%= story._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group w-100">
-                    <label for="story[title]">Title</label>
-                    <input class="w-50" type="text" name="story[title]" value="<%= story.title %>" required>
+                    <label for="story[title]">Story Title</label>
+                    <input class="form-control" type="text" name="story[title]" value="<%= story.title %>" required>
                 </div>
-                <!-- <div class="form-group">
-                    <input class="w-50" type="text" name="story[location]" value="<%= story.location %>" required>
-                </div> -->
                 <div class="form-group">
-                    <label for="story[location]">Location</label>
-                    <input class="form-control" type="text" name="story[location]" id="location" value="<%= campground.location.name %>">
+                    <label for="story[locationName]">Location Name</label>
+                    <input class="form-control" type="text" name="story[locationName]" id="location" value="<%= story.location.name %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="story[locationCity]">Location City</label>
+                    <input class="form-control" type="text" name="story[locationCity]" value="<%= story.location.city %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="story[locationCountry]">Location Country</label>
+                    <input class="form-control" type="text" name="story[locationCountry]" value="<%= story.location.country %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="story[locationLatitude]">Location Latitude</label>
+                    <input class="form-control" type="text" name="story[locationLatitude]" value="<%= story.location.latitude %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="story[locationLongitute]">Location Longitude</label>
+                    <input class="form-control" type="text" name="story[locationLongitude]" value="<%= story.location.longitude %>" required>
                 </div>
                 <div class="form-group">
                     <label for="story[date]">Date</label>
-                    <input class="w-50" type="text" name="story[date]" value="<%= story.date %>" required>
+                    <input class="form-control" type="text" name="story[date]" value="<%= story.date %>" required>
                 </div>
                 <div class="form-group">
                     <label for="story[body]">Body</label>
-                    <textarea class="w-50" type="text" name="story[body]" required><%= story.body %></textarea>
+                    <textarea class="form-control" type="text" name="story[body]" required><%= story.body %></textarea>
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>

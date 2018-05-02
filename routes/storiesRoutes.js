@@ -61,7 +61,6 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
           return res.redirect('back');
         }
         req.body.story.title = req.sanitize(req.body.story.title);
-        req.body.story.location = req.sanitize(req.body.story.location);
         req.body.story.date = req.sanitize(req.body.story.date);
         req.body.story.body = req.sanitize(req.body.story.body);
         req.body.story.author = {
@@ -77,7 +76,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
           country: foundCity.country,
           id: req.params.cityId,
         }
-        
+
         geocoder.geocode(req.body.story.locationName, function (err, data) {
           if (err || !data.length) {
             req.flash('error', err.message);
@@ -87,8 +86,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
             name: req.body.story.locationName,
             city: req.body.story.locationCity,
             country: req.body.story.locationCountry,
-            lat: data[0].latitude,
-            lng: data[0].longitude,
+            latitude: data[0].latitude,
+            longitude: data[0].longitude,
           }
           Story.create(req.body.story, function(err, newStory){
             if(err){
@@ -166,7 +165,11 @@ router.put("/stories/:storyId", middleware.checkStoryOwner, upload.single('image
         }
       }
       foundStory.title = req.sanitize(req.body.story.title);
-      foundStory.location = req.sanitize(req.body.story.location);
+      foundStory.location.name = req.sanitize(req.body.story.locationName);
+      foundStory.location.city = req.sanitize(req.body.story.locationCity);
+      foundStory.location.country = req.sanitize(req.body.story.locationCountry);
+      foundStory.location.latitude = req.sanitize(req.body.story.locationLatitude);
+      foundStory.location.longitude = req.sanitize(req.body.story.locationLongitude);
       foundStory.date = req.sanitize(req.body.story.date);
       foundStory.body = req.sanitize(req.body.story.body);
       foundStory.save();

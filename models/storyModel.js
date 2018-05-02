@@ -19,8 +19,8 @@ let storySchema = new mongoose.Schema({
         name: String,
         city: String,
         country: String,
-        lat: Number,
-        lng: Number,
+        latitude: Number,
+        longitude: Number,
     },
     city: {
         name: String,

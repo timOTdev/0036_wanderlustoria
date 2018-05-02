@@ -70,8 +70,8 @@
 
 <script>
   function initMap() {
-    var lat = <%= story.location.lat %>;
-    var lng = <%= story.location.lng %>;
+    var lat = <%= story.location.latitude %>;
+    var lng = <%= story.location.longitude %>;
     var center = {lat: lat, lng: lng };
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
