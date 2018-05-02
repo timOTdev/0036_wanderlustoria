@@ -38,7 +38,7 @@
             <div class="story-overlay">
               <div class="story-text">
               <h1><%= story.title.toUpperCase() %></h1>
-              <h3><%= story.location %></h3>
+              <h3>@ <%= story.location.name %></h3>
               <h5><%= story.date %></h5>
               <h5>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></h5>
               </div>

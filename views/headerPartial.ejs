@@ -36,7 +36,7 @@
                     <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>">
                         <span className="white" role="img" aria-label="bust in silhouette">&#128100; <%= currentUser.username %></span>
                     </a>
-                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout">
+                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout" onclick="return confirm('Log out?');">
                         <span className="white" role="img" aria-label="open lock">&#128275; Logout</span>
                     </a>
                 <% } %>

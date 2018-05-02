@@ -10,10 +10,10 @@
         </div>
 
         <div class="card-body">
-            <img class="card-img-top img-fluid img-thumbnail rounded mx-auto" 
+            <img class="card-img-top img-thumbnail img-fluid mx-auto" 
             src="<%= user.image.name %>" 
             alt="<%= user.username %>'s Profile Image"
-            style="display: block; max-width: 20rem;">
+            style="display: block; max-width: 20rem; border-radius: 50%;">
           <p class="card-text"><%= user.body %></p>
         </div>
 
@@ -32,10 +32,15 @@
       </div>
     </div>
 
-    <div class="col-lg-8 col-md-8 col-sm-12 py-1">
+    <div class="col-lg-8 col-md-8 col-sm-12 py-3">
       <h1>Stories</h1>
       <% stories.forEach(story => { %>
-        <p><a href="/cities/<%= story.city.id %>/stories/<%= story._id %>"><%= story.title %> (<%= story.city.name %>, <%= story.city.country %>)</a></p>
+        <p>
+          <a class="btn btn-outline-success" 
+          href="/cities/<%= story.city.id %>/stories/<%= story._id %>">
+            <%= story.title %> @ <%= story.city.name %>, <%= story.city.country %> - <%= story.date %>
+          </a>
+        </p>
       <% }) %>
     </div>
   </div>

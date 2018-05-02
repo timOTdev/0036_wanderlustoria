@@ -26,6 +26,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// GEOCODER SETUP
+const NodeGeocoder = require('node-geocoder');
+const options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+const geocoder = NodeGeocoder(options);
+
 // NEW ROUTE
 router.get("/new", middleware.isLoggedIn, function(req, res){
   City.findById(req.params.cityId, function(err, foundCity){
@@ -67,17 +77,31 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
           country: foundCity.country,
           id: req.params.cityId,
         }
-        Story.create(req.body.story, function(err, newStory){
-          if(err){
-            req.flash("error", err.message);
-            return res.redirect("back");
-          } 
-          else{
-            foundCity.stories.push(newStory);
-            foundCity.save();
-            res.redirect("/cities/" + req.params.cityId);
+        
+        geocoder.geocode(req.body.story.locationName, function (err, data) {
+          if (err || !data.length) {
+            req.flash('error', err.message);
+            return res.redirect('back');
           }
-        })
+          req.body.story.location = {
+            name: req.body.story.locationName,
+            city: req.body.story.locationCity,
+            country: req.body.story.locationCountry,
+            lat: data[0].latitude,
+            lng: data[0].longitude,
+          }
+          Story.create(req.body.story, function(err, newStory){
+            if(err){
+              req.flash("error", err.message);
+              return res.redirect("back");
+            } 
+            else{
+              foundCity.stories.push(newStory);
+              foundCity.save();
+              res.redirect("/cities/" + req.params.cityId);
+            }
+          })
+        });
       })
     }
   });

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 let storySchema = new mongoose.Schema({
     title: String,
-    location: String,
     date: String,
     body: String,
     author: {
@@ -15,6 +14,13 @@ let storySchema = new mongoose.Schema({
     image: {
         name: String,
         id: String
+    },
+    location: {
+        name: String,
+        city: String,
+        country: String,
+        lat: Number,
+        lng: Number,
     },
     city: {
         name: String,

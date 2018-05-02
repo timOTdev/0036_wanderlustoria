@@ -4,7 +4,7 @@
   <div class="py-1" aria-label="breadcrumb">
       <a class="btn btn-outline-secondary py-0" href="/cities">Cities</a>
       <a class="btn btn-outline-secondary py-0" href="/cities/<%= city._id %>"><%= city.name %>, <%= city.country %></a>
-      <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/<%= story._id %>"><%= story.title %></a>
+      <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><%= story.location.name %></a>
   </div> 
   <div class="py-1">
     <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new"><button class="btn btn-success py-0">Add New Comment</button></a>
@@ -23,24 +23,27 @@
 
 <div class="jumbotron mx-0 mb-0 p-0">
   <div class="row mx-0 text-center">
-    <div class="col-lg-8 col-md-6 col-sm-12 my-1 py-1">
-      <h1><%= story.title.toUpperCase() %></h1>
-      <h2><em><%= story.location %></em></h2>
-      <h2><em><%= story.date %></em></h2>
-      <hr class="w-75">
-      <img class="img-fluid w-75" src="<%= story.image.name %>" alt="<%= story.title %>" />
-      <p class="mt-5 w-75 mx-auto"><%= story.body %></p>
-      <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></p>
-  </div>
+    <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1 text-right" id="map" style="height: 90vh; width: 100%; border: 2px solid black; border-radius: 5%;">
+    </div>
 
-  <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1" style="border: 2px solid black; border-radius: 5%;">
+    <div class="col-lg-6 col-md-6 col-sm-12 my-1 py-1">
+      <h1><%= story.title.toUpperCase() %></h1>
+      <h5><em><%= story.location.name %> @ <%= story.location.city %>, <%= story.location.country %></em></h5>
+      <hr class="w-100">
+      <img class="img-fluid" src="<%= story.image.name %>" alt="<%= story.title %>" />
+      <p><em><%= story.date %></em></p>
+      <p class="w-100 mx-auto"><%= story.body %></p>
+      <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></p>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-12 my-1 py-1" style="height: 90vh; border: 2px solid black; border-radius: 5%;">
       <% story.comments.forEach(function(comment){ %>
         <div class="comment">
           <p class="d-inline">
             <a href="/users/<%= comment.author.id %>">
               <strong><%= comment.author.username %></strong></a>: <%= comment.body %>
           </p>
-  
+
           <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
             <a class="d-inline" href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
               <button class="btn btn-warning">
@@ -61,7 +64,36 @@
         <a href="/cities/<%= city._id %>/stories/<%= story._id %>/new">
           <button class="btn btn-success d-block mx-auto" style="margin: 1rem 0;">Add New Comment</button>
         </a>
+    </div>
   </div>
 </div>
+
+<script>
+  function initMap() {
+    var lat = <%= story.location.lat %>;
+    var lng = <%= story.location.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+        <p style="text-align: left;"><strong><%= story.location.name %></strong></p>
+        <p style="text-align: left;"><%= story.location.city %>, <%= story.location.country %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD388n3Ic5C826_Hoi60v_eCJMwaAlfDs4&callback=initMap"></script>
 
 <% include footerPartial %>
