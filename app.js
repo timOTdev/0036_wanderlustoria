@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(flash());
+app.locals.moment = require('moment');
 mongoose.connect("mongodb://localhost/wanderlustoria");
 
 // Passport Configuration
