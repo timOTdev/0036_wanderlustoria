@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
     </head>
     <body>
-        <nav class="navbar fixed-top justify-content-between my-0 py-0" style="background: black; margin-bottom: 0 !important;">
+        <nav class="navbar fixed-top justify-content-between my-0 py-0" style="background: black;">
             <a class="navbar-brand logo" href="/home" style="
             color: lightcoral;
             text-shadow: 3px 3px 3px darkred;
@@ -33,6 +33,9 @@
                         <span className="white" role="img" aria-label="closed lock">&#128274; Login</span>
                     </a>
                 <% } else {%>
+                    <% if(currentUser && currentUser.isAdmin){ %> 
+                        <a class="btn btn-primary my-0 py-0" href="/dashboard">Dashboard</a>
+                    <% } %>
                     <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>">
                         <span className="white" role="img" aria-label="bust in silhouette">&#128100; <%= currentUser.username %></span>
                     </a>

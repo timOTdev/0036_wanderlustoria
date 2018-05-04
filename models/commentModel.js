@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 let commentSchema = new mongoose.Schema({
+  body: String,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +13,14 @@ let commentSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
   },
-  body: String
+  story: {
+    title: String,
+    id: String,
+  },
+  city: {
+    name: String,
+    id: String,
+  }
 });
 
 let Comment = mongoose.model("Comment", commentSchema);

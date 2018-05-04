@@ -8,6 +8,8 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require('dotenv').config();
 const User = require("../models/userModel")
+const Story = require("../models/storyModel")
+const Comment = require("../models/commentModel")
 
 // INDEX ROUTES
 router.get('/', function(req, res){
@@ -163,7 +165,31 @@ router.get("/logout", function(req, res){
 
 // DASHBOARD ROUTES
 router.get('/dashboard', middleware.isAdminAccount, function(req,res){
-    res.render("dashboardIndex");
+  User.find({}).sort('-createdAt').limit(20).exec(function(err, latestUsers){
+    if(err){
+      req.flash("error", err.message);
+      return res.redirect("back");
+    }
+    else {
+      Story.find({}).sort('-createdAt').limit(20).exec(function(err, latestStories){
+        if(err){
+          req.flash("error", err.message);
+          return res.redirect("back");
+        } 
+        else {
+          Comment.find({}).sort('-createdAt').limit(20).exec(function(err, latestComments){
+            if(err){
+              req.flash("error", err.message);
+              return res.redirect("back");
+            } 
+            else {
+            res.render("dashboardIndex", {users: latestUsers, stories: latestStories, comments: latestComments});
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;

@@ -40,6 +40,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
             } else {
               newComment.author.id = req.user._id
               newComment.author.username = req.user.username
+              newComment.story.title = foundStory.title
+              newComment.story.id = foundStory.id
+              newComment.city.name = foundCity.name
+              newComment.city.id = foundCity.id
               newComment.save();
               foundStory.comments.push(newComment);
               foundStory.save();
