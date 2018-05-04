@@ -26,21 +26,14 @@
            
             <div>
                 <% if(!currentUser){ %>
-                    <a class="btn btn-secondary my-0 py-0" href="/register">
-                        <span className="white" role="img" aria-label="lower left fountain pen">&#128395; Register</span>
-                    </a>
-                    <a class="btn btn-secondary my-0 py-0" href="/login %>">
-                        <span className="white" role="img" aria-label="closed lock">&#128274; Login</span>
-                    </a>
+                    <a class="btn btn-secondary my-0 py-0" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+                    <a class="btn btn-secondary my-0 py-0" href="/login %>"><i class="fas fa-sign-in-alt"></i> Login </a>
                 <% } else {%>
                     <% if(currentUser && currentUser.isAdmin){ %> 
-                        <a class="btn btn-primary my-0 py-0" href="/dashboard">Dashboard</a>
+                        <a class="btn btn-primary my-0 py-0" href="/dashboard"><i class="fas fa-globe"></i> Dashboard</a>
                     <% } %>
-                    <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>">
-                        <span className="white" role="img" aria-label="bust in silhouette">&#128100; <%= currentUser.username %></span>
-                    </a>
-                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout" onclick="return confirm('Log out?');">
-                        <span className="white" role="img" aria-label="open lock">&#128275; Logout</span>
+                    <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> <%= currentUser.username %></a>
+                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout" onclick="return confirm('Log out?');"><i class="fas fa-sign-out-alt"></i> Logout</span>
                     </a>
                 <% } %>
             </div>
