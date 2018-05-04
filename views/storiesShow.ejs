@@ -46,8 +46,10 @@
               <a class="" href="/users/<%= comment.author.id %>"><strong><%= comment.author.username %></strong></a>
             </p>
 
-            <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-              <div>
+            <div class="align-self-end">
+              <span><%= moment(comment.createdAt).fromNow() %></span>
+
+              <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                 <a class="d-inline" href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
                   <button class="btn btn-warning p-0">
                       <i class="fas fa-edit"></i>
@@ -59,10 +61,8 @@
                       <i class="fas fa-trash-alt"></i>
                   </button>
                 </form>
+              <% } %>
               </div>
-            <% } %>
-
-            <span class="align-self-end"><%= moment(comment.createdAt).fromNow() %></span>
           </div>
 
           <p><%= comment.body %></p>

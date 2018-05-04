@@ -1,0 +1,23 @@
+<% include headerPartial %>
+
+<div class="row">
+	<div class="col-md-12 col-md-12 col-sm-12 text-center">
+		<form class="w-50 mx-auto" action="/reset/<%= token %>" method="POST">
+      <h1>Reset Password</h1>
+      <h5>Changing password for user: <%= user.username %></h5>
+		  <div class="form-group py-1">
+		    <label for="password">New Password</label>
+		    <input type="password" name="password" value="" placeholder="New password" class="form-control" autofocus/>
+		  </div>
+		  <div class="form-group py-1">
+		    <label for="confirm">Confirm Password</label>
+		    <input type="password" name="confirm" value="" placeholder="Confirm password" class="form-control"/>
+		  </div>
+		  <div class="form-group py-1">
+		    <button type="submit" class="btn btn-primary">Update Password</button>
+		  </div>
+		</form>
+	</div>
+</div>
+
+<% include headerPartial %>

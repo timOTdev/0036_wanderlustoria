@@ -4,9 +4,11 @@ const passportLocalMongoose = require("passport-local-mongoose");
 let UserSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: String,
-  username: String,
+  email: {type: String, unique: true, required: true},
+  username: {type: String, unique: true, required: true},
   password: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   body: {type: String, default: "No bio provided"},
   isAdmin: {type: Boolean, default: false},
   createdAt: {
