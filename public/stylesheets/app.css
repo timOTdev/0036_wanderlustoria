@@ -3,11 +3,38 @@ body{
     margin: 0 !important;
     padding: 0 !important;
     padding-top: 36px !important;
-    background:#f4f4f4;
-    font-family: 'Fira Sans', sans-serif !important;
+    background: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
 }
 .container{
     min-width: 100vw;
+}
+
+.title {
+    font-family: 'Black And White Picture', sans-serif;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+}
+.underline {
+    text-decoration: underline;
+}
+.bold {
+    font-weight: bold;
+}
+.wander {
+    font-family: 'Black And White Picture', sans-serif;
+    color: lightgreen;
+    text-shadow: 3px 3px 3px darkcyan;
+    font-size: 1.5rem;
+}
+.lustoria {
+    font-family: 'Black And White Picture', sans-serif;
+    color: lightcoral;
+    text-shadow: 3px 3px 3px darkred;
+    font-size: 1.5rem;
 }
 
 /* homeIndex */
