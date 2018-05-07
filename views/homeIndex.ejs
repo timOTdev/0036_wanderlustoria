@@ -16,14 +16,17 @@
         top: 20%;
         vertical-align: middle;
         z-index: 1;
-        min-width: 100%;">
+        min-width: 100%;
+        ">
             <h1 class="title">A Travel Vision Platform</h1>                
             <p class="subtitle">Finding your next travel destination off the beaten path</p>
             <a href="/cities"><button type="button" class="btn btn-success btn-lg"><i class="far fa-compass"></i> Enter The Cities</button></a>
         </div>
     </div>
     
-    <div class="summary text-center py-5" id="summary" style="
+    <div class="summary text-center py-5" 
+    id="summary" 
+    style="
     background-color: #8EC5FC;
     background-image: linear-gradient(45deg, #8EC5FC 0%, #E0C3FC 100%);
     clip-path: polygon(0 0, 0 100%, 100% 95%, 100% 0);
@@ -65,7 +68,7 @@
         </div>
     </div>
 
-    <div class="stories py-5 mx-5" id="stories">
+    <div class="stories p-5" id="stories">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <h1 class="title">New Stories</h1>
@@ -150,14 +153,20 @@
                 background-color: #8EC5FC;
                 background-image: linear-gradient(0deg, #8EC5FC 0%, #E0C3FC 100%);
                 "></i>
-                <div class="text-center">
-                    <p>1. Visit Destinations</p>
-                    <a href="/cities"><button type="button" class="btn btn-success btn-lg d-block mx-auto my-5"><i class="far fa-compass"></i> Enter The Cities</button></a>
-                    <p>2. Sign up to see stories</p>
-                    <a href="/register"><button class="btn btn-success btn-lg d-block mx-auto my-5"><i class="fas fa-user-plus"></i> Register</button></a>
-                    <p>3. Comment and connect with a new friend!</p>
-                    <a href="/login %>"><button class="btn btn-success btn-lg d-block mx-auto my-5"><i class="fas fa-sign-in-alt"></i> Login</button></a>
-                
+                <div class="d-flex justify-content-center subtitle">
+                    <div class="w-25">
+                        <p>1. Visit Destinations</p>
+                        <a href="/cities"><button type="button" class="btn btn-success btn-lg my-2"><i class="far fa-compass"></i> Enter The Cities</button></a>
+                    </div>
+                    <div class="w-25">
+                        <p>2. Sign up to see stories</p>
+                        <a href="/register"><button class="btn btn-success btn-lg my-2"><i class="fas fa-user-plus"></i> Register</button></a>
+                    </div>
+                    <div class="w-25">
+                        <p>3. Comment on stories</p>
+                        <a href="/login %>"><button class="btn btn-success btn-lg my-2"><i class="fas fa-sign-in-alt"></i> Login</button></a>
+                    </div>
+                        
                 </div>
         </div>
     </div>
