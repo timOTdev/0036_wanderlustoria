@@ -55,22 +55,22 @@ body {
     animation: imageAnimation 50s linear infinite; 
 }
 .slideshow li:nth-child(1){
-    background-image: url("../images/venice.jpg");
+    background-image: url("https://i.imgur.com/ULnAYDw.jpg");
 }
 .slideshow li:nth-child(2){
-    background-image: url("../images/rio.jpg");
+    background-image: url("https://i.imgur.com/2UdtvdX.jpg");
     animation-delay: 10s; 
 }
 .slideshow li:nth-child(3){
-    background-image: url("../images/london.jpg");
+    background-image: url("https://i.imgur.com/ef8dJIn.jpg");
     animation-delay: 20s; 
 }
 .slideshow li:nth-child(4){
-    background-image: url("../images/bali.jpg");
+    background-image: url("https://i.imgur.com/PXY9xRj.jpg");
     animation-delay: 30s; 
 }
 .slideshow li:nth-child(5){
-    background-image: url("../images/rome.jpg");
+    background-image: url("https://i.imgur.com/0fBDXx1.jpg");
     animation-delay: 40s; 
 }
 
