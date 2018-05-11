@@ -1,17 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-let commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   body: String,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
-    username: String
+    username: String,
   },
   createdAt: {
-      type: Date,
-      default: Date.now,
+    type: Date,
+    default: Date.now,
   },
   story: {
     title: String,
@@ -20,9 +20,9 @@ let commentSchema = new mongoose.Schema({
   city: {
     name: String,
     id: String,
-  }
+  },
 });
 
-let Comment = mongoose.model("Comment", commentSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;
