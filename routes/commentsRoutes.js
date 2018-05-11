@@ -1,106 +1,111 @@
-const express = require("express");
-const router  = express.Router({mergeParams: true});
-const City = require("../models/cityModel");
-const Story = require("../models/storyModel");
-const Comment = require("../models/commentModel");
-const middleware = require("../middleware");
+const express = require('express');
+const router = express.Router({ mergeParams: true });
+const City = require('../models/cityModel');
+const Story = require('../models/storyModel');
+const Comment = require('../models/commentModel');
+const middleware = require('../middleware');
 
 // NEW ROUTE
-router.get("/new", middleware.isLoggedIn, function(req, res){
-  City.findById(req.params.cityId, function(err, foundCity){
-    if(err){
-      console.log(err);
-    } else {
-      Story.findById(req.params.storyId, function(err, foundStory){
-        if(err){
-          console.log(err);
-        } else {
-          res.render("commentsNew", {city: foundCity, story: foundStory});
-        }
-      })
+router.get('/new', middleware.isLoggedIn, (req, res) => {
+  City.findById(req.params.cityId, (err, city) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
+    Story.findById(req.params.storyId, (err, story) => {
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      return res.render('commentsNew', { city, story });
+    });
+    return city;
   });
 });
 
 // CREATE ROUTE
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post('/', middleware.isLoggedIn, (req, res) => {
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
-  City.findById(req.params.cityId, function(err, foundCity){
-    if(err){
-      console.log(err);
-    } else {
-      Story.findById(req.params.storyId, function(err, foundStory){
-        if(err){
-          console.log(err);
-        } else {
-          Comment.create(req.body.comment, function(err, newComment){
-            if(err){
-              console.log(err);
-            } else {
-              newComment.author.id = req.user._id
-              newComment.author.username = req.user.username
-              newComment.story.title = foundStory.title
-              newComment.story.id = foundStory.id
-              newComment.city.name = foundCity.name
-              newComment.city.id = foundCity.id
-              newComment.save();
-              foundStory.comments.push(newComment);
-              foundStory.save();
-              res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
-            }
-          })
-        }
-      })
+  City.findById(req.params.cityId, (err, city) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
+    Story.findById(req.params.storyId, (err, story) => {
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      Comment.create(req.body.comment, (err, comment) => {
+        if (err) {
+          req.flash('error', err.message);
+          return res.redirect('back');
+        }
+        comment.author.id = req.user._id;
+        comment.author.username = req.user.username;
+        comment.story.title = story.title;
+        comment.story.id = story.id;
+        comment.city.name = city.name;
+        comment.city.id = city.id;
+        comment.save();
+        story.comments.push(comment);
+        story.save();
+        return res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
+      });
+      return story;
+    });
+    return city;
   });
 });
 
 // EDIT ROUTE
-router.get("/comments/:commentId/edit", middleware.checkCommentOwner, function(req, res){
-  City.findById(req.params.cityId, function(err, foundCity){
-    if(err){
-        console.log(err);
-    } else {
-      Story.findById(req.params.storyId, function(err, foundStory){
-        if(err){
-          console.log(err);
-        } else {
-          Comment.findById(req.params.commentId, function(err, foundComment){
-            if(err){
-              console.log(err);
-            } else {
-              res.render("commentsEdit", {city: foundCity, story: foundStory, comment: foundComment});
-            }
-          })
-        }
-      })
+router.get('/comments/:commentId/edit', middleware.checkCommentOwner, (req, res) => {
+  City.findById(req.params.cityId, (err, city) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
+    Story.findById(req.params.storyId, (err, story) => {
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      Comment.findById(req.params.commentId, (err, comment) => {
+        if (err) {
+          req.flash('error', err.message);
+          return res.redirect('back');
+        }
+        return res.render('commentsEdit', { city, story, comment });
+      });
+      return story;
+    });
+    return city;
   });
-})
+});
 
 // UPDATE ROUTE
-router.put("/comments/:commentId", middleware.checkCommentOwner, function(req, res){
+router.put('/comments/:commentId', middleware.checkCommentOwner, (req, res) => {
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
-  Comment.findByIdAndUpdate(req.params.commentId, {body: req.body.comment.body}, function(err, foundComment){
-    if(err){
-      console.log(err);
-    } else {
-      res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+  Comment.findByIdAndUpdate(req.params.commentId, { body: req.body.comment.body }, (err) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
+    return res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
   });
 });
 
 // DESTROY ROUTE
-router.delete("/comments/:commentId", middleware.checkCommentOwner, function(req, res){
-  Comment.findByIdAndRemove(req.params.commentId, function(err){
-    if(err){
-      console.log(err);
-    }else{
-      res.redirect("/cities/" + req.params.cityId + "/stories/" + req.params.storyId);
+router.delete('/comments/:commentId', middleware.checkCommentOwner, (req, res) => {
+  Comment.findByIdAndRemove(req.params.commentId, (err) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
-  })
-})
+    return res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
+  });
+});
 
 module.exports = router;

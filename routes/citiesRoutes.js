@@ -135,30 +135,29 @@ router.get('/:cityId/edit', middleware.isAdminAccount, (req, res) => {
 
 // UPDATE ROUTE
 router.put('/:cityId', middleware.isAdminAccount, upload.single('image'), (req, res) => {
-  City.findById(req.params.cityId, async (err, foundCity) => {
+  City.findById(req.params.cityId, async (err, city) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
-    } else {
-      if (req.file) {
-        try {
-          await cloudinary.v2.uploader.destroy(foundCity.imageId);
-          const result = await cloudinary.v2.uploader.upload(req.file.path);
-          foundCity.image = result.secure_url;
-          foundCity.imageId = result.public_id;
-        } catch (err) {
-          req.flash('error', err.message);
-          return res.redirect('back');
-        }
-      }
-      foundCity.name = req.sanitize(req.body.city.name);
-      foundCity.country = req.sanitize(req.body.city.country);
-      foundCity.tagline = req.sanitize(req.body.city.tagline);
-      foundCity.description = req.sanitize(req.body.city.description);
-      foundCity.save();
-      req.flash('success', 'City updated');
-      res.redirect(`/cities/${req.params.cityId}`);
     }
+    if (req.file) {
+      try {
+        await cloudinary.v2.uploader.destroy(city.imageId);
+        const result = await cloudinary.v2.uploader.upload(req.file.path);
+        city.image = result.secure_url;
+        city.imageId = result.public_id;
+      } catch (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+    }
+    city.name = req.sanitize(req.body.city.name);
+    city.country = req.sanitize(req.body.city.country);
+    city.tagline = req.sanitize(req.body.city.tagline);
+    city.description = req.sanitize(req.body.city.description);
+    city.save();
+    req.flash('success', 'City updated');
+    return res.redirect(`/cities/${req.params.cityId}`);
   });
 });
 
