@@ -106,7 +106,7 @@ router.post('/', middleware.isLoggedIn, upload.single('image'), (req, res) => {
 });
 
 // SHOW ROUTE
-router.get('/stories/:storyId', (req, res) => {
+router.get('/stories/:storyId', middleware.isLoggedIn, (req, res) => {
   City.findById(req.params.cityId, (err, city) => {
     if (err) {
       req.flash('error', err.message);

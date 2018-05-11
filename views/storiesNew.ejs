@@ -13,22 +13,22 @@
             <h1>New Story Page</h1>
             <form action="/cities/<%= city._id %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="story[title]" placeholder="Story Title" autofocus required>
+                    <input class="form-control" type="text" name="story[title]" placeholder="Story Title" maxlength='20' autofocus required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="story[locationName]" id="location" placeholder="Location Name" required>
+                    <input class="form-control" type="text" name="story[locationName]" id="location" placeholder="Location Name" maxlength='20' required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="story[locationCity]" placeholder="City" required>
+                    <input class="form-control" type="text" name="story[locationCity]" placeholder="City" maxlength='20' required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="story[locationCountry]" placeholder="Country" required>
+                    <input class="form-control" type="text" name="story[locationCountry]" placeholder="Country" maxlength='20' required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="story[date]" placeholder="Date" required>
+                    <input class="form-control" type="text" name="story[date]" placeholder="Date" maxlength='20' required>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" type="text" name="story[body]" placeholder="Body" required></textarea>
+                    <textarea class="form-control" type="text" name="story[body]" placeholder="Body" maxlength='280' required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="image">Image
