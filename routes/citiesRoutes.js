@@ -4,7 +4,7 @@ const middleware = require('../middleware');
 const City = require('../models/cityModel');
 
 // CLOUDINARY AND MULTER SETUP
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const multer = require('multer');
 const cloudinary = require('cloudinary');
 const storage = multer.diskStorage({
@@ -18,7 +18,7 @@ const imageFilter = function (req, file, cb) {
   }
   return cb(null, true);
 };
-const upload = multer({ storage, fileFilter });
+const upload = multer({ storage, fileFilter: imageFilter });
 cloudinary.config({
   cloud_name: 'wanderlustoria',
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -135,27 +135,27 @@ router.get('/:cityId/edit', middleware.isAdminAccount, (req, res) => {
 
 // UPDATE ROUTE
 router.put('/:cityId', middleware.isAdminAccount, upload.single('image'), (req, res) => {
-  City.findById(req.params.cityId, async (err, city) => {
+  City.findById(req.params.cityId, async (err, foundCity) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
     }
     if (req.file) {
       try {
-        await cloudinary.v2.uploader.destroy(city.imageId);
+        await cloudinary.v2.uploader.destroy(foundCity.imageId);
         const result = await cloudinary.v2.uploader.upload(req.file.path);
-        city.image = result.secure_url;
-        city.imageId = result.public_id;
+        foundCity.image = result.secure_url;
+        foundCity.imageId = result.public_id;
       } catch (err) {
         req.flash('error', err.message);
         return res.redirect('back');
       }
     }
-    city.name = req.sanitize(req.body.city.name);
-    city.country = req.sanitize(req.body.city.country);
-    city.tagline = req.sanitize(req.body.city.tagline);
-    city.description = req.sanitize(req.body.city.description);
-    city.save();
+    foundCity.name = req.sanitize(req.body.city.name);
+    foundCity.country = req.sanitize(req.body.city.country);
+    foundCity.tagline = req.sanitize(req.body.city.tagline);
+    foundCity.description = req.sanitize(req.body.city.description);
+    foundCity.save();
     req.flash('success', 'City updated');
     return res.redirect(`/cities/${req.params.cityId}`);
   });

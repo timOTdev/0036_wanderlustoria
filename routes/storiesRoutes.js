@@ -5,7 +5,7 @@ const City = require('../models/cityModel');
 const Story = require('../models/storyModel');
 
 // CLOUDINARY AND MULTER SETUP
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const multer = require('multer');
 const cloudinary = require('cloudinary');
 const storage = multer.diskStorage({
@@ -53,53 +53,55 @@ router.post('/', middleware.isLoggedIn, upload.single('image'), (req, res) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
-    } else {
-      cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
-        if (err) {
+    }
+    cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      req.body.story.title = req.sanitize(req.body.story.title);
+      req.body.story.date = req.sanitize(req.body.story.date);
+      req.body.story.body = req.sanitize(req.body.story.body);
+      req.body.story.author = {
+        name: req.user.username,
+        id: req.user._id,
+      };
+      req.body.story.image = {
+        name: result.secure_url,
+        id: result.public_id,
+      };
+      req.body.story.city = {
+        name: city.name,
+        country: city.country,
+        id: req.params.cityId,
+      };
+
+      geocoder.geocode(req.body.story.locationName, (err, data) => {
+        if (err || !data.length) {
           req.flash('error', err.message);
           return res.redirect('back');
         }
-        req.body.story.title = req.sanitize(req.body.story.title);
-        req.body.story.date = req.sanitize(req.body.story.date);
-        req.body.story.body = req.sanitize(req.body.story.body);
-        req.body.story.author = {
-          name: req.user.username,
-          id: req.user._id,
+        req.body.story.location = {
+          name: req.body.story.locationName,
+          city: req.body.story.locationCity,
+          country: req.body.story.locationCountry,
+          latitude: data[0].latitude,
+          longitude: data[0].longitude,
         };
-        req.body.story.image = {
-          name: result.secure_url,
-          id: result.public_id,
-        };
-        req.body.story.city = {
-          name: city.name,
-          country: city.country,
-          id: req.params.cityId,
-        };
-
-        geocoder.geocode(req.body.story.locationName, (err, data) => {
-          if (err || !data.length) {
+        Story.create(req.body.story, (err, story) => {
+          if (err) {
             req.flash('error', err.message);
             return res.redirect('back');
           }
-          req.body.story.location = {
-            name: req.body.story.locationName,
-            city: req.body.story.locationCity,
-            country: req.body.story.locationCountry,
-            latitude: data[0].latitude,
-            longitude: data[0].longitude,
-          };
-          Story.create(req.body.story, (err, story) => {
-            if (err) {
-              req.flash('error', err.message);
-              return res.redirect('back');
-            }
-            city.stories.push(story);
-            city.save();
-            res.redirect(`/cities/${req.params.cityId}`);
-          });
+          city.stories.push(story);
+          city.save();
+          return res.redirect(`/cities/${req.params.cityId}`);
         });
+        return data;
       });
-    }
+      return result;
+    });
+    return city;
   });
 });
 
@@ -135,6 +137,7 @@ router.get('/stories/:storyId/edit', middleware.checkStoryOwner, (req, res) => {
       }
       return res.render('storiesEdit', { city, story });
     });
+    return city;
   });
 });
 
@@ -144,30 +147,29 @@ router.put('/stories/:storyId', middleware.checkStoryOwner, upload.single('image
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
-    } else {
-      if (req.file) {
-        try {
-          await cloudinary.v2.uploader.destroy(foundStory.image.id);
-          const result = await cloudinary.v2.uploader.upload(req.file.path);
-          foundStory.image.name = result.secure_url;
-          foundStory.image.id = result.public_id;
-        } catch (err) {
-          req.flash('error', err.message);
-          return res.redirect('back');
-        }
-      }
-      foundStory.title = req.sanitize(req.body.story.title);
-      foundStory.location.name = req.sanitize(req.body.story.locationName);
-      foundStory.location.city = req.sanitize(req.body.story.locationCity);
-      foundStory.location.country = req.sanitize(req.body.story.locationCountry);
-      foundStory.location.latitude = req.sanitize(req.body.story.locationLatitude);
-      foundStory.location.longitude = req.sanitize(req.body.story.locationLongitude);
-      foundStory.date = req.sanitize(req.body.story.date);
-      foundStory.body = req.sanitize(req.body.story.body);
-      foundStory.save();
-      req.flash('success', 'Story updated');
-      res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
     }
+    if (req.file) {
+      try {
+        await cloudinary.v2.uploader.destroy(foundStory.image.id);
+        const result = await cloudinary.v2.uploader.upload(req.file.path);
+        foundStory.image.name = result.secure_url;
+        foundStory.image.id = result.public_id;
+      } catch (err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+    }
+    foundStory.title = req.sanitize(req.body.story.title);
+    foundStory.location.name = req.sanitize(req.body.story.locationName);
+    foundStory.location.city = req.sanitize(req.body.story.locationCity);
+    foundStory.location.country = req.sanitize(req.body.story.locationCountry);
+    foundStory.location.latitude = req.sanitize(req.body.story.locationLatitude);
+    foundStory.location.longitude = req.sanitize(req.body.story.locationLongitude);
+    foundStory.date = req.sanitize(req.body.story.date);
+    foundStory.body = req.sanitize(req.body.story.body);
+    foundStory.save();
+    req.flash('success', 'Story updated');
+    return res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
   });
 });
 

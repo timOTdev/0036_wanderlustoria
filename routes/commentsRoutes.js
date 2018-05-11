@@ -27,35 +27,35 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 router.post('/', middleware.isLoggedIn, (req, res) => {
   req.body.comment.body = req.sanitize(req.body.comment.body);
 
-  City.findById(req.params.cityId, (err, city) => {
+  City.findById(req.params.cityId, (err, foundCity) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
     }
-    Story.findById(req.params.storyId, (err, story) => {
+    Story.findById(req.params.storyId, (err, foundStory) => {
       if (err) {
         req.flash('error', err.message);
         return res.redirect('back');
       }
-      Comment.create(req.body.comment, (err, comment) => {
+      Comment.create(req.body.comment, (err, newComment) => {
         if (err) {
           req.flash('error', err.message);
           return res.redirect('back');
         }
-        comment.author.id = req.user._id;
-        comment.author.username = req.user.username;
-        comment.story.title = story.title;
-        comment.story.id = story.id;
-        comment.city.name = city.name;
-        comment.city.id = city.id;
-        comment.save();
-        story.comments.push(comment);
-        story.save();
+        newComment.author.id = req.user._id;
+        newComment.author.username = req.user.username;
+        newComment.story.title = foundStory.title;
+        newComment.story.id = foundStory.id;
+        newComment.city.name = foundCity.name;
+        newComment.city.id = foundCity.id;
+        newComment.save();
+        foundStory.comments.push(newComment);
+        foundStory.save();
         return res.redirect(`/cities/${req.params.cityId}/stories/${req.params.storyId}`);
       });
-      return story;
+      return foundStory;
     });
-    return city;
+    return foundCity;
   });
 });
 
