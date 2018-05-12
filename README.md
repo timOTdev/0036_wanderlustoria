@@ -56,6 +56,7 @@
 4. Post a new story under a city
 5. Post comments on other stories
 6. Enjoy learning about new places
+7. Charater limits are as follows: 1000 character limit for story body, 500 for user bio, 280 for user comments
 
 ### As an admin
 
