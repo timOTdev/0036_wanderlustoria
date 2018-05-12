@@ -27,7 +27,7 @@ app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(flash());
 app.locals.moment = require('moment');
-mongoose.connect(process.env.HEROKUDATABASE);
+mongoose.connect(process.env.HEROKUDATABASE || "mongodb://localhost/yelp_camp");
 
 // Passport Configuration
 app.use(require("express-session")({
@@ -55,6 +55,6 @@ app.use("/cities/:cityId", storiesRoutes);
 app.use("/cities/:cityId/stories/:storyId", commentsRoutes);
 
 // Server Listener
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log("Wanderlustoria is running!");
 });
