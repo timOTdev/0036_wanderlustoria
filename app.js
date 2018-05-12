@@ -27,7 +27,7 @@ app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(flash());
 app.locals.moment = require('moment');
-mongoose.connect("mongodb://localhost/wanderlustoria");
+mongoose.connect(process.env.HEROKUDATABASE);
 
 // Passport Configuration
 app.use(require("express-session")({
