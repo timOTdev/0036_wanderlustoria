@@ -1,5 +1,6 @@
-const express = require('express');
+require('dotenv').config();
 
+const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const middleware = require('../middleware');
@@ -10,7 +11,6 @@ const User = require('../models/userModel');
 const Story = require('../models/storyModel');
 const Comment = require('../models/commentModel');
 const moment = require('moment');
-require('dotenv').config();
 require('express-sanitizer');
 
 // INDEX ROUTES

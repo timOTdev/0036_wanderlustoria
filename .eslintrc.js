@@ -6,5 +6,6 @@ module.exports = {
       'no-param-reassign': ['off'],
       'no-underscore-dangle': ['off'],
       'max-len': ['off'],
+      'func-names': ['off'],
   },
 };
