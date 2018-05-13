@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -55,6 +57,6 @@ app.use('/cities/:cityId', storiesRoutes);
 app.use('/cities/:cityId/stories/:storyId', commentsRoutes);
 
 // Server Listener
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3000, function() {
   console.log('Wanderlustoria is running!');
 });

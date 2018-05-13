@@ -31,7 +31,7 @@ const NodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'google',
   httpAdapter: 'https',
-  apiKey: process.env.GEOCODER_API_KEY,
+  apiKey: process.env.GEOCODER_SERVER_API_KEY,
   formatter: null,
 };
 const geocoder = NodeGeocoder(options);
@@ -106,7 +106,7 @@ router.post('/', middleware.isLoggedIn, upload.single('image'), (req, res) => {
 });
 
 // SHOW ROUTE
-router.get('/stories/:storyId', middleware.isLoggedIn, (req, res) => {
+router.get('/stories/:storyId', (req, res) => {
   City.findById(req.params.cityId, (err, city) => {
     if (err) {
       req.flash('error', err.message);
