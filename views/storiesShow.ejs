@@ -106,6 +106,7 @@
     });
   }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD388n3Ic5C826_Hoi60v_eCJMwaAlfDs4&callback=initMap"></script>
+
+<script async defer src='https://maps.googleapis.com/maps/api/js?key=<%= process.env.GEOCODER_API_KEY %>&callback=initMap'></script>
 
 <% include footerPartial %>

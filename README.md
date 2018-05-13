@@ -15,7 +15,7 @@
 
 ## Features
 
-- A fast, smooth platform built with NodeJS/ExpressJS/MongoDB
+- A fast, powerful platform built with NodeJS/ExpressJS/MongoDB
 - Upload photos which are hosted on cloudinary
 - Sign up and log into your own account with PassportJS
 - Auto-finds Google Map of location based on the name
@@ -90,20 +90,20 @@
 2. Navigate to the directory of choice and type `git clone https://github.com/timh1203/wanderlustoria`
 3. Set up a **MongoDB community server** for a local database (recommended) or **mLAB** database for a free online database:
 4. For a Mongo Community server:
-* [Download MongoDB Comunnity Server](https://www.mongodb.com/download-center#community)
-* [Follow Mac OSX Setup Instructions from MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) or use the youtube video
-* [Follow MAC OSX Setup Instructions from Youtube](https://www.youtube.com/watch?v=DX15WbKidXY)
+- [Download MongoDB Comunnity Server](https://www.mongodb.com/download-center#community)
+- [Follow Mac OSX Setup Instructions from MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) or use the youtube video
+- [Follow MAC OSX Setup Instructions from Youtube](https://www.youtube.com/watch?v=DX15WbKidXY)
 5. For an MLAB database:
-* Sign up at [mLab Home](https://mlab.com/)
-* Remember your username and password for the `.env.variables` file later
+- Sign up at [mLab Home](https://mlab.com/)
+- Remember your username and password for the `.env.variables` file later
 6. You will also need API keys:
-* [Cloudinary Name, API Key and API Secret](https://cloudinary.com/console/dashboard) to host pictures for your users
-* [Geocoder API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key) to find the user-input location
-* [Gmail account](https://accounts.google.com/signin/v2/identifier?service=mail) to send users emails to reset their passwords
+- [Cloudinary Name, API Key and API Secret](https://cloudinary.com/console/dashboard) to host pictures for your users
+- [Geocoder API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key) to find the user-input location
+- [Gmail account](https://accounts.google.com/signin/v2/identifier?service=mail) to send users emails to reset their passwords
 7. Enter these api key variables in the `.env.variables` file and RENAME the file to `.env` when you are done
-* API variables inside .env are after the equal sign without quotes such as `CLOUDINARY_API_SECRET=abc123`
-* MLABDATABASE follows a format such as `mongodb://<dbuser>:<dbpassword>@ds119370.mlab.com:19370/<database name>`
-* Fill in the information from the MLAB signup from step 5.
+- API variables inside .env are after the equal sign without quotes such as `CLOUDINARY_API_SECRET=abc123`
+- MLABDATABASE follows a format such as `mongodb://<dbuser>:<dbpassword>@ds119370.mlab.com:19370/<database name>`
+- Fill in the information from the MLAB signup from step 5.
 8. Run the MongoDB server with the terminal command `mongod` or have it linked up to MLAB database
 9. Run the node app with `node app.js` in the root directory
 10. Open up your favorite editor and hack away!

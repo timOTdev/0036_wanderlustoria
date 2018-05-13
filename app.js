@@ -22,7 +22,7 @@ const commentsRoutes = require('./routes/commentsRoutes');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 // app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 app.use(flash());
@@ -31,9 +31,9 @@ mongoose.connect(process.env.MLABDATABASE || 'mongodb://localhost/wanderlustoria
 
 // Passport Configuration
 app.use(require('express-session')({
-    secret: 'fernweh',
-    resave: false,
-    saveUninitialized: false
+  secret: 'fernweh',
+  resave: false,
+  saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,11 +41,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    res.locals.error = req.flash('error');
-    res.locals.success = req.flash('success');
-    next();
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  next();
 });
 
 app.use('/', homeRoutes);
@@ -55,6 +55,6 @@ app.use('/cities/:cityId', storiesRoutes);
 app.use('/cities/:cityId/stories/:storyId', commentsRoutes);
 
 // Server Listener
-app.listen(process.env.PORT || 3000, function(){
-    console.log('Wanderlustoria is running!');
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Wanderlustoria is running!');
 });
