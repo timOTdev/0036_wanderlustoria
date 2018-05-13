@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -29,8 +29,7 @@ app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 app.use(flash());
 app.locals.moment = require('moment');
-mongoose.connect('mongodb://localhost/wanderlustoria');
-// mongoose.connect(process.env.MLABDATABASE || 'mongodb://localhost/wanderlustoria');
+mongoose.connect(process.env.MLABDATABASE || 'mongodb://localhost/wanderlustoria');
 
 // Passport Configuration
 app.use(require('express-session')({
@@ -58,6 +57,4 @@ app.use('/cities/:cityId', storiesRoutes);
 app.use('/cities/:cityId/stories/:storyId', commentsRoutes);
 
 // Server Listener
-app.listen(process.env.PORT || 3000, function() {
-  console.log('Wanderlustoria is running!');
-});
+app.listen(process.env.PORT || 3000);

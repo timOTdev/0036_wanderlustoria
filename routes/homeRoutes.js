@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -44,10 +43,9 @@ router.post('/login', passport.authenticate('local', {
   successFlash: 'Welcome back!',
 }), (req, res) => {
   if (req.user.isAdmin === true) {
-    res.redirect('/dashboard');
-  } else {
-    res.redirect('/cities');
+    return res.redirect('/dashboard');
   }
+  return res.redirect('/cities');
 });
 
 // FORGOT PASSWORD ROUTES

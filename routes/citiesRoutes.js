@@ -41,19 +41,17 @@ router.get('/', (req, res) => {
         City.count({ name: regex }).exec((err, count) => {
           if (err) {
             req.flash('error', err.message);
-            res.redirect('back');
-          } else {
-            if (allCities.length === 0) {
-              noMatch = 'No matches found.';
-            }
-            res.render('citiesIndex', {
-              cities: allCities,
-              noMatch,
-              current: pageNumber,
-              pages: Math.ceil(count / perPage),
-              search: req.query.search,
-            });
+            return res.redirect('back');
+          } else if (allCities.length === 0) {
+            noMatch = 'No matches found.';
           }
+          return res.render('citiesIndex', {
+            cities: allCities,
+            noMatch,
+            current: pageNumber,
+            pages: Math.ceil(count / perPage),
+            search: req.query.search,
+          });
         });
       });
   } else {
@@ -64,16 +62,15 @@ router.get('/', (req, res) => {
         City.count().exec((err, count) => {
           if (err) {
             req.flash('error', err.message);
-            res.redirect('back');
-          } else {
-            res.render('citiesIndex', {
-              cities: allCities,
-              current: pageNumber,
-              pages: Math.ceil(count / perPage),
-              noMatch: null,
-              search: false,
-            });
+            return res.redirect('back');
           }
+          return res.render('citiesIndex', {
+            cities: allCities,
+            current: pageNumber,
+            pages: Math.ceil(count / perPage),
+            noMatch: null,
+            search: false,
+          });
         });
       });
   }
@@ -117,9 +114,9 @@ router.get('/:cityId', (req, res) => {
   City.findById(req.params.cityId).populate('stories').exec((err, city) => {
     if (err) {
       req.flash('error', err.message);
-    } else {
-      res.render('citiesShow', { city });
+      return res.redirect('back');
     }
+    return res.render('citiesShow', { city });
   });
 });
 
@@ -127,6 +124,7 @@ router.get('/:cityId', (req, res) => {
 router.get('/:cityId/edit', middleware.isAdminAccount, (req, res) => {
   City.findById(req.params.cityId, (err, city) => {
     if (err) {
+      req.flash('error', err.message);
       return res.redirect('back');
     }
     return res.render('citiesEdit', { city });
