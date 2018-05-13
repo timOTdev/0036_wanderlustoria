@@ -44,15 +44,19 @@ middlewareObj.checkStoryOwner = function (req, res, next) {
       if (err) {
         req.flash('error', 'Story not found');
         return res.redirect('back');
-      } else if (foundStory.author.id.equals(req.user._id) || req.user.isAdmin) {
-        return next();
+      } else {
+        if (foundStory.author.id.equals(req.user._id) || req.user.isAdmin) {
+          next();
+        } else {
+          req.flash('error', 'You do not have permission');
+          res.redirect('back');
+        }
       }
-      req.flash('error', 'You do not have permission');
-      return res.redirect('back');
     });
+  } else {
+    req.flash('error', 'You need to be logged in');
+    res.redirect('back');
   }
-  req.flash('error', 'You need to be logged in');
-  return res.redirect('back');
 };
 
 middlewareObj.checkCommentOwner = function (req, res, next) {
@@ -61,15 +65,19 @@ middlewareObj.checkCommentOwner = function (req, res, next) {
       if (err) {
         req.flash('error', 'Comment not found');
         return res.redirect('back');
-      } else if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
-        return next();
+      } else {
+        if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
+          next();
+        } else {
+          req.flash('error', 'You do not have permission');
+          res.redirect('back');
+        }
       }
-      req.flash('error', 'You do not have permission');
-      return res.redirect('back');
     });
+  } else {
+    req.flash('error', 'You need to be logged in');
+    res.redirect('back');
   }
-  req.flash('error', 'You need to be logged in');
-  return res.redirect('back');
 };
 
 module.exports = middlewareObj;
