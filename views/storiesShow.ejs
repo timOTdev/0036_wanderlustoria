@@ -46,8 +46,17 @@
   </div>
 
   <div class='col-lg-10 col-md-6 col-sm-12 my-1 py-1 mx-auto'>
+    <form action='/cities/<%= city._id %>/stories/<%= story._id%>' method='POST'>
+      <div class='form-group'>
+        <textarea class='form-control w-100' type='text' name='comment[body]' placeholder='Comment' maxlength='280' required></textarea>
+      </div>
+      <button class='btn btn-success d-block mx-auto' type='submit'>
+        <i class='far fa-comment'></i> Add Comment
+      </button>
+    </form>
+    <hr class='w-100'>
+
     <% story.comments.forEach(function (comment) { %>
-      <hr class='w-100'>
       <div class='comment'>
         <div class='comment-top d-flex justify-content-between'>
           <p class='align-self-start'>
@@ -75,18 +84,8 @@
         
         <p><%= comment.body %></p>
       </div>
+      <hr class='w-100'>
     <% }) %>
-
-    <hr class='w-100'>
-
-    <form action='/cities/<%= city._id %>/stories/<%= story._id%>' method='POST'>
-      <div class='form-group'>
-        <textarea class='form-control w-100' type='text' name='comment[body]' placeholder='Comment' maxlength='280' required></textarea>
-      </div>
-      <button class='btn btn-success d-block mx-auto' type='submit'>
-        <i class='far fa-comment'></i> Add Comment
-      </button>
-    </form>
   </div>
 </div>
 
