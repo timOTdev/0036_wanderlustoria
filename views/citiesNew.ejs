@@ -1,39 +1,40 @@
 <% include headerPartial %>
 
-<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
-    <div class="py-1" aria-label="breadcrumb">
-        <a class="btn btn-outline-light py-0" href="/cities">Cities</a>
+<nav class='navbar navbar-expand-lg justify-content-between my-0 py-1 text-center' style='background: black;'>
+    <div class='py-1' aria-label='breadcrumb'>
+        <a class='btn btn-outline-light py-0' href='/cities'>Cities</a>
     </div> 
 </nav>
 
-<div class="container">
-    <div class="row">
-        <div class="w-50 mx-auto text-center">
-            <h1>New City Page</h1>
-            <form action="/cities" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="city[name]" placeholder="City" maxlength='20' autofocus required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="city[country]" placeholder="Country" maxlength='20' required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="city[tagline]" placeholder="Tagline" maxlength='40' required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" type="text" name="city[description]" placeholder="Description" maxlength='1000' required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="image">Image
-                        <input class="form-control" id="image" type="file" name="image" accept="image/*" required>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-lg btn-primary">Submit</button>
-                </div>
-            </form>
+<div class='container'>
+  <div class='row'>
+    <div class='w-50 mx-auto text-center'>
+      <h1>New City Page</h1>
+      
+      <form action='/cities' method='POST' enctype='multipart/form-data'>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='city[name]' placeholder='City' maxlength='140' autofocus required />
         </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='city[country]' placeholder='Country' maxlength='140' required />
+        </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='city[tagline]' placeholder='Tagline' maxlength='140' required />
+        </div>
+        <div class='form-group'>
+          <textarea class='form-control' type='text' name='city[description]' placeholder='Description' maxlength='1000' required></textarea>
+        </div>
+        <div class='form-group'>
+          <label for='image'>Image
+            <input class='form-control' id='image' type='file' name='image' accept='image/*' required />
+          </label>
+        </div>
+        <div class='form-group'>
+          <button class='btn btn-lg btn-primary'>Submit</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <% include footerPartial %>

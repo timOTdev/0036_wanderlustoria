@@ -1,42 +1,46 @@
 <% include headerPartial %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-12 text-center">
-      <div class="card">
-        <div class="card-header">
-          <h1><%= user.firstName + " " + user.lastName %></h1>
+<div class='container'>
+  <div class='row'>
+    <div class='col-lg-4 col-md-4 col-sm-12 text-center'>
+      <div class='card'>
+        <div class='card-header'>
+          <h1><%= user.firstName + ' ' + user.lastName %></h1>
           <h3><%= user.username %></h3>
         </div>
 
-        <div class="card-body">
-            <img class="card-img-top img-thumbnail img-fluid mx-auto" 
-            src="<%= user.image.name %>" 
-            alt="<%= user.username %>'s Profile Image"
-            style="display: block; max-width: 20rem; border-radius: 50%;">
-          <p class="card-text"><%= user.body %></p>
+        <div class='card-body'>
+          <img class='card-img-top img-thumbnail img-fluid mx-auto' 
+          src='<%= user.image.name %>' 
+          alt="<%= user.username %>'s Profile Image"
+          style='display: block; max-width: 20rem; border-radius: 50%;'>
+          <p class='card-text'><%= user.body %></p>
         </div>
 
-        <div class="card-footer text-center btn-group-vertical">
-        <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-          <a class="btn btn-warning w-50 my-1 align-self-center" href="/users/<%= user._id %>/edit"><i class="fas fa-cog"></i> Edit Profile</a>
-          <a class="btn btn-warning w-50 my-1 align-self-center" href="/forgot"><i class="fas fa-key"></i> Change Password</a>
-          <% if(currentUser && currentUser.isAdmin){ %>
-            <form class="w-50 my-1 align-self-center" action="/users/<%= user._id %>?_method=DELETE" method="POST">
-              <a class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Profile</a>
-            </form>
+        <div class='card-footer text-center btn-group-vertical'>
+          <% if (currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+            <a class='btn btn-warning w-50 my-1 align-self-center' href='/users/<%= user._id %>/edit'>
+              <i class='fas fa-cog'></i> Edit Profile
+            </a>
+            <a class='btn btn-warning w-50 my-1 align-self-center' href='/forgot'>
+              <i class='fas fa-key'></i> Change Password
+            </a>
+            <% if (currentUser && currentUser.isAdmin) { %>
+              <form class='w-50 my-1 align-self-center' action='/users/<%= user._id %>?_method=DELETE' method='POST'>
+                <a class='btn btn-danger'><i class='fas fa-trash-alt'></i> Delete Profile</a>
+              </form>
+            <% } %>
           <% } %>
-        <% } %>
         </div>
       </div>
     </div>
 
-    <div class="col-lg-8 col-md-8 col-sm-12 py-3">
+    <div class='col-lg-8 col-md-8 col-sm-12 py-3'>
       <h1>Stories</h1>
       <% stories.forEach(story => { %>
         <p>
-          <a class="btn btn-outline-success" 
-          href="/cities/<%= story.city.id %>/stories/<%= story._id %>">
+          <a class='btn btn-outline-success' 
+          href='/cities/<%= story.city.id %>/stories/<%= story._id %>'>
             <%= story.title %> @ <%= story.city.name %>, <%= story.city.country %> - <%= story.date %>
           </a>
         </p>

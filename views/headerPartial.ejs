@@ -1,55 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Wanderlustoria by Timothy Hoang</title>
-        <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
-    </head>
-    <body>
-        <nav class="navbar fixed-top justify-content-between my-0 py-0" style="background: black;">
-            <a class="navbar-brand logo" href="/home" style="
-            color: lightcoral;
-            text-shadow: 3px 3px 3px darkred;
-            font-family: 'Black And White Picture', sans-serif;">
-                <h3 class="my-0 py-0">
-                    <span class="wander" style="color: lightgreen;text-shadow: 3px 3px 3px darkcyan;">Wander</span>lustoria
-                </h3>
+  <head>
+    <title>Wanderlustoria by Timothy Hoang</title>
+    <link href='https://fonts.googleapis.com/css?family=Black+And+White+Picture|Montserrat' rel='stylesheet'>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' type='text/css' href='/stylesheets/app.css'>
+  </head>
+  <body>
+    <nav class='navbar fixed-top justify-content-between my-0 py-0' style='background: black;'>
+      <a class='navbar-brand logo' href='/home' style='
+      color: lightcoral;
+      text-shadow: 3px 3px 3px darkred;
+      font-family: "Black And White Picture", sans-serif;'>
+        <h3 class='my-0 py-0'>
+          <span class='wander' style='color: lightgreen;text-shadow: 3px 3px 3px darkcyan;'>Wander</span>lustoria
+        </h3>
+      </a>
+      
+      <form class='form-inline my-2 my-lg-0' action='/cities' method='GET'>
+        <div class='form-group'>
+          <input class='form-control mr-sm-2' type='text' name='search' placeholder='City Search...' aria-label='Search' maxlength='20' />
+          <input class='btn btn-default' type='submit' value='Search' />
+        </div>
+      </form>
+      
+      <div>
+        <% if (!currentUser) { %>
+          <a class='btn btn-secondary my-0 py-0' href='/register'>
+            <i class='fas fa-user-plus'></i> Register
+          </a>
+          <a class='btn btn-secondary my-0 py-0' href='/login %>'>
+            <i class='fas fa-sign-in-alt'></i> Login
+          </a>
+        <% } else { %>
+          <% if (currentUser && currentUser.isAdmin) { %> 
+            <a class='btn btn-primary my-0 py-0' href='/dashboard'>
+              <i class='fas fa-globe'></i> Dashboard
             </a>
-            
-            <form class="form-inline my-2 my-lg-0" action="/cities" method="GET">
-                <div class="form-group">
-                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="City Search..." aria-label="Search" maxlength='20'>
-                    <input class="btn btn-default" type="submit" value="Search">
-                </div>
-            </form>
-           
-            <div>
-                <% if(!currentUser){ %>
-                    <a class="btn btn-secondary my-0 py-0" href="/register"><i class="fas fa-user-plus"></i> Register</a>
-                    <a class="btn btn-secondary my-0 py-0" href="/login %>"><i class="fas fa-sign-in-alt"></i> Login </a>
-                <% } else {%>
-                    <% if(currentUser && currentUser.isAdmin){ %> 
-                        <a class="btn btn-primary my-0 py-0" href="/dashboard"><i class="fas fa-globe"></i> Dashboard</a>
-                    <% } %>
-                    <a class="btn btn-info my-0 py-0" href="/users/<%= currentUser._id %>"><i class="fas fa-user"></i> <%= currentUser.username %></a>
-                    <a class="btn btn-info my-0 py-0" data-value="logout" href="/logout" onclick="return confirm('Log out?');"><i class="fas fa-sign-out-alt"></i> Logout</span>
-                    </a>
-                <% } %>
-            </div>
-        </nav>
+          <% } %>
+          <a class='btn btn-info my-0 py-0' href='/users/<%= currentUser._id %>'>
+            <i class='fas fa-user'></i> <%= currentUser.username %>
+          </a>
+          <a class='btn btn-info my-0 py-0' data-value='logout' href='/logout' onclick='return confirm("Log out?");'>
+            <i class='fas fa-sign-out-alt'></i> Logout
+          </a>
+        <% } %>
+      </div>
+    </nav>
 
-        <% if(error && error.length > 0 ){ %>
-            <div class="my-0 py-0 pt-1">
-                <div class="alert alert-danger text-center my-0 py-0" role="alert">
-                    <%= error %>
-                </div>
-            </div>
-        <% } %>
-        <% if(success && success.length > 0){ %>
-            <div class="my-0 py-0 pt-1">
-                <div class="alert alert-success text-center my-0 py-0" role="alert">
-                    <%= success %>
-                </div>
-            </div>
-        <% } %>
+    <% if (error && error.length > 0) { %>
+      <div class='my-0 py-0 pt-1'>
+        <div class='alert alert-danger text-center my-0 py-0' role='alert'>
+          <%= error %>
+        </div>
+      </div>
+    <% } %>
+    <% if (success && success.length > 0) { %>
+      <div class='my-0 py-0 pt-1'>
+        <div class='alert alert-success text-center my-0 py-0' role='alert'>
+          <%= success %>
+        </div>
+      </div>
+    <% } %>

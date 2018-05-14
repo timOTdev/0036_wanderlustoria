@@ -1,83 +1,93 @@
 <% include headerPartial %>
 
-<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
-  <div class="py-1" aria-label="breadcrumb">
-      <a class="btn btn-outline-secondary py-0" href="/cities"><i class="far fa-map"></i> Destinations</a>
-      <a class="btn btn-outline-secondary py-0" href="/cities/<%= city._id %>"><i class="far fa-building"></i> <%= city.name %>, <%= city.country %></a>
-      <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>"><i class="fas fa-map-pin"></i> <%= story.location.name %></a>
+<nav class='navbar navbar-expand-lg justify-content-between my-0 py-1 text-center' style='background: black;'>
+  <div class='py-1' aria-label='breadcrumb'>
+    <a class='btn btn-outline-secondary py-0' href='/cities'>
+      <i class='far fa-map'></i> Destinations
+    </a>
+    <a class='btn btn-outline-secondary py-0' href='/cities/<%= city._id %>'>
+      <i class='far fa-building'></i> <%= city.name %>, <%= city.country %>
+    </a>
+    <a class='btn btn-outline-light py-0' href='/cities/<%= city._id %>/stories/<%= story._id %>'>
+      <i class='fas fa-map-pin'></i> <%= story.location.name %>
+    </a>
   </div> 
   
-  <div class="py-1">
+  <div class='py-1'>
     <% if (currentUser && story.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-      <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/stories/<%= story._id %>/edit"><i class="fas fa-edit"></i> Edit</a>
-      <form class="btn btn-danger p-0" 
-      id="delete" 
-      action="/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE" 
-      method="POST" 
-      onsubmit="return confirm('Delete <%= story.title %>?');">
-        <button type="submit" class="btn btn-danger btn-transparent py-0"><i class="fas fa-trash"></i> Delete</button>
+      <a class='btn btn-warning py-0' href='/cities/<%= city._id %>/stories/<%= story._id %>/edit'>
+        <i class='fas fa-edit'></i> Edit
+      </a>
+      <form class='btn btn-danger p-0' 
+      id='delete' 
+      action='/cities/<%= city._id%>/stories/<%= story._id %>?_method=DELETE' 
+      method='POST' 
+      onsubmit='return confirm("Delete <%= story.title %>?");'>
+        <button type='submit' class='btn btn-danger btn-transparent py-0'><i class='fas fa-trash'></i> Delete</button>
       </form>
     <% } %>
   </div>
 </nav>
 
-<div class="jumbotron mx-0 mb-0 p-0">
-  <div class="row justify-content-center mx-0">
-    <div class="col-lg-3 mx-5 my-1 py-1" id="map" style="height: 90vh; border: 1px solid black; border-radius: 5%;">
+<div class='jumbotron mx-0 mb-0 p-0'>
+  <div class='row justify-content-center mx-0'>
+    <div class='col-lg-3 mx-5 my-1 py-1' id='map' style='height: 90vh; border: 1px solid black; border-radius: 5%;'>
     </div>
 
-    <div class="col-lg-6 mx-5 my-1 py-1 text-center">
-      <img class="img w-100" src="<%= story.image.name %>" alt="<%= story.title %>" style="border: 1px solid black; border-radius: 1%;"/>
+    <div class='col-lg-6 mx-5 my-1 py-1 text-center'>
+      <img class='img w-100' src='<%= story.image.name %>' alt='<%= story.title %>' style='border: 1px solid black; border-radius: 1%;'/>
       <h1><%= story.title.toUpperCase() %></h1>
       <h5><em><%= story.location.name %> @ <%= story.location.city %>, <%= story.location.country %></em></h5>
       <p><em><%= story.date %></em></p>
-      <hr class="w-100">
-      <p class="w-75 mx-auto"><%= story.body %></p>
-      <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a>, <em><%= moment(story.createdAt).fromNow() %></em></p>
+      <hr class='w-100'>
+      <p class='w-75 mx-auto'><%= story.body %></p>
+      <p>Submitted by: <a href='/users/<%= story.author.id %>'><%= story.author.name %></a>, <em><%= moment(story.createdAt).fromNow() %></em></p>
     </div>
   </div>
 
-  <div class="col-lg-10 col-md-6 col-sm-12 my-1 py-1 mx-auto">
-      <% story.comments.forEach(function(comment){ %>
-        <hr class="w-100">
-        <div class="comment">
-          <div class="comment-top d-flex justify-content-between"
-            <p class="align-self-start">
-              <a class="" href="/users/<%= comment.author.id %>"><strong><%= comment.author.username %></strong></a>
-            </p>
+  <div class='col-lg-10 col-md-6 col-sm-12 my-1 py-1 mx-auto'>
+    <% story.comments.forEach(function (comment) { %>
+      <hr class='w-100'>
+      <div class='comment'>
+        <div class='comment-top d-flex justify-content-between'>
+          <p class='align-self-start'>
+            <a class='' href='/users/<%= comment.author.id %>'><strong><%= comment.author.username %></strong></a>
+          </p>
 
-            <div class="align-self-end">
-              <span><%= moment(comment.createdAt).fromNow() %></span>
+          <div class='align-self-end'>
+            <span><%= moment(comment.createdAt).fromNow() %></span>
 
-              <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-                <a class="d-inline" href="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
-                  <button class="btn btn-warning p-0">
-                    <i class="fas fa-pencil-alt"></i>
-                  </button>
-                </a>
-                
-                <form class="d-inline" id="delete" action="/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-danger p-0" onclick="return confirm('Delete comment?');">
-                      <i class="fas fa-trash-alt"></i>
-                  </button>
-                </form>
-              <% } %>
-              </div>
+            <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
+              <a class='d-inline' href='/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>/edit'>
+                <button class='btn btn-warning p-0'>
+                  <i class='fas fa-pencil-alt'></i>
+                </button>
+              </a>
+              
+              <form class='d-inline' id='delete' action='/cities/<%= city._id %>/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE' method='POST'>
+                <button class='btn btn-danger p-0' onclick='return confirm("Delete comment?");'>
+                  <i class='fas fa-trash-alt'></i>
+                </button>
+              </form>
+            <% } %>
           </div>
-
-          <p><%= comment.body %></p>
         </div>
-        <% }) %>
+        
+        <p><%= comment.body %></p>
+      </div>
+    <% }) %>
 
-        <hr class="w-100">
+    <hr class='w-100'>
 
-        <form action="/cities/<%= city._id %>/stories/<%= story._id%>" method="POST">
-          <div class="form-group">
-              <textarea class="form-control w-100" type="text" name="comment[body]" placeholder="Comment" maxlength='280' required></textarea>
-          </div>
-          <button class="btn btn-success d-block mx-auto" type="submit"><i class="far fa-comment"></i> Add Comment</button>
-        </form>
-    </div>
+    <form action='/cities/<%= city._id %>/stories/<%= story._id%>' method='POST'>
+      <div class='form-group'>
+        <textarea class='form-control w-100' type='text' name='comment[body]' placeholder='Comment' maxlength='280' required></textarea>
+      </div>
+      <button class='btn btn-success d-block mx-auto' type='submit'>
+        <i class='far fa-comment'></i> Add Comment
+      </button>
+    </form>
+  </div>
 </div>
 
 <script>
@@ -91,8 +101,8 @@
         scrollwheel: false
     });
     var contentString = `
-        <p style="text-align: left;"><strong><%= story.location.name %></strong></p>
-        <p style="text-align: left;"><%= story.location.city %>, <%= story.location.country %></p>
+        <p style='text-align: left;'><strong><%= story.location.name %></strong></p>
+        <p style='text-align: left;'><%= story.location.city %>, <%= story.location.country %></p>
     `
     var infowindow = new google.maps.InfoWindow({
       content: contentString

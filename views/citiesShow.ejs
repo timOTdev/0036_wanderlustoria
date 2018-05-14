@@ -1,52 +1,59 @@
 <% include headerPartial %>
 
-<nav class="navbar navbar-expand-lg justify-content-between my-0 py-1 text-center" style="background: black;">
-    <div class="py-1" aria-label="breadcrumb">
-        <a class="btn btn-outline-secondary py-0" href="/cities"><i class="far fa-map"></i> Destinations</a>
-        <a class="btn btn-outline-light py-0" href="/cities/<%= city._id %>"><i class="far fa-building"></i> <%= city.name %>, <%= city.country %></a>
-    </div> 
-    
-    <div class="py-1">
-      <a href="/cities/<%= city._id %>/new"><button class="btn btn-success py-0"><i class="fas fa-thumbtack"></i> Add New Story</button></a>
-      <% if (currentUser && currentUser.isAdmin) { %>
-        <a class="btn btn-warning py-0" href="/cities/<%= city._id %>/edit"><i class="fas fa-edit"></i> Edit</a>
-          <form class="btn btn-danger p-0" 
-          id="delete" 
-          action="/cities/<%= city._id%>?_method=DELETE" 
-          method="POST" 
-          onsubmit="return confirm('Delete <%= city.name %>?');">
-            <button type="submit" class="btn btn-danger btn-transparent py-0"><i class="fas fa-trash"></i> Delete</button>
-          </form>
-      <% } %>
-    </div>
+<nav class='navbar navbar-expand-lg justify-content-between my-0 py-1 text-center' style='background: black;'>
+  <div class='py-1' aria-label='breadcrumb'>
+    <a class='btn btn-outline-secondary py-0' href='/cities'>
+      <i class='far fa-map'></i> Destinations
+    </a>
+    <a class='btn btn-outline-light py-0' href='/cities/<%= city._id %>'>
+      <i class='far fa-building'></i> <%= city.name %>, <%= city.country %>
+    </a>
+  </div> 
+  
+  <div class='py-1'>
+    <a href='/cities/<%= city._id %>/new'><button class='btn btn-success py-0'><i class='fas fa-thumbtack'></i> Add New Story</button></a>
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <a class='btn btn-warning py-0' href='/cities/<%= city._id %>/edit'>
+        <i class='fas fa-edit'></i> Edit
+      </a>
+      <form class='btn btn-danger p-0' 
+      id='delete' 
+      action='/cities/<%= city._id%>?_method=DELETE' 
+      method='POST' 
+      onsubmit='return confirm("Delete <%= city.name %>?");'>
+        <button type='submit' class='btn btn-danger btn-transparent py-0'>
+          <i class='fas fa-trash'></i> Delete
+        </button>
+      </form>
+    <% } %>
+  </div>
 </nav>
 
-<div class="jumbotron mx-auto text-center pt-0">
+<div class='jumbotron mx-auto text-center pt-0'>
   <h1>Welcome to <%= city.name %>, <%= city.country %>!</h1>
   <h2><em><%= city.tagline %></em></h2>
-  <hr class="my-4">
-  <img class="img-fluid w-50" src="<%= city.image %>" alt="<%= city.description %>" />
-  <p class="mt-5 w-75 mx-auto"><%= city.description %></p>
-  <p>Submitted by: <a href="/users/<%= city.author.id %>"><%= city.author.username %></a></p>
+  <hr class='my-4'>
+  <img class='img-fluid w-50' src='<%= city.image %>' alt='<%= city.description %>' />
+  <p class='mt-5 w-75 mx-auto'><%= city.description %></p>
+  <p>Submitted by: <a href='/users/<%= city.author.id %>'><%= city.author.username %></a></p>
 </div>
 
-<div class="Stories">
-  <div class="row mx-0">
-    <% city.stories.forEach(function(story){ %>
-      <div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="card img-thumbnail rounded">
-          <div class="card-img">
-            <div class="story-overlay">
-              <div class="story-text">
-              <p class="bold underline"><%= story.title.toUpperCase() %></p>
+<div class='Stories'>
+  <div class='row mx-0'>
+    <% city.stories.forEach(function (story) { %>
+      <div class='col-lg-4 col-md-4 col-sm-6'>
+        <div class='card img-thumbnail rounded'>
+          <div class='card-img'>
+            <div class='story-overlay'>
+              <div class='story-text'>
+              <p class='bold underline'><%= story.title.toUpperCase() %></p>
               <p><%= story.location.name %></p>
               <p><%= story.date %></p>
-              <p>Submitted by: <a href="/users/<%= story.author.id %>"><%= story.author.name %></a></p>
+              <p>Submitted by: <a href='/users/<%= story.author.id %>'><%= story.author.name %></a></p>
               </div>
             </div>
-            <a href="/cities/<%= city._id %>/stories/<%= story._id %>">
-              <img class="story-image" src="<%= story.image.name %>" 
-                />
+            <a href='/cities/<%= city._id %>/stories/<%= story._id %>'>
+              <img class='story-image' src='<%= story.image.name %>' />
             </a>
           </div>
         </div>
@@ -54,9 +61,9 @@
     <% }) %>
   </div>
   
-  <div class="navButtons text-center">
-    <a href="/cities/<%= city._id %>/new">
-      <button class="btn btn-success" style="margin: 1rem 0;">Add New Story</button>
+  <div class='navButtons text-center'>
+    <a href='/cities/<%= city._id %>/new'>
+      <button class='btn btn-success' style='margin: 1rem 0;'>Add New Story</button>
     </a>
   </div>
 </div>
