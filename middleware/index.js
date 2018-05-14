@@ -23,19 +23,23 @@ middlewareObj.isLoggedIn = function (req, res, next) {
 
 middlewareObj.checkProfileOwner = function (req, res, next) {
   if (req.isAuthenticated()) {
-    User.findById(req.params.userId, (err, foundUser) => {
+    User.findById(req.params.userId, function (err, foundUser) {
       if (err) {
         req.flash('error', 'User not found');
-        return res.redirect('back');
-      } else if (foundUser._id.equals(req.user._id) || req.user.isAdmin) {
-        return next();
+        res.redirect('back');
+      } else {
+        if (foundUser._id.equals(req.user._id) || req.user.isAdmin) {
+          next();
+        } else {
+          req.flash('error', 'You do not have permission');
+          res.redirect('/cities');
+        }
       }
-      req.flash('error', 'You do not have permission');
-      return res.redirect('/cities');
     });
+  } else {
+    req.flash('error', 'You need to be logged in');
+    res.redirect('/login');
   }
-  req.flash('error', 'You need to be logged in');
-  return res.redirect('/login');
 };
 
 middlewareObj.checkStoryOwner = function (req, res, next) {

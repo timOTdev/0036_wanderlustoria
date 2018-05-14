@@ -22,7 +22,7 @@
       <h1>New Users</h1>
       <% users.forEach(function(user){ %>
         <a href='/users/<%= user.id %>'>
-          <p><%= user.firstName %> @ <%= user.createdAt %></p>
+          <p><%= user.firstName %> @ <%= moment(user.createdAt).format('MMMM Do, YYYY @ h a'); %></p>
         </a>
         <hr />
       <% }) %>
@@ -30,7 +30,7 @@
       <h1>New Stories</h1>
       <% stories.forEach(function (story) { %>
         <a href='/cities/<%= story.city.id %>/stories/<%= story.id %>'>
-          <p><%= story.title %> @ <%= story.createdAt %></p>
+          <p><%= story.title %> @ <%= moment(story.createdAt).format('MMMM Do, YYYY @ h a'); %></p>
         </a>
         <hr />
       <% }) %>
@@ -40,7 +40,7 @@
       <h1>New Comments</h1>
       <% comments.forEach(function (comment) { %>
         <a href='/cities/<%= comment.city.id %>/stories/<%= comment.story.id %>'>
-          <p><%= comment.body %> @ <%= comment.createdAt %></p>
+          <p><%= comment.body %> @ <%= moment(comment.createdAt).format('MMMM Do, YYYY @ h a'); %></p>
         </a>
         <hr />
       <% }) %>
