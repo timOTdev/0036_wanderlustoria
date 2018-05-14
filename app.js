@@ -29,7 +29,7 @@ app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 app.use(flash());
 app.locals.moment = require('moment');
-mongoose.connect(process.env.LOCALDATABASE);
+mongoose.connect(process.env.MLABDATABASE);
 
 // Passport Configuration
 app.use(require('express-session')({

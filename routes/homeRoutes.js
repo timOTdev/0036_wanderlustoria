@@ -56,13 +56,13 @@ router.get('/forgot', (req, res) => {
 router.post('/forgot', (req, res, next) => {
   async.waterfall([
     function (done) {
-      crypto.randomBytes(20, (err, buf) => {
+      crypto.randomBytes(20, function (err, buf) {
         const token = buf.toString('hex');
         done(err, token);
       });
     },
     function (token, done) {
-      User.findOne({ email: req.body.email }, (err, user) => {
+      User.findOne({ email: req.body.email }, function (err, user) {
         if (!user) {
           req.flash('error', 'No account found with that email address.');
           return res.redirect('/forgot');
@@ -71,10 +71,9 @@ router.post('/forgot', (req, res, next) => {
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-        user.save((err) => {
+        user.save(function (err) {
           done(err, token, user);
         });
-        return user;
       });
     },
     function (token, user, done) {
@@ -90,6 +89,8 @@ router.post('/forgot', (req, res, next) => {
         from: 'timh1203@gmail.com',
         subject: 'Wanderlustoria Password Reset',
         text: `
+        Dear ${user.username},
+
         You are receiving this because you (or someone else) have requested the reset of the password for your account.
 
         Please click on the following link, or paste this into your browser to complete the process:
@@ -100,14 +101,15 @@ router.post('/forgot', (req, res, next) => {
 
         With love, Wanderlustoria`,
       };
-      smtpTransport.sendMail(mailOptions, (err) => {
+      smtpTransport.sendMail(mailOptions, function (err) {
+        console.log('mail sent');
         req.flash('success', `An e-mail has been sent to ${user.email} with further instructions.`);
         done(err, 'done');
       });
     },
-  ], (err) => {
-    if (err) { return next(err); }
-    return res.redirect('/forgot');
+  ], function (err) {
+    if (err) return next(err);
+    res.redirect('/forgot');
   });
 });
 
@@ -124,41 +126,26 @@ router.get('/reset/:token', (req, res) => {
 router.post('/reset/:token', (req, res) => {
   async.waterfall([
     function (done) {
-      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
         if (!user) {
           req.flash('error', 'Password reset token is invalid or has expired.');
           return res.redirect('back');
         }
         if (req.body.password === req.body.confirm) {
-          user.setPassword(req.body.password, (err, user) => {
-            if (err) {
-              req.flash('error', 'Passwords do not match.');
-              return res.redirect('back');
-            }
+          user.setPassword(req.body.password, function (err) {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;
 
-            user.save((err, user) => {
-              if (err) {
-                req.flash('error', 'Passwords do not match.');
-                return res.redirect('back');
-              }
-              req.logIn(user, (err) => {
-                if (err) {
-                  req.flash('error', 'Passwords do not match.');
-                  return res.redirect('back');
-                }
-                return done(err, user);
+            user.save(function (err) {
+              req.logIn(user, function (err) {
+                done(err, user);
               });
-              return user;
             });
-            return user;
           });
         } else {
           req.flash('error', 'Passwords do not match.');
           return res.redirect('back');
         }
-        return user;
       });
     },
     function (user, done) {
@@ -171,30 +158,22 @@ router.post('/reset/:token', (req, res) => {
       });
       const mailOptions = {
         to: user.email,
-        from: 'timh1203@mail.com',
+        from: 'timh1203@gmail.com',
         subject: 'Your password has been changed',
         text: `
-        Hello,
+        Hello ${user.username},
 
         This is a confirmation that the password for your account ${user.email} has just been changed.
 
         With love, Wanderlustoria`,
       };
-      smtpTransport.sendMail(mailOptions, (err) => {
-        if (err) {
-          req.flash('error', err.message);
-          return res.redirect('back');
-        }
+      smtpTransport.sendMail(mailOptions, function (err) {
         req.flash('success', 'Success! Your password has been changed.');
-        return done(err);
+        done(err);
       });
     },
-  ], (err) => {
-    if (err) {
-      req.flash('error', 'Passwords do not match.');
-      return res.redirect('back');
-    }
-    return res.redirect('/cities');
+  ], function (err) {
+    res.redirect('/cities');
   });
 });
 
