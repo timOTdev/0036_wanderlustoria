@@ -112,7 +112,7 @@ router.get('/stories/:storyId', (req, res) => {
       req.flash('error', err.message);
       return res.redirect('back');
     }
-    Story.findById(req.params.storyId).populate('comments').exec((err, story) => {
+    Story.findById(req.params.storyId).populate({ path: 'comments', options: { sort: { createdAt: -1 } } }).exec((err, story) => {
       if (err) {
         req.flash('error', err.message);
         return res.redirect('back');

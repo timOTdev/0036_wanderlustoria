@@ -111,7 +111,7 @@ router.post('/', middleware.isAdminAccount, upload.single('image'), (req, res) =
 
 // SHOW ROUTE
 router.get('/:cityId', (req, res) => {
-  City.findById(req.params.cityId).populate('stories').exec((err, city) => {
+  City.findById(req.params.cityId).populate({ path: 'stories', options: { sort: { createdAt: -1 } } }).exec((err, city) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
