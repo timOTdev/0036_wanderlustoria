@@ -13,26 +13,28 @@
       text-shadow: 3px 3px 3px darkred;
       font-family: "Black And White Picture", sans-serif;'>
         <h3 class='my-0 py-0'>
-          <span class='wander' style='color: lightgreen;text-shadow: 3px 3px 3px darkcyan;'>Wander</span>lustoria
+          <span class='wander' style='color: lightgreen; text-shadow: 3px 3px 3px darkcyan;'>Wander</span>lustoria
         </h3>
       </a>
-      
-      <form class='form-inline my-2 my-lg-0' action='/cities' method='GET'>
+
+      <form class='form-inline my-0 my-lg-0' action='/cities' method='GET'>
         <div class='form-group'>
           <input class='form-control mr-sm-2' type='text' name='search' placeholder='City Search...' aria-label='Search' maxlength='20' />
           <input class='btn btn-default' type='submit' value='Search' />
         </div>
       </form>
-      
-      <div>
-        <% if (!currentUser) { %>
-          <a class='btn btn-secondary my-0 py-0' href='/register'>
+    
+      <% if (!currentUser) { %>
+        <div>
+          <a class='btn btn-secondary my-0 py-0 d-inline' href='/register'>
             <i class='fas fa-user-plus'></i> Register
           </a>
-          <a class='btn btn-secondary my-0 py-0' href='/login %>'>
+          <a class='btn btn-secondary my-0 py-0 d-inline' href='/login %>'>
             <i class='fas fa-sign-in-alt'></i> Login
           </a>
-        <% } else { %>
+        </div>
+      <% } else { %>
+        <div>
           <% if (currentUser && currentUser.isAdmin) { %> 
             <a class='btn btn-primary my-0 py-0' href='/dashboard'>
               <i class='fas fa-globe'></i> Dashboard
@@ -44,8 +46,8 @@
           <a class='btn btn-info my-0 py-0' data-value='logout' href='/logout' onclick='return confirm("Log out?");'>
             <i class='fas fa-sign-out-alt'></i> Logout
           </a>
-        <% } %>
-      </div>
+        </div>
+      <% } %>
     </nav>
 
     <% if (error && error.length > 0) { %>

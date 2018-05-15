@@ -31,10 +31,7 @@
 
 <div class='jumbotron mx-0 mb-0 p-0'>
   <div class='row justify-content-center mx-0'>
-    <div class='col-lg-3 mx-5 my-1 py-1' id='map' style='height: 90vh; border: 1px solid black; border-radius: 5%;'>
-    </div>
-
-    <div class='col-lg-6 mx-5 my-1 py-1 text-center'>
+    <div class='col-lg-6 col-md-12 col-sm-12 mx-5 my-1 py-1 text-center'>
       <img class='img w-100' src='<%= story.image.name %>' alt='<%= story.title %>' style='border: 1px solid black; border-radius: 1%;'/>
       <h1><%= story.title.toUpperCase() %></h1>
       <h5><em><%= story.location.name %> @ <%= story.location.city %>, <%= story.location.country %></em></h5>
@@ -42,6 +39,9 @@
       <hr class='w-100'>
       <p class='w-75 mx-auto'><%= story.body %></p>
       <p>Submitted by: <a href='/users/<%= story.author.id %>'><%= story.author.name %></a>, <em><%= moment(story.createdAt).fromNow() %></em></p>
+    </div>
+
+    <div class='col-lg-3 col-md-12 col-sm-12 mx-5 my-1 py-1' id='map' style='height: 90vh; border: 1px solid black; border-radius: 5%;'>
     </div>
   </div>
 

@@ -2,7 +2,7 @@
 
 <div class='mx-0 px-0 mt-1'>
   <div class='row mx-0 px-0'>
-    <div class='col-lg-3 col-md-4 col-sm-12'>
+    <div class='col-lg-3 col-md-12 col-sm-12'>
       <div class='card text-center'>
         <div class='card-header'>
           <h1>Welcome back,</h1>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class='col-lg-4 col-md-4 col-sm-12'>
+    <div class='col-lg-4 col-md-12 col-sm-12'>
       <h1>New Users</h1>
       <% users.forEach(function(user){ %>
         <a href='/users/<%= user.id %>'>
@@ -36,7 +36,7 @@
       <% }) %>
     </div>
 
-    <div class='col-lg-5 col-md-4 col-sm-12'>
+    <div class='col-lg-5 col-md-12 col-sm-12'>
       <h1>New Comments</h1>
       <% comments.forEach(function (comment) { %>
         <a href='/cities/<%= comment.city.id %>/stories/<%= comment.story.id %>'>
