@@ -11,19 +11,19 @@
 
 - [Wanderlustoria](https://wanderlustoria.herokuapp.com/) is an picture sharing platform for travel-enthusiasts to share their experience and inspire others to travel
 - Sign up for an account, share photos and stories, comment on other stories, and make new friends
-- Currently: Stable Version v1.0 -- updates are possible, not currently planned (as of 4/12/2018)
+- Currently: Stable Version v1.0 -- updates are possible, not currently planned (as of 4/15/2018)
 
 ## Features
 
 - A fast, powerful platform built with NodeJS/ExpressJS/MongoDB
-- Upload photos which are hosted on cloudinary
+- Upload photos which are hosted on Cloudinary
 - Sign up and log into your own account with PassportJS
-- Auto-finds Google Map of location based on the name
+- Auto-finds Google Map of location with use of Geocoder API
 - Add/update/delete stories with user login
 - Add/update/delete comments with user login
 - Create/update/delete your own user profile
 - Check out other user's profiles
-- Reset your forgotten passwords via email
+- Reset your forgotten passwords via email with Nodemail API
 
 ## Admin Features
 
@@ -37,17 +37,19 @@
 
 1. Register a new account
 2. Set up your profile by clicking your name on the top right
-3. Check out the available cities or request a new one from the admins via the contact form on home page
-4. Post a new story under a city
-5. Post comments on other stories
-6. Enjoy learning about new places and making friends
-7. Charater limits are as follows: 1000 character limit for story body, 500 for user bio, 280 for user comments
+3. Don't forget to fill out your profile by click on the your name at the top right
+4. Check out the available cities or request a new one from the admins via the contact form on home page
+5. Post a new story under a city
+6. Post comments on other stories
+7. Enjoy learning about new places and making friends
+8. Character limits are as follows: 1000 character limit for story body, 500 for user bio, 280 for user comments
 
 ### As an admin
 
 1. Register an account as normal
-2. Log into the Mongo database and grant admin permissions with `db.<your user database>.update({ username: "<username>" }, { $set: { isAdmin: true }})`
+2. Log into the Mongo database and grant admin permissions with `db.<your user database>.update({ username: "<username>" }, { $set: { isAdmin: true }})` if using command line or log into [mLAB](https://mlab.com/) and edit directly
 3. Now admins should have all special abilities and user abilities
+4. Feel free to add new cities and administrate
 
 ## Technologies for this project
 
@@ -95,17 +97,20 @@
 - [Follow MAC OSX Setup Instructions from Youtube](https://www.youtube.com/watch?v=DX15WbKidXY)
 5. For an MLAB database:
 - Sign up at [mLab Home](https://mlab.com/)
-- Remember your username and password for the `.env.variables` file later
+- Remember your username, password, and database name for the `.env.variables` file later
 6. You will also need API keys:
 - [Cloudinary Name, API Key and API Secret](https://cloudinary.com/console/dashboard) to host pictures for your users
-- [Geocoder API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key) to find the user-input location
 - [Gmail account](https://accounts.google.com/signin/v2/identifier?service=mail) to send users emails to reset their passwords
+- 2 [Geocoder API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key) to find the user-input location
+- You will need one Geocoder API key for the back-end to make requests without restrictions (GEOCODER_SERVER_API_KEY in .env), then another for the front end for the users to make requests (GEOCODER_CLIENT_API_KEY)
 7. Enter these api key variables in the `.env.variables` file and RENAME the file to `.env` when you are done
 - API variables inside .env are after the equal sign without quotes such as `CLOUDINARY_API_SECRET=abc123`
 - MLABDATABASE follows a format such as `mongodb://<dbuser>:<dbpassword>@ds119370.mlab.com:19370/<database name>`
-- Fill in the information from the MLAB signup from step 5.
+- LOCALDATABASE is for if you plan to run a local Mongo database, don't forget to change `mongoose.connect()` line in app.js
+- Fill in the information from the MLAB signup from step 5
+- If you plan on using the password reset feature, nodemailer also requires [GMAIL Lesser Secure Apps Feature](https://myaccount.google.com/lesssecureapps)
 8. Run the MongoDB server with the terminal command `mongod` or have it linked up to MLAB database
-9. Run the node app with `node app.js` in the root directory
+9. Run the node app with `node app.js`, or nodemon if installed, in the root directory
 10. Open up your favorite editor and hack away!
 
 ## More pictures
