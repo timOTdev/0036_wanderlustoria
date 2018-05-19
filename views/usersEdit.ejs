@@ -7,15 +7,15 @@
         <form action='/users/<%= user._id %>?_method=PUT' method='POST' enctype='multipart/form-data' autofocus required>
           <div class='form-group py-1'>
             <label for='firstName'>First Name:</label>
-              <input class='form-control' type='text' name='firstName' value='<%= user.firstName %>' maxlength='20' required />
+              <input class='form-control' type='text' name='firstName' value='<%= user.firstName %>' maxlength='50' required />
           </div>
           <div class='form-group py-1'>
             <label for='lastName'>Last Name:</label>
-              <input class='form-control' type='text' name='lastName' value='<%= user.lastName %>' maxlength='20' required />
+              <input class='form-control' type='text' name='lastName' value='<%= user.lastName %>' maxlength='50' required />
           </div>
           <div class='form-group py-1'>
             <label for='email'>Email:</label>
-              <input class='form-control' type='email' name='email' value='<%= user.email %>' maxlength='20' required />
+              <input class='form-control' type='email' name='email' value='<%= user.email %>' maxlength='50' required />
           </div>
           <div class='form-group py-1'>
             <label for='body'>Bio</label>
