@@ -1,4 +1,4 @@
-# Wanderlustoria
+# 0036_wanderlustoria
 
 <figure><img src="https://i.imgur.com/nwRZMmO.png" alt="Wanderlustoria Intro Page" style="width: 60%; display: block; margin: 0 auto;"/></figure>
 
